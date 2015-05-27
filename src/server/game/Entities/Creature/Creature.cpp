@@ -380,6 +380,7 @@ bool Creature::UpdateEntry(uint32 Entry, uint32 team, const CreatureData* data)
     SetAttackTime(RANGED_ATTACK, cInfo->rangeattacktime);
 
     SetUInt32Value(UNIT_FIELD_FLAGS, unit_flags);
+	SetUInt32Value(UNIT_FIELD_FLAGS_2, cInfo->unit_flags2);
 
     SetUInt32Value(UNIT_DYNAMIC_FLAGS, dynamicflags);
 
@@ -562,13 +563,13 @@ void Creature::Update(uint32 diff)
             if (!IsInEvadeMode() && (!bInCombat || IsPolymorphed())) // regenerate health if not in combat or if polymorphed
                 RegenerateHealth();
 
-            if (getPowerType() == POWER_ENERGY)
-            {
-                if (!IsVehicle() || GetVehicleKit()->GetVehicleInfo()->_powerType != POWER_PYRITE)
-                    Regenerate(POWER_ENERGY);
-            }
-            else
-                RegenerateMana();
+			if (HasFlag(UNIT_FIELD_FLAGS_2, UNIT_FLAG2_REGENERATE_POWER))
+			{
+				if (getPowerType() == POWER_ENERGY)
+					Regenerate(POWER_ENERGY);
+				else
+					RegenerateMana();
+			}
 
             /*if (!bIsPolymorphed) // only increase the timer if not polymorphed
                     _regenTimer += CREATURE_REGEN_INTERVAL - diff;

@@ -470,48 +470,49 @@ public:
             cInfo->rangeattacktime       = fields[29].GetUInt32();
             cInfo->unit_class            = uint32(fields[30].GetUInt8());
             cInfo->unit_flags            = fields[31].GetUInt32();
-            cInfo->dynamicflags          = fields[32].GetUInt32();
-            cInfo->family                = uint32(fields[33].GetUInt8());
-            cInfo->trainer_type          = uint32(fields[34].GetUInt8());
-            cInfo->trainer_spell         = fields[35].GetUInt32();
-            cInfo->trainer_class         = uint32(fields[36].GetUInt8());
-            cInfo->trainer_race          = uint32(fields[37].GetUInt8());
-            cInfo->minrangedmg           = fields[38].GetFloat();
-            cInfo->maxrangedmg           = fields[39].GetFloat();
-            cInfo->rangedattackpower     = uint32(fields[40].GetUInt16());
-            cInfo->type                  = uint32(fields[41].GetUInt8());
-            cInfo->type_flags            = fields[42].GetUInt32();
-            cInfo->lootid                = fields[43].GetUInt32();
-            cInfo->pickpocketLootId      = fields[44].GetUInt32();
-            cInfo->SkinLootId            = fields[45].GetUInt32();
+			cInfo->unit_flags            = fields[32].GetUInt32();
+            cInfo->dynamicflags          = fields[33].GetUInt32();
+            cInfo->family                = uint32(fields[34].GetUInt8());
+            cInfo->trainer_type          = uint32(fields[35].GetUInt8());
+            cInfo->trainer_spell         = fields[36].GetUInt32();
+            cInfo->trainer_class         = uint32(fields[37].GetUInt8());
+            cInfo->trainer_race          = uint32(fields[38].GetUInt8());
+            cInfo->minrangedmg           = fields[39].GetFloat();
+            cInfo->maxrangedmg           = fields[40].GetFloat();
+            cInfo->rangedattackpower     = uint32(fields[41].GetUInt16());
+            cInfo->type                  = uint32(fields[42].GetUInt8());
+            cInfo->type_flags            = fields[43].GetUInt32();
+            cInfo->lootid                = fields[44].GetUInt32();
+            cInfo->pickpocketLootId      = fields[45].GetUInt32();
+            cInfo->SkinLootId            = fields[46].GetUInt32();
 
             for (uint8 i = SPELL_SCHOOL_HOLY; i < MAX_SPELL_SCHOOL; ++i)
-                cInfo->resistance[i]     = fields[46 + i -1].GetUInt16();
+                cInfo->resistance[i]     = fields[47 + i -1].GetUInt16();
 
             for (uint8 i = 0; i < CREATURE_MAX_SPELLS; ++i)
-                cInfo->spells[i] = fields[52 + i].GetUInt32();
+                cInfo->spells[i] = fields[53 + i].GetUInt32();
             
-            cInfo->PetSpellDataId        = fields[60].GetUInt32();
-            cInfo->VehicleId             = fields[61].GetUInt32();
-            cInfo->mingold               = fields[62].GetUInt32();
-            cInfo->maxgold               = fields[63].GetUInt32();
-            cInfo->AIName                = fields[64].GetString();
-            cInfo->MovementType          = uint32(fields[65].GetUInt8());
-            cInfo->InhabitType           = uint32(fields[66].GetUInt8());
-            cInfo->ModHealth             = fields[67].GetFloat();
-            cInfo->ModMana               = fields[68].GetFloat();
-            cInfo->ModArmor              = fields[69].GetFloat();
-            cInfo->RacialLeader          = fields[70].GetBool();
+            cInfo->PetSpellDataId        = fields[61].GetUInt32();
+            cInfo->VehicleId             = fields[62].GetUInt32();
+            cInfo->mingold               = fields[63].GetUInt32();
+            cInfo->maxgold               = fields[64].GetUInt32();
+            cInfo->AIName                = fields[65].GetString();
+            cInfo->MovementType          = uint32(fields[66].GetUInt8());
+            cInfo->InhabitType           = uint32(fields[67].GetUInt8());
+            cInfo->ModHealth             = fields[68].GetFloat();
+            cInfo->ModMana               = fields[69].GetFloat();
+            cInfo->ModArmor              = fields[70].GetFloat();
+            cInfo->RacialLeader          = fields[71].GetBool();
 
             for (uint8 i = 0; i < MAX_CREATURE_QUEST_ITEMS; ++i)
-                cInfo->questItems[i] = fields[71 + i].GetUInt32();
+                cInfo->questItems[i] = fields[72 + i].GetUInt32();
 
-            cInfo->movementId            = fields[77].GetUInt32();
-            cInfo->RegenHealth           = fields[78].GetBool();
-            cInfo->equipmentId           = fields[79].GetUInt32();
-            cInfo->MechanicImmuneMask    = fields[80].GetUInt32();
-            cInfo->flags_extra           = fields[81].GetUInt32();
-            cInfo->ScriptID              = sObjectMgr->GetScriptId(fields[82].GetCString());
+            cInfo->movementId            = fields[78].GetUInt32();
+            cInfo->RegenHealth           = fields[79].GetBool();
+            cInfo->equipmentId           = fields[80].GetUInt32();
+            cInfo->MechanicImmuneMask    = fields[81].GetUInt32();
+            cInfo->flags_extra           = fields[82].GetUInt32();
+            cInfo->ScriptID              = sObjectMgr->GetScriptId(fields[83].GetCString());
 
             sObjectMgr->CheckCreatureTemplate(cInfo);
         }
