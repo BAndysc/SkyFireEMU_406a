@@ -15866,7 +15866,7 @@ void Player::AddQuest(Quest const *quest, Object *questGiver)
         GetMap()->ScriptsStart(sQuestStartScripts, quest->GetQuestStartScript(), questGiver, this);
 
     // Some spells applied at quest activation
-    SpellAreaForQuestMapBounds saBounds = sSpellMgr->GetSpellAreaForQuestMapBounds(quest_id, true);
+    SpellAreaForQuestMapBounds saBounds = sSpellMgr->GetSpellAreaForQuestMapBounds(quest_id);
     if (saBounds.first != saBounds.second)
     {
         uint32 zone, area;
@@ -16129,7 +16129,7 @@ void Player::RewardQuest(Quest const *quest, uint32 reward, Object* questGiver, 
     }
 
     // Some spells applied at quest reward
-    SpellAreaForQuestMapBounds saBounds = sSpellMgr->GetSpellAreaForQuestMapBounds(quest_id, false);
+    SpellAreaForQuestMapBounds saBounds = sSpellMgr->GetSpellAreaForQuestMapBounds(quest_id);
     if (saBounds.first != saBounds.second)
     {
         if (!zone || !area)
@@ -23976,15 +23976,18 @@ void Player::SetClientControl(Unit* target, uint8 allowMove)
         SetMover(this);
 }
 
+
+
 void Player::UpdateZoneDependentAuras(uint32 newZone)
 {
-    // Some spells applied at enter into zone (with subzones), aura removed in UpdateAreaDependentAuras that called always at zone->area update
-    SpellAreaForAreaMapBounds saBounds = sSpellMgr->GetSpellAreaForAreaMapBounds(newZone);
-    for (SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
-        if (itr->second->autocast && itr->second->IsFitToRequirements(this, newZone, 0))
-            if (!HasAura(itr->second->spellId))
-                CastSpell(this, itr->second->spellId, true);
+	// Some spells applied at enter into zone (with subzones), aura removed in UpdateAreaDependentAuras that called always at zone->area update
+	SpellAreaForAreaMapBounds saBounds = sSpellMgr->GetSpellAreaForAreaMapBounds(newZone);
+	for (SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+		if (itr->second->autocast && itr->second->IsFitToRequirements(this, newZone, 0))
+			if (!HasAura(itr->second->spellId))
+				CastSpell(this, itr->second->spellId, true);
 }
+
 
 void Player::UpdateAreaDependentAuras(uint32 newArea)
 {
@@ -24017,6 +24020,7 @@ void Player::UpdateAreaDependentAuras(uint32 newArea)
         }
     }
 }
+
 
 uint32 Player::GetCorpseReclaimDelay(bool pvp) const
 {

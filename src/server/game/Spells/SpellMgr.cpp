@@ -1132,11 +1132,8 @@ SpellAreaMapBounds SpellMgr::GetSpellAreaMapBounds(uint32 spell_id) const
     return SpellAreaMapBounds(mSpellAreaMap.lower_bound(spell_id), mSpellAreaMap.upper_bound(spell_id));
 }
 
-SpellAreaForQuestMapBounds SpellMgr::GetSpellAreaForQuestMapBounds(uint32 quest_id, bool active) const
+SpellAreaForQuestMapBounds SpellMgr::GetSpellAreaForQuestMapBounds(uint32 quest_id) const
 {
-    if (active)
-        return SpellAreaForQuestMapBounds(mSpellAreaForActiveQuestMap.lower_bound(quest_id), mSpellAreaForActiveQuestMap.upper_bound(quest_id));
-    else
         return SpellAreaForQuestMapBounds(mSpellAreaForQuestMap.lower_bound(quest_id), mSpellAreaForQuestMap.upper_bound(quest_id));
 }
 
@@ -1170,11 +1167,11 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
             return false;
 
     if (questStart)                              // not in expected required quest state
-        if (!player || ((!questStartCanActive || !player->IsActiveQuest(questStart)) && !player->GetQuestRewardStatus(questStart)))
+		if (!player || (((1 << player->GetQuestStatus(questStart)) & questStartStatus) == 0))
             return false;
 
     if (questEnd)                                // not in expected forbidden quest state
-        if (!player || player->GetQuestRewardStatus(questEnd))
+		if (!player || (((1 << player->GetQuestStatus(questEnd)) & questEndStatus) == 0))
             return false;
 
     if (auraSpell)                               // not have expected aura
@@ -1213,6 +1210,10 @@ bool SpellArea::IsFitToRequirements(Player const* player, uint32 newZone, uint32
 
     return true;
 }
+
+
+
+
 
 void SpellMgr::LoadSpellInfos()
 {
@@ -2490,12 +2491,11 @@ void SpellMgr::LoadSpellAreas()
 
     mSpellAreaMap.clear();                                  // need for reload case
     mSpellAreaForQuestMap.clear();
-    mSpellAreaForActiveQuestMap.clear();
     mSpellAreaForQuestEndMap.clear();
     mSpellAreaForAuraMap.clear();
 
-    //                                                  0     1         2              3               4           5          6        7       8
-    QueryResult result = WorldDatabase.Query("SELECT spell, area, quest_start, quest_start_active, quest_end, aura_spell, racemask, gender, autocast FROM spell_area");
+    //                                                  0     1         2             3                       4           5          6        7         8       9              10
+    QueryResult result = WorldDatabase.Query("SELECT spell, area, quest_start, quest_start_status, quest_end_status, quest_end, aura_spell, racemask, gender, autocast FROM spell_area");
 
     if (!result)
     {
@@ -2515,12 +2515,14 @@ void SpellMgr::LoadSpellAreas()
         spellArea.spellId             = spell;
         spellArea.areaId              = fields[1].GetUInt32();
         spellArea.questStart          = fields[2].GetUInt32();
-        spellArea.questStartCanActive = fields[3].GetBool();
-        spellArea.questEnd            = fields[4].GetUInt32();
-        spellArea.auraSpell           = fields[5].GetInt32();
-        spellArea.raceMask            = fields[6].GetUInt32();
-        spellArea.gender              = Gender(fields[7].GetUInt8());
-        spellArea.autocast            = fields[8].GetBool();
+		spellArea.questStartStatus    = fields[3].GetUInt32();		
+		spellArea.questEndStatus      = fields[4].GetUInt32();		
+        spellArea.questEnd            = fields[5].GetUInt32();
+        spellArea.auraSpell           = fields[6].GetInt32();
+        spellArea.raceMask            = fields[7].GetUInt32();
+        spellArea.gender              = Gender(fields[8].GetUInt8());
+        spellArea.autocast            = fields[9].GetBool();
+
 
         if (SpellInfo const* spellInfo = GetSpellInfo(spell))
         {
@@ -2583,11 +2585,6 @@ void SpellMgr::LoadSpellAreas()
                 continue;
             }
 
-            if (spellArea.questEnd == spellArea.questStart && !spellArea.questStartCanActive)
-            {
-                sLog->outErrorDb("Spell %u listed in `spell_area` have quest (%u) requirement for start and end in same time", spell, spellArea.questEnd);
-                continue;
-            }
         }
 
         if (spellArea.auraSpell)
@@ -2663,12 +2660,7 @@ void SpellMgr::LoadSpellAreas()
 
         // for search at quest start/reward
         if (spellArea.questStart)
-        {
-            if (spellArea.questStartCanActive)
-                mSpellAreaForActiveQuestMap.insert(SpellAreaForQuestMap::value_type(spellArea.questStart, sa));
-            else
-                mSpellAreaForQuestMap.insert(SpellAreaForQuestMap::value_type(spellArea.questStart, sa));
-        }
+            mSpellAreaForQuestMap.insert(SpellAreaForQuestMap::value_type(spellArea.questStart, sa));
 
         // for search at quest start/reward
         if (spellArea.questEnd)
