@@ -1515,8 +1515,9 @@ SpellCastResult SpellInfo::CheckShapeshift(uint32 form) const
     return SPELL_CAST_OK;
 }
 
-SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 area_id, Player const* player, uint8 effMask) const
+SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 area_id, Player const* player) const
 {
+
     // normal case
     if (AreaGroupId > 0)
     {
@@ -1524,6 +1525,7 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
         AreaGroupEntry const* groupEntry = sAreaGroupStore.LookupEntry(AreaGroupId);
         while (groupEntry)
         {
+
             for (uint8 i = 0; i < MAX_GROUP_AREA_IDS; ++i)
                 if (groupEntry->AreaId[i] == zone_id || groupEntry->AreaId[i] == area_id)
                     found = true;
@@ -1565,7 +1567,6 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
         }
         return SPELL_FAILED_INCORRECT_AREA;
     }
-
     // bg spell checks
     switch (Id)
     {
@@ -1630,7 +1631,7 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
             return bg && bg->GetStatus() == STATUS_WAIT_JOIN ? SPELL_CAST_OK : SPELL_FAILED_REQUIRES_AREA;
         }
     }
-
+	
     // aura limitations
     for (uint8 i = 0; i < MAX_SPELL_EFFECTS; ++i)
     {
@@ -1639,8 +1640,8 @@ SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 a
         // if a player in flying mount entered a non-flight area,
         // the mount speed mod aura will be re-applied with flight effect removed (suppressed),
         // in this case, the new applied speed mod aura (with ground mount speed mod only) should not be removed.
-        if (!(effMask & (1<<i)) || !Effects[i].IsAura())
-            continue;
+        //if (!(effMask & (1<<i)) || !Effects[i].IsAura())
+        //    continue;
         switch (Effects[i].ApplyAuraName)
         {
             case SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED:

@@ -23995,8 +23995,8 @@ void Player::UpdateAreaDependentAuras(uint32 newArea)
     for (AuraMap::iterator iter = m_ownedAuras.begin(); iter != m_ownedAuras.end();)
     {
         // use _zoneUpdateId for speed: UpdateArea called from UpdateZone or instead UpdateZone in both cases _zoneUpdateId up-to-date
-        if (iter->second->GetSpellInfo()->CheckLocation(GetMapId(), _zoneUpdateId, newArea, this, iter->second->GetEffectMask()) != SPELL_CAST_OK)
-            RemoveOwnedAura(iter);
+		if (iter->second->GetSpellInfo()->CheckLocation(GetMapId(), _zoneUpdateId, newArea, this) != SPELL_CAST_OK) 
+			RemoveOwnedAura(iter);
         else
             ++iter;
     }
