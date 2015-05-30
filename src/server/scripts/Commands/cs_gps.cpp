@@ -39,6 +39,7 @@ public:
         {
             { "gps",     SEC_ADMINISTRATOR,  false, &HandleGPSCommand,                  "", NULL },
             { "wpgps",   SEC_ADMINISTRATOR,  false, &HandleWPGPSCommand,                "", NULL },
+			{ "wpgps2",  SEC_ADMINISTRATOR, false, &HandleWPGPS2Command, "", NULL },
             { NULL,       0,                  false, NULL,                               "", NULL }
         };
         return commandTable;
@@ -135,6 +136,18 @@ public:
         handler->PSendSysMessage("Waypoint SQL written to SQL Developer log");
         return true;
     }
+
+
+	static bool HandleWPGPS2Command(ChatHandler* handler, const char* /*args*/)
+	{
+		Player* player = handler->GetSession()->GetPlayer();
+
+		sLog->outSQLDev("{%.3f, %.3f, %.5f, %.5f},", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation());
+
+		handler->PSendSysMessage("Waypoint with orientation written to SQL Developer log (c++ output)");
+		return true;
+	}
+
 };
 
 void AddSC_gps_commandscript()
