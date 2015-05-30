@@ -999,12 +999,28 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
         }
         case SMART_ACTION_FORCE_DESPAWN:
         {
-            if (!IsSmart())
-                break;
 
-            CAST_AI(SmartAI, me->AI())->SetDespawnTime(e.action.forceDespawn.delay + 1);//next tick
-            CAST_AI(SmartAI, me->AI())->StartDespawn();
-            break;
+			ObjectList* targets = GetTargets(e, unit);
+
+			if (!targets)
+				break;
+
+			for (ObjectList::const_iterator itr = targets->begin(); itr != targets->end(); ++itr)
+			{
+				if (!IsCreature(*itr))
+					continue;
+
+				if ((*itr)->ToUnit()->isAlive() && IsSmart((*itr)->ToCreature()))
+				{
+					ENSURE_AI(SmartAI, (*itr)->ToCreature()->AI())->SetDespawnTime(e.action.forceDespawn.delay + 1); // Next tick
+					ENSURE_AI(SmartAI, (*itr)->ToCreature()->AI())->StartDespawn();
+				}
+				else
+					(*itr)->ToCreature()->DespawnOrUnsummon(e.action.forceDespawn.delay);
+			}
+
+			delete targets;
+			break;
         }
         case SMART_ACTION_SET_INGAME_PHASE_MASK:
         {
@@ -1839,7 +1855,7 @@ void SmartScript::ProcessAction(SmartScriptHolder& e, Unit* unit, uint32 var0, u
             for (ObjectList::const_iterator itr = targets->begin(); itr != targets->end(); ++itr)
                 if (IsUnit(*itr))
                     (*itr)->ToUnit()->SetUInt32Value(UNIT_DYNAMIC_FLAGS, e.action.unitFlag.flag);
-
+			
             delete targets;
             break;
         }

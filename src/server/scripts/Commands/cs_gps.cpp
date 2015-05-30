@@ -142,7 +142,7 @@ public:
 	{
 		Player* player = handler->GetSession()->GetPlayer();
 
-		sLog->outSQLDev("{%.3f, %.3f, %.5f, %.5f},", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation());
+		sLog->outSQLDev("{%.3ff, %.3ff, %.5ff, %.5ff},", player->GetPositionX(), player->GetPositionY(), player->GetPositionZ(), player->GetOrientation());
 
 		handler->PSendSysMessage("Waypoint with orientation written to SQL Developer log (c++ output)");
 		return true;
