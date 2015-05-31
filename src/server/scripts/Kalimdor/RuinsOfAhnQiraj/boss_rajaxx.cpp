@@ -24,22 +24,22 @@
 enum Yells
 {
     // The time of our retribution is at hand! Let darkness reign in the hearts of our enemies! Sound: 8645 Emote: 35
-    SAY_ANDOROV_INTRO         = -1509003,   // Before for the first wave
-    SAY_ANDOROV_ATTACK        = -1509004,   // Beginning the event
-    SAY_ANDOROV_WAVE_1        = -1509001,   // When the first wave comes text: Kill first, ask questions later... Incoming! emote: 45 sound: 8653
-    SAY_WAVE3                 = -1509005,
-    SAY_WAVE4                 = -1509006,
-    SAY_WAVE5                 = -1509007,
-    SAY_WAVE6                 = -1509008,
-    SAY_WAVE7                 = -1509009,
-    SAY_INTRO                 = -1509010,
-    SAY_UNK1                  = -1509011,
-    SAY_UNK2                  = -1509012,
-    SAY_UNK3                  = -1509013,
-    SAY_DEATH                 = -1509014,
-    SAY_CHANGEAGGRO           = -1509015,
-    SAY_KILLS_ANDOROV         = -1509016,
-    SAY_COMPLETE_QUEST        = -1509017    // Yell when realm complete quest 8743 for world event
+    SAY_ANDOROV_INTRO         = 389,   // Before for the first wave
+    SAY_ANDOROV_ATTACK        = 388,   // Beginning the event
+    SAY_ANDOROV_WAVE_1        = 391,   // When the first wave comes text: Kill first, ask questions later... Incoming! emote: 45 sound: 8653
+    SAY_WAVE3                 = 387,
+    SAY_WAVE4                 = 386,
+    SAY_WAVE5                 = 385,
+    SAY_WAVE6                 = 384,
+    SAY_WAVE7                 = 383,
+    SAY_INTRO                 = 382,
+    SAY_UNK1                  = 381,
+    SAY_UNK2                  = 380,
+    SAY_UNK3                  = 379,
+    SAY_DEATH                 = 378,
+    SAY_CHANGEAGGRO           = 377,
+    SAY_KILLS_ANDOROV         = 376,
+    SAY_COMPLETE_QUEST        = 375    // Yell when realm complete quest 8743 for world event
     // Warriors, Captains, continue the fight! Sound: 8640
 };
 

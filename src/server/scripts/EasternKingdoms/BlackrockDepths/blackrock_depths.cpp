@@ -214,12 +214,12 @@ public:
             switch (i)
             {
             case 0:
-                DoScriptText(SCRIPT_TEXT1, me);//2
+                //Talk(SCRIPT_TEXT1);//2 //improper data
                 CanWalk = false;
                 Event_Timer = 5000;
                 break;
             case 1:
-                DoScriptText(SCRIPT_TEXT2, me);//4
+                //Talk(SCRIPT_TEXT2);//4//improper data
                 CanWalk = false;
                 Event_Timer = 5000;
                 break;
@@ -227,10 +227,10 @@ public:
                 CanWalk = false;
                 break;
             case 3:
-                DoScriptText(SCRIPT_TEXT3, me);//5
+                //Talk(SCRIPT_TEXT3);//5//improper data
                 break;
             case 4:
-                DoScriptText(SCRIPT_TEXT4, me);//6
+               // Talk(SCRIPT_TEXT4);//6//improper data
                 CanWalk = false;
                 Event_Timer = 5000;
                 break;
@@ -300,7 +300,7 @@ public:
                     switch (EventPhase)
                     {
                     case 0:
-                        DoScriptText(SCRIPT_TEXT5, me);//1
+                        //Talk(SCRIPT_TEXT5);//1//improper data
                         HandleGameObject(DATA_ARENA4, false);
                         Start(false, false);
                         CanWalk = true;
@@ -335,7 +335,7 @@ public:
                     case 7:
                         me->SetVisible(true);
                         HandleGameObject(DATA_ARENA1, false);
-                        DoScriptText(SCRIPT_TEXT6, me);//4
+                        //Talk(SCRIPT_TEXT6);//4//improper data
                         CanWalk = true;
                         Event_Timer = 0;
                         break;
@@ -1200,7 +1200,7 @@ public:
 
 enum RocknotSays
 {
-    SAY_GOT_BEER                                           = -1230000
+    SAY_GOT_BEER                                           = 0
 };
 
 enum RocknotSpells
@@ -1237,7 +1237,7 @@ public:
             //keep track of amount in instance script, returns SPECIAL if amount ok and event in progress
             if (instance->GetData(TYPE_BAR) == SPECIAL)
             {
-                DoScriptText(SAY_GOT_BEER, creature);
+                creature->AI()->Talk(SAY_GOT_BEER);
                 creature->CastSpell(creature, SPELL_DRUNKEN_RAGE, false);
                 if (npc_escortAI* escortAI = CAST_AI(npc_rocknot::npc_rocknotAI, creature->AI()))
                     escortAI->Start(false, false);

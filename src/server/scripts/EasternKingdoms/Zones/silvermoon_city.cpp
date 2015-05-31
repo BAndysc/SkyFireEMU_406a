@@ -35,7 +35,7 @@ EndContentData */
 #######*/
 enum eStillbladeData
 {
-    SAY_HEAL                    = -1000193,
+    SAY_HEAL                    = 472,
 
     QUEST_REDEEMING_THE_DEAD    = 9685,
     SPELL_SHIMMERING_VESSEL     = 31225,
@@ -92,7 +92,7 @@ public:
                 me->SetStandState(UNIT_STAND_STATE_STAND);
                 me->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0);
                 //me->RemoveAllAuras();
-                DoScriptText(SAY_HEAL, me);
+                //Talk(SAY_HEAL); //improper data
                 spellHit = true;
             }
         }

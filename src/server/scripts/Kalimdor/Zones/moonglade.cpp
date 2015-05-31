@@ -272,14 +272,14 @@ float Clintar_spirit_WP[41][5] =
 #define CLINTAR_SPIRIT_SUMMON_Z 438.9842f
 #define CLINTAR_SPIRIT_SUMMON_O 0.8594f
 
-//from -1000292 to -1000287 are signed for 7806. but all this texts ids wrong.
-#define CLINTAR_SPIRIT_SAY_START -1000286
-#define CLINTAR_SPIRIT_SAY_UNDER_ATTACK_1 -1000287
-#define CLINTAR_SPIRIT_SAY_UNDER_ATTACK_2 -1000288
-#define CLINTAR_SPIRIT_SAY_GET_ONE -1000289
-#define CLINTAR_SPIRIT_SAY_GET_TWO -1000290
-#define CLINTAR_SPIRIT_SAY_GET_THREE -1000291
-#define CLINTAR_SPIRIT_SAY_GET_FINAL -1000292
+//from 449 to 4 are signed for 7806. but all this texts ids wrong.
+#define CLINTAR_SPIRIT_SAY_START 0
+#define CLINTAR_SPIRIT_SAY_UNDER_ATTACK_1 4
+#define CLINTAR_SPIRIT_SAY_UNDER_ATTACK_2 3
+#define CLINTAR_SPIRIT_SAY_GET_ONE 2
+#define CLINTAR_SPIRIT_SAY_GET_TWO 1
+#define CLINTAR_SPIRIT_SAY_GET_THREE 0
+#define CLINTAR_SPIRIT_SAY_GET_FINAL 449
 
 class npc_clintar_spirit : public CreatureScript
 {
@@ -348,8 +348,8 @@ public:
             uint32 rnd = rand()%2;
             switch (rnd)
             {
-                case 0: DoScriptText(CLINTAR_SPIRIT_SAY_UNDER_ATTACK_1, me, who); break;
-                case 1: DoScriptText(CLINTAR_SPIRIT_SAY_UNDER_ATTACK_2, me, who); break;
+                case 0: Talk(CLINTAR_SPIRIT_SAY_UNDER_ATTACK_1, who->GetGUID()); break;
+                case 1: Talk(CLINTAR_SPIRIT_SAY_UNDER_ATTACK_2, who->GetGUID()); break;
             }
         }
 
@@ -424,7 +424,7 @@ public:
                                 break;
                             case 1:
                                 me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
-                                DoScriptText(CLINTAR_SPIRIT_SAY_GET_ONE, me, player);
+                                Talk(CLINTAR_SPIRIT_SAY_GET_ONE, player->GetGUID());
                                 Event_onWait = false;
                                 break;
                         }
@@ -447,7 +447,7 @@ public:
                         switch (Step)
                         {
                             case 0:
-                                DoScriptText(CLINTAR_SPIRIT_SAY_GET_TWO, me, player);
+                                Talk(CLINTAR_SPIRIT_SAY_GET_TWO, player->GetGUID());
                                 Event_Timer = 15000;
                                 Step = 1;
                                 break;
@@ -494,7 +494,7 @@ public:
                         switch (Step)
                         {
                             case 0:
-                                DoScriptText(CLINTAR_SPIRIT_SAY_GET_THREE, me, player);
+                                Talk(CLINTAR_SPIRIT_SAY_GET_THREE, player->GetGUID());
                                 Event_Timer = 4000;
                                 Step = 1;
                                 break;
@@ -508,7 +508,7 @@ public:
                         {
                             case 0:
                                 me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 2);
-                                DoScriptText(CLINTAR_SPIRIT_SAY_GET_FINAL, me, player);
+                                //Talk(CLINTAR_SPIRIT_SAY_GET_FINAL, player->GetGUID());//improper data
                                 player->CompleteQuest(10965);
                                 Event_Timer = 1500;
                                 Step = 1;

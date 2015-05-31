@@ -27,8 +27,8 @@ EndScriptData */
 #include "ScriptPCH.h"
 enum Say
 {
-    SAY_AGGRO               = -1469000,
-    SAY_LEASH               = -1469001
+    SAY_AGGRO               = 1,
+    SAY_LEASH               = 0
 };
 
 enum Spells
@@ -68,7 +68,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             DoZoneInCombat();
         }
 
@@ -109,7 +109,7 @@ public:
             } else KnockBack_Timer -= diff;
 
             if (EnterEvadeIfOutOfCombatArea(diff))
-                DoScriptText(SAY_LEASH, me);
+                Talk(SAY_LEASH);
 
             DoMeleeAttackIfReady();
         }

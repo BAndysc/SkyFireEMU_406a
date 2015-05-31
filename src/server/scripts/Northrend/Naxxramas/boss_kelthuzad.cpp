@@ -30,32 +30,32 @@ EndScriptData */
 enum Yells
 {
     //when shappiron dies. dialog between kel and lich king (in this order)
-    SAY_SAPP_DIALOG1                                       = -1533084, //not used
-    SAY_SAPP_DIALOG2_LICH                                  = -1533085, //not used
-    SAY_SAPP_DIALOG3                                       = -1533086, //not used
-    SAY_SAPP_DIALOG4_LICH                                  = -1533087, //not used
-    SAY_SAPP_DIALOG5                                       = -1533088, //not used
-    SAY_CAT_DIED                                           = -1533089, //when cat dies, not used
+    SAY_SAPP_DIALOG1                                       = 352, //not used
+    SAY_SAPP_DIALOG2_LICH                                  = 351, //not used
+    SAY_SAPP_DIALOG3                                       = 350, //not used
+    SAY_SAPP_DIALOG4_LICH                                  = 349, //not used
+    SAY_SAPP_DIALOG5                                       = 348, //not used
+    SAY_CAT_DIED                                           = 347, //when cat dies, not used
     //when each of the 4 wing bosses dies
-    SAY_TAUNT1                                             = -1533090, //not used
-    SAY_TAUNT2                                             = -1533091, //not used
-    SAY_TAUNT3                                             = -1533092, //not used
-    SAY_TAUNT4                                             = -1533093, //not used
-    SAY_SUMMON_MINIONS                                     = -1533105, //start of phase 1
-    SAY_AGGRO_1                                            = -1533094, //start of phase 2
-    SAY_AGGRO_2                                            = -1533095,
-    SAY_AGGRO_3                                            = -1533096,
-    SAY_SLAY_1                                             = -1533097,
-    SAY_SLAY_2                                             = -1533098,
-    SAY_DEATH                                              = -1533099,
-    SAY_CHAIN_1                                            = -1533100,
-    SAY_CHAIN_2                                            = -1533101,
-    SAY_FROST_BLAST                                        = -1533102,
-    SAY_SPECIAL_1                                          = -1533106,
-    SAY_SPECIAL_2                                          = -1533107,
-    SAY_SPECIAL_3                                          = -1533108,
-    SAY_REQUEST_AID                                        = -1533103, //start of phase 3
-    SAY_ANSWER_REQUEST                                     = -1533104  //lich king answer
+    SAY_TAUNT1                                             = 346, //not used
+    SAY_TAUNT2                                             = 345, //not used
+    SAY_TAUNT3                                             = 344, //not used
+    SAY_TAUNT4                                             = 343, //not used
+    SAY_SUMMON_MINIONS                                     = 342, //start of phase 1
+    SAY_AGGRO_1                                            = 13, //start of phase 2
+    SAY_AGGRO_2                                            = 12,
+    SAY_AGGRO_3                                            = 11,
+    SAY_SLAY_1                                             = 10,
+    SAY_SLAY_2                                             = 9,
+    SAY_DEATH                                              = 8,
+    SAY_CHAIN_1                                            = 7,
+    SAY_CHAIN_2                                            = 6,
+    SAY_FROST_BLAST                                        = 5,
+    SAY_SPECIAL_1                                          = 2,
+    SAY_SPECIAL_2                                          = 1,
+    SAY_SPECIAL_3                                          = 0,
+    SAY_REQUEST_AID                                        = 4, //start of phase 3
+    SAY_ANSWER_REQUEST                                     = 3  //lich king answer
 };
 enum Event
 {
@@ -336,13 +336,13 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             std::map<uint64, float>::const_iterator itr;
             for (itr = chained.begin(); itr != chained.end(); ++itr)
@@ -365,7 +365,7 @@ public:
                     pPortal->ResetDoorOrButton();
             }
             DoCast(me, SPELL_KELTHUZAD_CHANNEL, false);
-            DoScriptText(SAY_SUMMON_MINIONS, me);
+            //Talk(SAY_SUMMON_MINIONS);//improper data
             Phase = 1;
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NOT_SELECTABLE);
             me->SetFloatValue(UNIT_FIELD_COMBATREACH, 4);
@@ -430,7 +430,7 @@ public:
                             break;
                         case EVENT_PHASE:
                             events.Reset();
-                            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
                             spawns.DespawnAll();
                             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_DISABLE_MOVE | UNIT_FLAG_NOT_SELECTABLE);
                             me->CastStop();
@@ -459,10 +459,10 @@ public:
                     if (HealthBelowPct(45))
                     {
                         Phase = 3 ;
-                        DoScriptText(SAY_REQUEST_AID, me);
+                        Talk(SAY_REQUEST_AID);
                         //here Lich King should respond to KelThuzad but I don't know which Creature to make talk
                         //so for now just make Kelthuzad says it.
-                        DoScriptText(SAY_ANSWER_REQUEST, me);
+                        Talk(SAY_ANSWER_REQUEST);
 
                         for (uint8 i = 0; i <= 3; ++i)
                         {
@@ -518,7 +518,7 @@ public:
                                 }
                             }
                             if (!chained.empty())
-                                DoScriptText(RAND(SAY_CHAIN_1, SAY_CHAIN_2), me);
+                                Talk(RAND(SAY_CHAIN_1, SAY_CHAIN_2));
                             events.RepeatEvent(urand(100000, 180000));
                             break;
                         }
@@ -618,7 +618,7 @@ public:
                                 std::vector<Unit*>::const_iterator itr = unitList.begin();
                                 advance(itr, rand()%unitList.size());
                                 DoCast(*itr, SPELL_MANA_DETONATION);
-                                DoScriptText(RAND(SAY_SPECIAL_1, SAY_SPECIAL_2, SAY_SPECIAL_3), me);
+                                Talk(RAND(SAY_SPECIAL_1, SAY_SPECIAL_2, SAY_SPECIAL_3));
                             }
 
                             events.RepeatEvent(urand(20000, 50000));
@@ -633,7 +633,7 @@ public:
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, RAID_MODE(1, 0), 0, true))
                                 DoCast(target, SPELL_FROST_BLAST);
                             if (rand()%2)
-                                DoScriptText(SAY_FROST_BLAST, me);
+                                Talk(SAY_FROST_BLAST);
                             events.RepeatEvent(urand(30000, 90000));
                             break;
                         default:

@@ -48,26 +48,26 @@ enum Creatures
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1603000,
-    SAY_SLAY_1                                  = -1603001,
-    SAY_SLAY_2                                  = -1603002,
-    SAY_ENGADED_FOR_FIRTS_TIME                  = -1603003,
-    SAY_PHASE_2                                 = -1603004,
-    SAY_SUMMON_COLLAPSING_STAR                  = -1603005,
-    SAY_DEATH_1                                 = -1603006,
-    SAY_DEATH_2                                 = -1603007,
-    SAY_DEATH_3                                 = -1603008,
-    SAY_DEATH_4                                 = -1603009,
-    SAY_DEATH_5                                 = -1603010,
-    SAY_BERSERK                                 = -1603011,
-    SAY_BIG_BANG_1                              = -1603012,
-    SAY_BIG_BANG_2                              = -1603013,
-    SAY_TIMER_1                                 = -1603014,
-    SAY_TIMER_2                                 = -1603015,
-    SAY_TIMER_3                                 = -1603016,
-    SAY_SUMMON_1                                = -1603017,
-    SAY_SUMMON_2                                = -1603018,
-    SAY_SUMMON_3                                = -1603019,
+    SAY_AGGRO                                   = 19,
+    SAY_SLAY_1                                  = 18,
+    SAY_SLAY_2                                  = 17,
+    SAY_ENGADED_FOR_FIRTS_TIME                  = 16,
+    SAY_PHASE_2                                 = 15,
+    SAY_SUMMON_COLLAPSING_STAR                  = 14,
+    SAY_DEATH_1                                 = 13,
+    SAY_DEATH_2                                 = 12,
+    SAY_DEATH_3                                 = 11,
+    SAY_DEATH_4                                 = 10,
+    SAY_DEATH_5                                 = 9,
+    SAY_BERSERK                                 = 8,
+    SAY_BIG_BANG_1                              = 7,
+    SAY_BIG_BANG_2                              = 6,
+    SAY_TIMER_1                                 = 5,
+    SAY_TIMER_2                                 = 4,
+    SAY_TIMER_3                                 = 3,
+    SAY_SUMMON_1                                = 2,
+    SAY_SUMMON_2                                = 1,
+    SAY_SUMMON_3                                = 0,
 };
 
 class boss_algalon : public CreatureScript
@@ -112,7 +112,7 @@ public:
         {
             if (Summon)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 me->InterruptSpell(CURRENT_CHANNELED_SPELL);
                 DoZoneInCombat(who->ToCreature());
             }
@@ -129,7 +129,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void Reset()
@@ -188,7 +188,7 @@ public:
 
         void SummonCollapsingStar(Unit* target)
         {
-            DoScriptText(SAY_SUMMON_COLLAPSING_STAR, me);
+            Talk(SAY_SUMMON_COLLAPSING_STAR);
             me->SummonCreature(CREATURE_COLLAPSING_STAR, target->GetPositionX()+15.0f, target->GetPositionY()+15.0f, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 100000);
             me->SummonCreature(CREATURE_BLACK_HOLE, target->GetPositionX()+15.0f, target->GetPositionY()+15.0f, target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 27000);
         }
@@ -202,7 +202,7 @@ public:
             if (Phase == 1 && HealthBelowPct(20))
             {
                 Phase = 2;
-                DoScriptText(SAY_PHASE_2, me);
+                Talk(SAY_PHASE_2);
             }
 
             if (HealthBelowPct(2))
@@ -210,11 +210,11 @@ public:
                 me->SummonGameObject(GAMEOBJECT_GIVE_OF_THE_OBSERVER, 1634.258667f, -295.101166f, 417.321381f, 0, 0, 0, 0, 0, 0);
 
                 // All of them. or random?
-                DoScriptText(SAY_DEATH_1, me);
-                DoScriptText(SAY_DEATH_2, me);
-                DoScriptText(SAY_DEATH_3, me);
-                DoScriptText(SAY_DEATH_4, me);
-                DoScriptText(SAY_DEATH_5, me);
+                Talk(SAY_DEATH_1);
+                Talk(SAY_DEATH_2);
+                Talk(SAY_DEATH_3);
+                Talk(SAY_DEATH_4);
+                Talk(SAY_DEATH_5);
 
                 me->DisappearAndDie();
 
@@ -233,19 +233,19 @@ public:
                         switch (uiStep)
                         {
                             case 1:
-                                DoScriptText(SAY_SUMMON_1, me);
+                                Talk(SAY_SUMMON_1);
                                 JumpToNextStep(3000);
                                 break;
                             case 2:
-                                DoScriptText(SAY_SUMMON_2, me);
+                                Talk(SAY_SUMMON_2);
                                 JumpToNextStep(3000);
                                 break;
                             case 3:
-                                DoScriptText(SAY_SUMMON_3, me);
+                                Talk(SAY_SUMMON_3);
                                 JumpToNextStep(3000);
                                 break;
                             case 4:
-                                DoScriptText(SAY_ENGADED_FOR_FIRTS_TIME, me);
+                                Talk(SAY_ENGADED_FOR_FIRTS_TIME);
                                 JumpToNextStep(3000);
                                 break;
                             case 5:
@@ -268,7 +268,7 @@ public:
 
                 if (BigBang_Timer <= diff)
                 {
-                    DoScriptText(RAND(SAY_BIG_BANG_1, SAY_BIG_BANG_2), me);
+                    Talk(RAND(SAY_BIG_BANG_1, SAY_BIG_BANG_2));
                     DoCast(me->getVictim(), RAID_MODE(SPELL_BIG_BANG, H_SPELL_BIG_BANG), true);
 
                     BigBang_Timer = 90000;
@@ -297,7 +297,7 @@ public:
 
                 if (Berserk_Timer <= diff)
                 {
-                    DoScriptText(SAY_BERSERK, me);
+                    Talk(SAY_BERSERK);
                     DoCast(me->getVictim(), SPELL_BERSERK, true);
 
                     Berserk_Timer = 360000;
@@ -315,7 +315,7 @@ public:
                     if (Ascend_Timer <= diff)
                     {
                         DoCast(me, SPELL_ASCEND);
-                        DoScriptText(SAY_BERSERK, me);
+                        Talk(SAY_BERSERK);
                         Ascend_Timer = urand(360000, 365000);
                         Enrage = false;
                     } else Ascend_Timer -= diff;

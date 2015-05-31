@@ -30,11 +30,11 @@ enum eCorporalKeeshan
 {
     QUEST_MISSING_IN_ACTION       = 219,
 
-    SAY_CORPORAL_1                = -1000464,
-    SAY_CORPORAL_2                = -1000465,
-    SAY_CORPORAL_3                = -1000466,
-    SAY_CORPORAL_4                = -1000467,
-    SAY_CORPORAL_5                = -1000468,
+    SAY_CORPORAL_1                = 4,
+    SAY_CORPORAL_2                = 3,
+    SAY_CORPORAL_3                = 2,
+    SAY_CORPORAL_4                = 1,
+    SAY_CORPORAL_5                = 0,
 
     SPELL_MOCKING_BLOW            = 21008,
     SPELL_SHIELD_BASH             = 11972,
@@ -50,7 +50,7 @@ public:
         if (quest->GetQuestId() == QUEST_MISSING_IN_ACTION)
         {
             CAST_AI(npc_corporal_keeshan::npc_corporal_keeshanAI, creature->AI())->Start(true, false, player->GetGUID(), quest);
-            DoScriptText(SAY_CORPORAL_1, creature);
+            creature->AI()->Talk(SAY_CORPORAL_1);
         }
 
         return false;
@@ -125,23 +125,23 @@ public:
                             Phase = 2;
                             break;
                         case 2:
-                            DoScriptText(SAY_CORPORAL_2, me);
+                            Talk(SAY_CORPORAL_2);
                             Timer = 15000;
                             Phase = 3;
                             break;
                         case 3:
-                            DoScriptText(SAY_CORPORAL_3, me);
+                            Talk(SAY_CORPORAL_3);
                             me->SetStandState(UNIT_STAND_STATE_STAND);
                             SetEscortPaused(false);
                             Timer = 0;
                             Phase = 0;
                             break;
                         case 4:
-                            DoScriptText(SAY_CORPORAL_4, me);
+                            Talk(SAY_CORPORAL_4);
                             Timer = 2500;
                             Phase = 5;
                         case 5:
-                            DoScriptText(SAY_CORPORAL_5, me);
+                            Talk(SAY_CORPORAL_5);
                             Timer = 0;
                             Phase = 0;
                     }

@@ -95,40 +95,40 @@ public:
 ######*/
 
 //Thrall texts
-#define SAY_TH_START_EVENT_PART1    -1560023
-#define SAY_TH_ARMORY               -1560024
-#define SAY_TH_SKARLOC_MEET         -1560025
-#define SAY_TH_SKARLOC_TAUNT        -1560026
-#define SAY_TH_START_EVENT_PART2    -1560027
-#define SAY_TH_MOUNTS_UP            -1560028
-#define SAY_TH_CHURCH_END           -1560029
-#define SAY_TH_MEET_TARETHA         -1560030
-#define SAY_TH_EPOCH_WONDER         -1560031
-#define SAY_TH_EPOCH_KILL_TARETHA   -1560032
-#define SAY_TH_EVENT_COMPLETE       -1560033
+#define SAY_TH_START_EVENT_PART1    24
+#define SAY_TH_ARMORY               23
+#define SAY_TH_SKARLOC_MEET         22
+#define SAY_TH_SKARLOC_TAUNT        21
+#define SAY_TH_START_EVENT_PART2    20
+#define SAY_TH_MOUNTS_UP            19
+#define SAY_TH_CHURCH_END           18
+#define SAY_TH_MEET_TARETHA         17
+#define SAY_TH_EPOCH_WONDER         16
+#define SAY_TH_EPOCH_KILL_TARETHA   15
+#define SAY_TH_EVENT_COMPLETE       14
 
-#define SAY_TH_RANDOM_LOW_HP1       -1560034
-#define SAY_TH_RANDOM_LOW_HP2       -1560035
+#define SAY_TH_RANDOM_LOW_HP1       13
+#define SAY_TH_RANDOM_LOW_HP2       12
 
-#define SAY_TH_RANDOM_DIE1          -1560036
-#define SAY_TH_RANDOM_DIE2          -1560037
+#define SAY_TH_RANDOM_DIE1          11
+#define SAY_TH_RANDOM_DIE2          10
 
-#define SAY_TH_RANDOM_AGGRO1        -1560038
-#define SAY_TH_RANDOM_AGGRO2        -1560039
-#define SAY_TH_RANDOM_AGGRO3        -1560040
-#define SAY_TH_RANDOM_AGGRO4        -1560041
+#define SAY_TH_RANDOM_AGGRO1        9
+#define SAY_TH_RANDOM_AGGRO2        8
+#define SAY_TH_RANDOM_AGGRO3        7
+#define SAY_TH_RANDOM_AGGRO4        6
 
-#define SAY_TH_RANDOM_KILL1         -1560042
-#define SAY_TH_RANDOM_KILL2         -1560043
-#define SAY_TH_RANDOM_KILL3         -1560044
+#define SAY_TH_RANDOM_KILL1         5
+#define SAY_TH_RANDOM_KILL2         4
+#define SAY_TH_RANDOM_KILL3         3
 
-#define SAY_TH_LEAVE_COMBAT1        -1560045
-#define SAY_TH_LEAVE_COMBAT2        -1560046
-#define SAY_TH_LEAVE_COMBAT3        -1560047
+#define SAY_TH_LEAVE_COMBAT1        2
+#define SAY_TH_LEAVE_COMBAT2        1
+#define SAY_TH_LEAVE_COMBAT3        0
 
 //Taretha texts
-#define SAY_TA_FREE                 -1560048
-#define SAY_TA_ESCAPED              -1560049
+#define SAY_TA_FREE                 1
+#define SAY_TA_ESCAPED              0
 
 //Misc for Thrall
 #define SPELL_STRIKE                14516
@@ -212,7 +212,7 @@ public:
                     instance->SetData(TYPE_THRALL_PART1, IN_PROGRESS);
                 }
 
-                DoScriptText(SAY_TH_START_EVENT_PART1, creature);
+                creature->AI()->Talk(SAY_TH_START_EVENT_PART1);
 
                 if (npc_escortAI* escortAI = CAST_AI(npc_thrall_old_hillsbrad::npc_thrall_old_hillsbradAI, creature->AI()))
                     escortAI->Start(true, true, player->GetGUID());
@@ -233,7 +233,7 @@ public:
                 if (instance)
                     instance->SetData(TYPE_THRALL_PART2, IN_PROGRESS);
 
-                DoScriptText(SAY_TH_START_EVENT_PART2, creature);
+                creature->AI()->Talk(SAY_TH_START_EVENT_PART2);
 
                 CAST_AI(npc_thrall_old_hillsbrad::npc_thrall_old_hillsbradAI, creature->AI())->StartWP();
                 break;
@@ -308,7 +308,7 @@ public:
                     me->SummonCreature(18764, 2181.87f, 112.46f, 89.45f, 0.26f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
                 case 9:
-                    DoScriptText(SAY_TH_ARMORY, me);
+                    Talk(SAY_TH_ARMORY);
                     me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, THRALL_WEAPON_MODEL);
                     //me->SetUInt32Value(UNIT_VIRTUAL_ITEM_INFO, THRALL_WEAPON_INFO);
                     //me->SetUInt32Value(UNIT_VIRTUAL_ITEM_INFO+1, 781);
@@ -341,7 +341,7 @@ public:
                     me->SummonCreature(MOB_ENTRY_VETERAN, 2104.18f, 194.82f, 65.18f, 5.75f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
                 case 29:
-                    DoScriptText(SAY_TH_SKARLOC_MEET, me);
+                    Talk(SAY_TH_SKARLOC_MEET);
                     me->SummonCreature(ENTRY_SCARLOC, 2036.48f, 271.22f, 63.43f, 5.27f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     //temporary, skarloc should rather be triggered to walk up to thrall
                     break;
@@ -351,7 +351,7 @@ public:
                     SetRun(false);
                     break;
                 case 31:
-                    DoScriptText(SAY_TH_MOUNTS_UP, me);
+                    Talk(SAY_TH_MOUNTS_UP);
                     DoMount();
                     SetRun();
                     break;
@@ -397,7 +397,7 @@ public:
                     me->SummonCreature(MOB_ENTRY_CHURCH_GUARDSMAN, 2627.22f, 649.00f, 56.03f, 4.34f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 5000);
                     break;
                 case 84:
-                    DoScriptText(SAY_TH_CHURCH_END, me);
+                    Talk(SAY_TH_CHURCH_END);
                     SetRun();
                     break;
                 case 91:
@@ -414,19 +414,20 @@ public:
                     if (uint64 TarethaGUID = instance->GetData64(DATA_TARETHA))
                     {
                         if (Unit* Taretha = Unit::GetUnit(*me, TarethaGUID))
-                            DoScriptText(SAY_TA_ESCAPED, Taretha, me);
+							if (Taretha->ToCreature())
+								Taretha->ToCreature()->AI()->Talk(SAY_TA_ESCAPED, me->GetGUID());
                     }
                     break;
                 case 95:
-                    DoScriptText(SAY_TH_MEET_TARETHA, me);
+                    Talk(SAY_TH_MEET_TARETHA);
                     instance->SetData(TYPE_THRALL_PART3, DONE);
                     SetEscortPaused(true);
                     break;
                 case 96:
-                    DoScriptText(SAY_TH_EPOCH_WONDER, me);
+                    Talk(SAY_TH_EPOCH_WONDER);
                     break;
                 case 97:
-                    DoScriptText(SAY_TH_EPOCH_KILL_TARETHA, me);
+                    Talk(SAY_TH_EPOCH_KILL_TARETHA);
                     SetRun();
                     break;
                 case 98:
@@ -483,7 +484,7 @@ public:
             }
             if (HasEscortState(STATE_ESCORT_ESCORTING))
             {
-                DoScriptText(RAND(SAY_TH_LEAVE_COMBAT1, SAY_TH_LEAVE_COMBAT2, SAY_TH_LEAVE_COMBAT3), me);
+                Talk(RAND(SAY_TH_LEAVE_COMBAT1, SAY_TH_LEAVE_COMBAT2, SAY_TH_LEAVE_COMBAT3));
             }
         }
         void StartWP()
@@ -503,7 +504,7 @@ public:
         }
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_TH_RANDOM_AGGRO1, SAY_TH_RANDOM_AGGRO2, SAY_TH_RANDOM_AGGRO3, SAY_TH_RANDOM_AGGRO4), me);
+            Talk(RAND(SAY_TH_RANDOM_AGGRO1, SAY_TH_RANDOM_AGGRO2, SAY_TH_RANDOM_AGGRO3, SAY_TH_RANDOM_AGGRO4));
             if (me->IsMounted())
             {
                 DoUnmount();
@@ -530,7 +531,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_TH_RANDOM_KILL1, SAY_TH_RANDOM_KILL2, SAY_TH_RANDOM_KILL3), me);
+            Talk(RAND(SAY_TH_RANDOM_KILL1, SAY_TH_RANDOM_KILL2, SAY_TH_RANDOM_KILL3));
         }
         void JustDied(Unit* slayer)
         {
@@ -541,7 +542,7 @@ public:
             if (slayer == me)
                 return;
 
-            DoScriptText(RAND(SAY_TH_RANDOM_DIE1, SAY_TH_RANDOM_DIE2), me);
+            Talk(RAND(SAY_TH_RANDOM_DIE1, SAY_TH_RANDOM_DIE2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -554,7 +555,7 @@ public:
                  //TODO: add his abilities'n-crap here
                 if (!LowHp && HealthBelowPct(20))
                 {
-                    DoScriptText(RAND(SAY_TH_RANDOM_LOW_HP1, SAY_TH_RANDOM_LOW_HP2), me);
+                    Talk(RAND(SAY_TH_RANDOM_LOW_HP1, SAY_TH_RANDOM_LOW_HP2));
                     LowHp = true;
                 }
         }
@@ -636,7 +637,7 @@ public:
             switch (i)
             {
                 case 6:
-                    DoScriptText(SAY_TA_FREE, me);
+                    Talk(SAY_TA_FREE);
                     break;
                 case 7:
                     me->HandleEmoteCommand(EMOTE_ONESHOT_CHEER);

@@ -28,15 +28,15 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_TAUNT              = -1543000,
-    SAY_HEAL               = -1543001,
-    SAY_SURGE              = -1543002,
-    SAY_AGGRO_1            = -1543003,
-    SAY_AGGRO_2            = -1543004,
-    SAY_AGGRO_3            = -1543005,
-    SAY_KILL_1             = -1543006,
-    SAY_KILL_2             = -1543007,
-    SAY_DIE                = -1543008,
+    SAY_TAUNT              = 8,
+    SAY_HEAL               = 7,
+    SAY_SURGE              = 6,
+    SAY_AGGRO_1            = 5,
+    SAY_AGGRO_2            = 4,
+    SAY_AGGRO_3            = 3,
+    SAY_KILL_1             = 2,
+    SAY_KILL_2             = 1,
+    SAY_DIE                = 0,
 };
 
 enum eSpells
@@ -81,7 +81,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
             }
 
             void MoveInLineOfSight(Unit* who)
@@ -99,7 +99,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
                     }
                     else if (!HasTaunted && me->IsWithinDistInMap(who, 60.0f))
                     {
-                        DoScriptText(SAY_TAUNT, me);
+                        Talk(SAY_TAUNT);
                         HasTaunted = true;
                     }
                 }
@@ -107,12 +107,12 @@ class boss_watchkeeper_gargolmar : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                Talk(RAND(SAY_KILL_1, SAY_KILL_2));
             }
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DIE, me);
+                Talk(SAY_DIE);
             }
 
             void UpdateAI(const uint32 diff)
@@ -130,7 +130,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
 
                 if (Surge_Timer <= diff)
                 {
-                    DoScriptText(SAY_SURGE, me);
+                    Talk(SAY_SURGE);
 
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                         DoCast(target, SPELL_SURGE);
@@ -155,7 +155,7 @@ class boss_watchkeeper_gargolmar : public CreatureScript
                 {
                     if (HealthBelowPct(40))
                     {
-                        DoScriptText(SAY_HEAL, me);
+                        Talk(SAY_HEAL);
                         YelledForHeal = true;
                     }
                 }

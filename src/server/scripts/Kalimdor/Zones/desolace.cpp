@@ -37,9 +37,9 @@ EndContentData */
 enum eDyingKodo
 {
     // signed for 9999
-    SAY_SMEED_HOME_1                = -1000348,
-    SAY_SMEED_HOME_2                = -1000349,
-    SAY_SMEED_HOME_3                = -1000350,
+    SAY_SMEED_HOME_1                = 1,
+    SAY_SMEED_HOME_2                = 0,
+    SAY_SMEED_HOME_3                = 0,
 
     QUEST_KODO                      = 5561,
 
@@ -130,7 +130,8 @@ public:
 
                 if (me->IsWithinDistInMap(who, 10.0f))
                 {
-                    DoScriptText(RAND(SAY_SMEED_HOME_1, SAY_SMEED_HOME_2, SAY_SMEED_HOME_3), who);
+					if (who->ToCreature())
+						who->ToCreature()->AI()->Talk(RAND(SAY_SMEED_HOME_1, SAY_SMEED_HOME_2, SAY_SMEED_HOME_3));
 
                     //spell have no implemented effect (dummy), so useful to notify spellHit
                     DoCast(me, SPELL_KODO_KOMBO_GOSSIP, true);

@@ -42,11 +42,11 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO_1                                   = -1578000,
-    SAY_AGGRO_2                                   = -1578001,
-    SAY_AGGRO_3                                   = -1578002,
-    SAY_AGGRO_4                                   = -1578003,
-    SAY_TELEPORT                                  = -1578004,
+    SAY_AGGRO_1                                   = 4,
+    SAY_AGGRO_2                                   = 3,
+    SAY_AGGRO_3                                   = 2,
+    SAY_AGGRO_4                                   = 1,
+    SAY_TELEPORT                                  = 0,
 };
 
 enum eCreature
@@ -151,7 +151,7 @@ public:
             {
                 if (me->Attack(who, true))
                 {
-                    DoScriptText(SayAggro[3], me);
+                    Talk(SayAggro[3]);
 
                     me->SetInCombatWith(who);
                     who->SetInCombatWith(me);
@@ -215,7 +215,7 @@ public:
             if (!instance || instance->GetData(DATA_UROM_PLATAFORM) > 2)
                 return;
 
-            DoScriptText(SayAggro[instance->GetData(DATA_UROM_PLATAFORM)], me);
+            Talk(SayAggro[instance->GetData(DATA_UROM_PLATAFORM)]);
             DoCast(TeleportSpells[instance->GetData(DATA_UROM_PLATAFORM)]);
         }
 
@@ -231,7 +231,7 @@ public:
             if (teleportTimer <= uiDiff)
             {
                 me->InterruptNonMeleeSpells(false);
-                DoScriptText(SAY_TELEPORT, me);
+                Talk(SAY_TELEPORT);
                 me->GetMotionMaster()->MoveIdle();
                 DoCast(SPELL_TELEPORT);
                 teleportTimer = urand(30000, 35000);

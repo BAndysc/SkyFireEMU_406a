@@ -34,9 +34,9 @@ EndContentData */
 
 enum eEnums
 {
-    YELL_DIE_L                  = -1540039,
-    YELL_DIE_R                  = -1540040,
-    EMOTE_ENRAGE                = -1540041,
+    YELL_DIE_L                  = 2,
+    YELL_DIE_R                  = 1,
+    EMOTE_ENRAGE                = 0,
 
     SPELL_BLAST_WAVE            = 30600,
     SPELL_FEAR                  = 30584,
@@ -57,49 +57,49 @@ struct Yell
 
 static Yell GoCombat[]=
 {
-    {-1540018, NPC_LEFT_HEAD},
-    {-1540019, NPC_LEFT_HEAD},
-    {-1540020, NPC_LEFT_HEAD},
+    {23, NPC_LEFT_HEAD},
+    {22, NPC_LEFT_HEAD},
+    {21, NPC_LEFT_HEAD},
 };
 static Yell GoCombatDelay[]=
 {
-    {-1540021, NPC_RIGHT_HEAD},
-    {-1540022, NPC_RIGHT_HEAD},
-    {-1540023, NPC_RIGHT_HEAD},
+    {20, NPC_RIGHT_HEAD},
+    {19, NPC_RIGHT_HEAD},
+    {18, NPC_RIGHT_HEAD},
 };
 
 static Yell Threat[]=
 {
-    {-1540024, NPC_LEFT_HEAD},
-    {-1540025, NPC_RIGHT_HEAD},
-    {-1540026, NPC_LEFT_HEAD},
-    {-1540027, NPC_LEFT_HEAD},
+    {17, NPC_LEFT_HEAD},
+    {16, NPC_RIGHT_HEAD},
+    {15, NPC_LEFT_HEAD},
+    {14, NPC_LEFT_HEAD},
 };
 static Yell ThreatDelay1[]=
 {
-    {-1540028, NPC_RIGHT_HEAD},
-    {-1540029, NPC_LEFT_HEAD},
-    {-1540030, NPC_RIGHT_HEAD},
-    {-1540031, NPC_RIGHT_HEAD},
+    {13, NPC_RIGHT_HEAD},
+    {12, NPC_LEFT_HEAD},
+    {11, NPC_RIGHT_HEAD},
+    {10, NPC_RIGHT_HEAD},
 };
 static Yell ThreatDelay2[]=
 {
-    {-1540032, NPC_LEFT_HEAD},
-    {-1540033, NPC_RIGHT_HEAD},
-    {-1540034, NPC_LEFT_HEAD},
-    {-1540035, NPC_LEFT_HEAD},
+    {9, NPC_LEFT_HEAD},
+    {8, NPC_RIGHT_HEAD},
+    {7, NPC_LEFT_HEAD},
+    {6, NPC_LEFT_HEAD},
 };
 
 static Yell Killing[]=
 {
-    {-1540036, NPC_LEFT_HEAD},
-    {-1540037, NPC_RIGHT_HEAD},
+    {5, NPC_LEFT_HEAD},
+    {4, NPC_RIGHT_HEAD},
 };
 
 static Yell KillingDelay[]=
 {
-    {-1540038, NPC_RIGHT_HEAD},
-    {-1000000, NPC_LEFT_HEAD},
+    {3, NPC_RIGHT_HEAD},
+    {495, NPC_LEFT_HEAD},
 };
 
 class mob_omrogg_heads : public CreatureScript
@@ -137,7 +137,7 @@ class mob_omrogg_heads : public CreatureScript
 
                 if (Death_Timer <= diff)
                 {
-                    DoScriptText(YELL_DIE_R, me);
+                    Talk(YELL_DIE_R);
                     Death_Timer = false;
                     me->setDeathState(JUST_DIED);
                 } else Death_Timer -= diff;
@@ -232,7 +232,8 @@ class boss_warbringer_omrogg : public CreatureScript
 
                 Unit* source = (pLeftHead->GetEntry() == Threat[ithreat].creature ? pLeftHead : pRightHead);
 
-                DoScriptText(Threat[ithreat].id, source);
+				if (source->ToCreature())
+					source->ToCreature()->AI()->Talk(Threat[ithreat].id);
 
                 Delay_Timer = 3500;
                 ThreatYell = true;
@@ -247,7 +248,8 @@ class boss_warbringer_omrogg : public CreatureScript
                 {
                     iaggro = rand()%3;
 
-                    DoScriptText(GoCombat[iaggro].id, pLeftHead);
+					if (pLeftHead->ToCreature())
+						pLeftHead->ToCreature()->AI()->Talk(GoCombat[iaggro].id);
 
                     Delay_Timer = 3500;
                     AggroYell = true;
@@ -285,12 +287,14 @@ class boss_warbringer_omrogg : public CreatureScript
                 switch (ikilling)
                 {
                     case 0:
-                        DoScriptText(Killing[ikilling].id, source);
+						if (source->ToCreature())
+							source->ToCreature()->AI()->Talk(Killing[ikilling].id);
                         Delay_Timer = 3500;
                         KillingYell = true;
                         break;
                     case 1:
-                        DoScriptText(Killing[ikilling].id, source);
+						if (source->ToCreature())
+							source->ToCreature()->AI()->Talk(Killing[ikilling].id);
                         KillingYell = false;
                         break;
                 }
@@ -304,7 +308,8 @@ class boss_warbringer_omrogg : public CreatureScript
                 if (!pLeftHead || !pRightHead)
                     return;
 
-                DoScriptText(YELL_DIE_L, pLeftHead);
+				if (pLeftHead->ToCreature())
+					pLeftHead->ToCreature()->AI()->Talk(YELL_DIE_L);
 
                 CAST_AI(mob_omrogg_heads::mob_omrogg_headsAI, CAST_CRE(pRightHead)->AI())->DoDeathYell();
 
@@ -326,7 +331,8 @@ class boss_warbringer_omrogg : public CreatureScript
 
                     if (AggroYell)
                     {
-                        DoScriptText(GoCombatDelay[iaggro].id, pRightHead);
+						if (pRightHead->ToCreature())
+							pRightHead->ToCreature()->AI()->Talk(GoCombatDelay[iaggro].id);
                         AggroYell = false;
                     }
 
@@ -334,15 +340,16 @@ class boss_warbringer_omrogg : public CreatureScript
                     {
                         Unit* source = (pLeftHead->GetEntry() == ThreatDelay2[ithreat].creature ? pLeftHead : pRightHead);
 
-                        DoScriptText(ThreatDelay2[ithreat].id, source);
+						if (source->ToCreature())
+							source->ToCreature()->AI()->Talk(ThreatDelay2[ithreat].id);
                         ThreatYell2 = false;
                     }
 
                     if (ThreatYell)
                     {
                         Unit* source = (pLeftHead->GetEntry() == ThreatDelay1[ithreat].creature ? pLeftHead : pRightHead);
-
-                        DoScriptText(ThreatDelay1[ithreat].id, source);
+						if (source->ToCreature())
+							source->ToCreature()->AI()->Talk(ThreatDelay1[ithreat].id);
                         ThreatYell = false;
                         ThreatYell2 = true;
                     }
@@ -350,8 +357,8 @@ class boss_warbringer_omrogg : public CreatureScript
                     if (KillingYell)
                     {
                         Unit* source = (pLeftHead->GetEntry() == KillingDelay[ikilling].creature ? pLeftHead : pRightHead);
-
-                        DoScriptText(KillingDelay[ikilling].id, source);
+						if (source->ToCreature())
+							source->ToCreature()->AI()->Talk(KillingDelay[ikilling].id);
                         KillingYell = false;
                     }
                 } else Delay_Timer -= diff;
@@ -373,7 +380,7 @@ class boss_warbringer_omrogg : public CreatureScript
 
                 if (BurningMaul_Timer <= diff)
                 {
-                    DoScriptText(EMOTE_ENRAGE, me);
+                    Talk(EMOTE_ENRAGE);
                     DoCast(me, SPELL_BURNING_MAUL);
                     BurningMaul_Timer = 40000;
                     BlastWave_Timer = 16000;

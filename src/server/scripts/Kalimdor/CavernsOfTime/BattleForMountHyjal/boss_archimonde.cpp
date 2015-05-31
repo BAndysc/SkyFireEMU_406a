@@ -29,19 +29,19 @@ EndScriptData */
 #include "SpellAuras.h"
 #include "hyjal_trash.h"
 
-//text id -1534018 are the text used when previous events complete. Not part of this script.
-#define SAY_AGGRO                   -1534019
-#define SAY_DOOMFIRE1               -1534020
-#define SAY_DOOMFIRE2               -1534021
-#define SAY_AIR_BURST1              -1534022
-#define SAY_AIR_BURST2              -1534023
-#define SAY_SLAY1                   -1534024
-#define SAY_SLAY2                   -1534025
-#define SAY_SLAY3                   -1534026
-#define SAY_ENRAGE                  -1534027
-#define SAY_DEATH                   -1534028
-#define SAY_SOUL_CHARGE1            -1534029
-#define SAY_SOUL_CHARGE2            -1534030
+//text id 341 are the text used when previous events complete. Not part of this script.
+#define SAY_AGGRO                   11
+#define SAY_DOOMFIRE1               10
+#define SAY_DOOMFIRE2               9
+#define SAY_AIR_BURST1              8
+#define SAY_AIR_BURST2              7
+#define SAY_SLAY1                   6
+#define SAY_SLAY2                   5
+#define SAY_SLAY3                   4
+#define SAY_ENRAGE                  3
+#define SAY_DEATH                   2
+#define SAY_SOUL_CHARGE1            1
+#define SAY_SOUL_CHARGE2            0
 
 #define SPELL_DENOUEMENT_WISP       32124
 #define SPELL_ANCIENT_SPARK         39349
@@ -292,7 +292,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             me->InterruptSpell(CURRENT_CHANNELED_SPELL);
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             DoZoneInCombat();
 
             if (instance)
@@ -301,7 +301,7 @@ public:
 
         void KilledUnit(Unit* victim)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
 
             if (victim && (victim->GetTypeId() == TYPEID_PLAYER))
                 GainSoulCharge(CAST_PLR(victim));
@@ -335,7 +335,7 @@ public:
         void JustDied(Unit* victim)
         {
             hyjal_trashAI::JustDied(victim);
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_ARCHIMONDEEVENT, DONE);
@@ -514,7 +514,7 @@ public:
                         me->GetMotionMaster()->Clear(false);
                         me->GetMotionMaster()->MoveIdle();
                         Enraged = true;
-                        DoScriptText(SAY_ENRAGE, me);
+                        Talk(SAY_ENRAGE);
                     }
                 } else EnrageTimer -= diff;
 
@@ -531,7 +531,7 @@ public:
                             me->GetMotionMaster()->Clear(false);
                             me->GetMotionMaster()->MoveIdle();
                             Enraged = true;
-                            DoScriptText(SAY_ENRAGE, me);
+                            Talk(SAY_ENRAGE);
                         }
                     }
                     CheckDistanceTimer = 5000;
@@ -588,9 +588,9 @@ public:
             if (AirBurstTimer <= diff)
             {
                 if (urand(0, 1))
-                    DoScriptText(SAY_AIR_BURST1, me);
+                    Talk(SAY_AIR_BURST1);
                 else
-                    DoScriptText(SAY_AIR_BURST2, me);
+                    Talk(SAY_AIR_BURST2);
 
                 DoCast(SelectTarget(SELECT_TARGET_RANDOM, 1), SPELL_AIR_BURST);//not on tank
                 AirBurstTimer = urand(25000, 40000);
@@ -605,9 +605,9 @@ public:
             if (DoomfireTimer <= diff)
             {
                 if (urand(0, 1))
-                    DoScriptText(SAY_DOOMFIRE1, me);
+                    Talk(SAY_DOOMFIRE1);
                 else
-                    DoScriptText(SAY_DOOMFIRE2, me);
+                    Talk(SAY_DOOMFIRE2);
 
                 Unit* temp = SelectTarget(SELECT_TARGET_RANDOM, 1);
                 if (!temp)

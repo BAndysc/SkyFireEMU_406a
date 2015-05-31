@@ -31,13 +31,13 @@ EndScriptData */
 //this texts are already used by 3975 and 3976
 enum Says
 {
-    SAY_ENTRANCE                = -1189001,
-    SAY_REJOINED                = -1189002,
-    SAY_LOST_HEAD               = -1189003,
-    SAY_CONFLAGRATION           = -1189004,
-    SAY_SPROUTING_PUMPKINS      = -1189005,
-    SAY_PLAYER_DEATH            = -1189006,
-    SAY_DEATH                   = -1189007
+    SAY_ENTRANCE                = 3,
+    SAY_REJOINED                = 2,
+    SAY_LOST_HEAD               = 1,
+    SAY_CONFLAGRATION           = 0,
+    SAY_SPROUTING_PUMPKINS      = 2,
+    SAY_PLAYER_DEATH            = 1,
+    SAY_DEATH                   = 0
 };
 
 uint32 RandomLaugh[] = {11965, 11975, 11976};
@@ -251,7 +251,7 @@ public:
         void EnterCombat(Unit* /*who*/) {}
         void SaySound(int32 textEntry, Unit* target = 0)
         {
-            DoScriptText(textEntry, me, target);
+            Talk(textEntry, target->GetGUID());
             //DoCast(me, SPELL_HEAD_SPEAKS, true);
             Creature* speaker = DoSpawnCreature(HELPER, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 1000);
             if (speaker)
@@ -503,7 +503,7 @@ public:
 
         void SaySound(int32 textEntry, Unit* target = 0)
         {
-            DoScriptText(textEntry, me, target);
+            Talk(textEntry, target->GetGUID());
             laugh += 4000;
         }
 

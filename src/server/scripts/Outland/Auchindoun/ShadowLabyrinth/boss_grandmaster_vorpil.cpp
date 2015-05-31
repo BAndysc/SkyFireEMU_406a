@@ -27,14 +27,14 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "shadow_labyrinth.h"
 
-#define SAY_INTRO                       -1555028
-#define SAY_AGGRO1                      -1555029
-#define SAY_AGGRO2                      -1555030
-#define SAY_AGGRO3                      -1555031
-#define SAY_HELP                        -1555032
-#define SAY_SLAY1                       -1555033
-#define SAY_SLAY2                       -1555034
-#define SAY_DEATH                       -1555035
+#define SAY_INTRO                       7
+#define SAY_AGGRO1                      6
+#define SAY_AGGRO2                      5
+#define SAY_AGGRO3                      4
+#define SAY_HELP                        3
+#define SAY_SLAY1                       2
+#define SAY_SLAY2                       1
+#define SAY_DEATH                       0
 
 #define SPELL_RAIN_OF_FIRE          33617
 #define H_SPELL_RAIN_OF_FIRE        39363
@@ -216,7 +216,7 @@ public:
             me->SummonCreature(MOB_VOID_TRAVELER, VoidPortalCoords[pos][0], VoidPortalCoords[pos][1], VoidPortalCoords[pos][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 5000);
             if (!HelpYell)
             {
-                DoScriptText(SAY_HELP, me);
+                Talk(SAY_HELP);
                 HelpYell = true;
             }
         }
@@ -229,12 +229,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             destroyPortals();
 
             if (instance)
@@ -243,7 +243,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3));
             summonPortals();
 
             if (instance)
@@ -256,7 +256,7 @@ public:
 
             if (!Intro && me->IsWithinLOSInMap(who)&& me->IsWithinDistInMap(who, 100) && me->IsValidAttackTarget(who))
             {
-                DoScriptText(SAY_INTRO, me);
+                Talk(SAY_INTRO);
                 Intro = true;
             }
         }

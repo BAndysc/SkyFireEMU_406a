@@ -26,14 +26,14 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_AGGRO                       -1532057
-#define SAY_SUMMON1                     -1532058
-#define SAY_SUMMON2                     -1532059
-#define SAY_EVOCATE                     -1532060
-#define SAY_ENRAGE                      -1532061
-#define SAY_KILL1                       -1532062
-#define SAY_KILL2                       -1532063
-#define SAY_DEATH                       -1532064
+#define SAY_AGGRO                       7
+#define SAY_SUMMON1                     6
+#define SAY_SUMMON2                     5
+#define SAY_EVOCATE                     4
+#define SAY_ENRAGE                      3
+#define SAY_KILL1                       2
+#define SAY_KILL2                       1
+#define SAY_DEATH                       0
 
 //Flare spell info
 #define SPELL_ASTRAL_FLARE_PASSIVE      30234               //Visual effect + Flare damage
@@ -78,17 +78,17 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL1, SAY_KILL2), me);
+            Talk(RAND(SAY_KILL1, SAY_KILL2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void UpdateAI(const uint32 diff)
@@ -109,7 +109,7 @@ public:
                 }
 
                 //may not be correct SAY (generic hard enrage)
-                DoScriptText(SAY_ENRAGE, me);
+                Talk(SAY_ENRAGE);
 
                 me->InterruptNonMeleeSpells(true);
                 DoCast(me, SPELL_BERSERK);
@@ -151,7 +151,7 @@ public:
                         //if this get's us below 10%, then we evocate (the 10th should be summoned now)
                         if (me->GetPower(POWER_MANA)*100 / me->GetMaxPower(POWER_MANA) < 10)
                         {
-                            DoScriptText(SAY_EVOCATE, me);
+                            Talk(SAY_EVOCATE);
                             me->InterruptNonMeleeSpells(false);
                             DoCast(me, SPELL_EVOCATION);
                             Evocating = true;
@@ -162,7 +162,7 @@ public:
                         {
                             if (urand(0, 1) == 0)
                             {
-                                DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
+                                Talk(RAND(SAY_SUMMON1, SAY_SUMMON2));
                             }
                         }
                     }
@@ -174,7 +174,7 @@ public:
                 {
                     Enraged = true;
                     DoCast(me, SPELL_ENRAGE);
-                    DoScriptText(SAY_ENRAGE, me);
+                    Talk(SAY_ENRAGE);
                 }
             }
 

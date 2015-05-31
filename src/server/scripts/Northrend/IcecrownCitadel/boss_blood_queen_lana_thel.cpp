@@ -330,7 +330,7 @@ class boss_blood_queen_lana_thel : public CreatureScript
                     switch (eventId)
                     {
                         case EVENT_BERSERK:
-                            DoScriptText(EMOTE_GENERIC_BERSERK_RAID, me);
+                            //Talk(EMOTE_GENERIC_BERSERK_RAID);//improper data
                             Talk(SAY_BERSERK);
                             DoCast(me, SPELL_BERSERK);
                             break;

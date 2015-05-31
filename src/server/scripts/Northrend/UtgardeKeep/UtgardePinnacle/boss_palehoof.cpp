@@ -47,9 +47,9 @@ enum OrbSpells
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                = -1575000,
-    SAY_SLAY_1                               = -1575001,
-    SAY_SLAY_2                               = -1575002,
+    SAY_AGGRO                                = 2,
+    SAY_SLAY_1                               = 1,
+    SAY_SLAY_2                               = 0,
     SAY_DEATH                                = -1575003
 };
 
@@ -155,7 +155,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void AttackStart(Unit* who)
@@ -212,7 +212,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            //Talk(SAY_DEATH);//improper data
             if (instance)
                 instance->SetData(DATA_GORTOK_PALEHOOF_EVENT, DONE);
             Creature* temp = Unit::GetCreature(*me, instance ? instance->GetData64(DATA_MOB_ORB) : 0);
@@ -222,7 +222,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void NextPhase()

@@ -28,15 +28,15 @@ EndScriptData */
 #include "serpent_shrine.h"
 #include "ScriptedEscortAI.h"
 
-#define SAY_AGGRO                   -1548021
-#define SAY_GAIN_BLESSING           -1548022
-#define SAY_GAIN_ABILITY1           -1548023
-#define SAY_GAIN_ABILITY2           -1548024
-#define SAY_GAIN_ABILITY3           -1548025
-#define SAY_SLAY1                   -1548026
-#define SAY_SLAY2                   -1548027
-#define SAY_SLAY3                   -1548028
-#define SAY_DEATH                   -1548029
+#define SAY_AGGRO                   8
+#define SAY_GAIN_BLESSING           7
+#define SAY_GAIN_ABILITY1           6
+#define SAY_GAIN_ABILITY2           5
+#define SAY_GAIN_ABILITY3           4
+#define SAY_SLAY1                   3
+#define SAY_SLAY2                   2
+#define SAY_SLAY3                   1
+#define SAY_DEATH                   0
 
 //Karathress spells
 #define SPELL_CATACLYSMIC_BOLT          38441
@@ -159,19 +159,19 @@ public:
 
         void EventSharkkisDeath()
         {
-            DoScriptText(SAY_GAIN_ABILITY1, me);
+            Talk(SAY_GAIN_ABILITY1);
             DoCast(me, SPELL_POWER_OF_SHARKKIS);
         }
 
         void EventTidalvessDeath()
         {
-            DoScriptText(SAY_GAIN_ABILITY2, me);
+            Talk(SAY_GAIN_ABILITY2);
             DoCast(me, SPELL_POWER_OF_TIDALVESS);
         }
 
         void EventCaribdisDeath()
         {
-            DoScriptText(SAY_GAIN_ABILITY3, me);
+            Talk(SAY_GAIN_ABILITY3);
             DoCast(me, SPELL_POWER_OF_CARIBDIS);
         }
 
@@ -192,7 +192,7 @@ public:
 
             GetAdvisors();
 
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             DoZoneInCombat();
 
             instance->SetData64(DATA_KARATHRESSEVENT_STARTER, who->GetGUID());
@@ -201,12 +201,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_FATHOMLORDKARATHRESSEVENT, DONE);

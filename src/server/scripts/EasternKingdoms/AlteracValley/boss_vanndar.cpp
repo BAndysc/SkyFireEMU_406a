@@ -67,13 +67,13 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(YELL_AGGRO, me);
+            //Talk(YELL_AGGRO);//improper data
         }
 
         void JustRespawned()
         {
             Reset();
-            DoScriptText(RAND(YELL_RESPAWN1, YELL_RESPAWN2), me);
+            Talk(RAND(YELL_RESPAWN1, YELL_RESPAWN2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -101,7 +101,7 @@ public:
 
             if (YellTimer <= diff)
             {
-                DoScriptText(RAND(YELL_RANDOM1, YELL_RANDOM2, YELL_RANDOM3, YELL_RANDOM4, YELL_RANDOM5, YELL_RANDOM6, YELL_RANDOM7), me);
+                Talk(RAND(YELL_RANDOM1, YELL_RANDOM2, YELL_RANDOM3, YELL_RANDOM4, YELL_RANDOM5, YELL_RANDOM6, YELL_RANDOM7));
                 YellTimer = urand(20 * IN_MILLISECONDS, 30 * IN_MILLISECONDS); //20 to 30 seconds
             } else YellTimer -= diff;
 
@@ -111,7 +111,7 @@ public:
                 if (me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
                 {
                     EnterEvadeMode();
-                    DoScriptText(YELL_EVADE, me);
+                    //Talk(YELL_EVADE);//improper data
                 }
                 ResetTimer = 5 * IN_MILLISECONDS;
             } else ResetTimer -= diff;

@@ -31,7 +31,7 @@ enum eTBqueuenpctext
     TB_NPCQUEUE_TEXT_A_NOWAR       = 110003,
     TB_NPCQUEUE_TEXT_A_QUEUE       = 110001,
     TB_NPCQUEUE_TEXT_A_WAR         = 110004,
-    TB_NPCQUEUE_TEXTOPTION_JOIN    = -1732009,
+    TB_NPCQUEUE_TEXTOPTION_JOIN    = 116,
 };
 
 class npc_tb_spiritguide : public CreatureScript

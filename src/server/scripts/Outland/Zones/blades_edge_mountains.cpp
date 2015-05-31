@@ -171,7 +171,7 @@ public:
                 //we are nihil, so say before transform
                 if (me->GetEntry() == ENTRY_NIHIL)
                 {
-                    DoScriptText(SAY_NIHIL_INTERRUPT, me);
+                    //Talk(SAY_NIHIL_INTERRUPT);//improper data
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     IsNihil = false;
                 }
@@ -198,19 +198,19 @@ public:
                     switch (NihilSpeech_Phase)
                     {
                         case 0:
-                            DoScriptText(SAY_NIHIL_1, me);
+                            //Talk(SAY_NIHIL_1);//improper data
                             ++NihilSpeech_Phase;
                             break;
                         case 1:
-                            DoScriptText(SAY_NIHIL_2, me);
+                            //Talk(SAY_NIHIL_2);//improper data
                             ++NihilSpeech_Phase;
                             break;
                         case 2:
-                            DoScriptText(SAY_NIHIL_3, me);
+                            //Talk(SAY_NIHIL_3);//improper data
                             ++NihilSpeech_Phase;
                             break;
                         case 3:
-                            DoScriptText(SAY_NIHIL_4, me);
+                            //Talk(SAY_NIHIL_4);//improper data
                             ++NihilSpeech_Phase;
                             break;
                         case 4:
@@ -261,7 +261,7 @@ public:
 
 enum eDaranelle
 {
-    SAY_SPELL_INFLUENCE     = -1000174,
+    SAY_SPELL_INFLUENCE     = 0,
     SPELL_LASHHAN_CHANNEL   = 36904
 };
 
@@ -289,7 +289,7 @@ public:
             {
                 if (who->HasAura(SPELL_LASHHAN_CHANNEL) && me->IsWithinDistInMap(who, 10.0f))
                 {
-                    DoScriptText(SAY_SPELL_INFLUENCE, me, who);
+                    Talk(SAY_SPELL_INFLUENCE, who->GetGUID());
                     //TODO: Move the below to updateAI and run if this statement == true
                     DoCast(who, 37028, true);
                 }

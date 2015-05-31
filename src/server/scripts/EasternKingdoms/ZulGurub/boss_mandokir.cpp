@@ -27,11 +27,11 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO               -1309015
-#define SAY_DING_KILL           -1309016
-#define SAY_GRATS_JINDO         -1309017
-#define SAY_WATCH               -1309018
-#define SAY_WATCH_WHISPER       -1309019                    //is this text for real? easter egg?
+#define SAY_AGGRO               4
+#define SAY_DING_KILL           3
+#define SAY_GRATS_JINDO         2
+#define SAY_WATCH               1
+#define SAY_WATCH_WHISPER       0                    //is this text for real? easter egg?
 
 #define SPELL_CHARGE            24408
 #define SPELL_CLEAVE            7160
@@ -113,7 +113,7 @@ class boss_mandokir : public CreatureScript
 
                     if (KillCount == 3)
                     {
-                        DoScriptText(SAY_DING_KILL, me);
+                        Talk(SAY_DING_KILL);
 
                         if (instance)
                         {
@@ -122,8 +122,8 @@ class boss_mandokir : public CreatureScript
                             {
                                 if (Unit* jTemp = Unit::GetUnit(*me, JindoGUID))
                                 {
-                                    if (jTemp->isAlive())
-                                        DoScriptText(SAY_GRATS_JINDO, jTemp);
+									if (jTemp->isAlive() && jTemp->ToCreature())
+										jTemp->ToCreature()->AI()->Talk(SAY_GRATS_JINDO);
                                 }
                             }
                         }
@@ -135,7 +135,7 @@ class boss_mandokir : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-             DoScriptText(SAY_AGGRO, me);
+             Talk(SAY_AGGRO);
             }
 
             void UpdateAI(const uint32 diff)
@@ -187,7 +187,7 @@ class boss_mandokir : public CreatureScript
                     {
                         if (Unit* p = SelectTarget(SELECT_TARGET_RANDOM, 0))
                         {
-                            DoScriptText(SAY_WATCH, me, p);
+                            Talk(SAY_WATCH, p->GetGUID());
                             DoCast(p, SPELL_WATCH);
                             WatchTarget = p->GetGUID();
                             someWatched = true;

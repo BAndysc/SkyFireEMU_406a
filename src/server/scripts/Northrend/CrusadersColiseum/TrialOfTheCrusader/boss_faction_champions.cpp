@@ -33,8 +33,8 @@ EndScriptData */
 
 enum eYell
 {
-    SAY_GARROSH_KILL_ALLIANCE_PLAYER4 = -1649118,
-    SAY_VARIAN_KILL_HORDE_PLAYER4     = -1649123,
+    SAY_GARROSH_KILL_ALLIANCE_PLAYER4 = 158,
+    SAY_VARIAN_KILL_HORDE_PLAYER4     = 154,
 };
 
 enum eAIs
@@ -356,11 +356,11 @@ struct boss_faction_championsAI : public ScriptedAI
                 if (TeamInInstance == ALLIANCE)
                 {
                     if (Creature* temp = Unit::GetCreature(*me, m_pInstance->GetData64(NPC_VARIAN)))
-                        DoScriptText(SAY_VARIAN_KILL_HORDE_PLAYER4+urand(0, 3), temp); // + cause we are on negative
+                        temp->AI()->Talk(SAY_VARIAN_KILL_HORDE_PLAYER4+urand(0, 3)); // + cause we are on negative
                 }
                 else
                     if (Creature* temp = me->FindNearestCreature(NPC_GARROSH, 300.f))
-                        DoScriptText(SAY_GARROSH_KILL_ALLIANCE_PLAYER4+urand(0, 3), temp); // + cause we are on negative
+                        temp->AI()->Talk(SAY_GARROSH_KILL_ALLIANCE_PLAYER4+urand(0, 3)); // + cause we are on negative
 
                 m_pInstance->SetData(DATA_TRIBUTE_TO_IMMORTALITY_ELEGIBLE, 0);
             }

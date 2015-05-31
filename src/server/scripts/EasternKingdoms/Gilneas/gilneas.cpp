@@ -71,15 +71,15 @@ public:
                     {
                         default:
                         case 1:
-                            DoScriptText(SAY_PRINCE_LIAM_GREYMANE_1, me);
+                            Talk(SAY_PRINCE_LIAM_GREYMANE_1);
                             cSay++;
                             break;
                         case 2:
-                            DoScriptText(SAY_PRINCE_LIAM_GREYMANE_2, me);
+                            Talk(SAY_PRINCE_LIAM_GREYMANE_2);
                             cSay++;
                             break;
                         case 3:
-                            DoScriptText(SAY_PRINCE_LIAM_GREYMANE_3, me);
+                            Talk(SAY_PRINCE_LIAM_GREYMANE_3);
                             cSay = 1; //Reset to 1
                             break;
                     }
@@ -132,11 +132,10 @@ public:
                 if (tSay <= diff)
                 {
                     // Random say
-                    DoScriptText(RAND(
-                        SAY_GILNEAS_CITY_GUARD_GATE_1,
-                        SAY_GILNEAS_CITY_GUARD_GATE_2,
-                        SAY_GILNEAS_CITY_GUARD_GATE_3),
-                    me);
+					Talk(RAND(
+						SAY_GILNEAS_CITY_GUARD_GATE_1,
+						SAY_GILNEAS_CITY_GUARD_GATE_2,
+						SAY_GILNEAS_CITY_GUARD_GATE_3));
 
                     tSay = DELAY_SAY_GILNEAS_CITY_GUARD_GATE; // Reset timer
                 }
@@ -297,13 +296,12 @@ public:
                     if (tYell <= diff)
                     {
                         // Random yell
-                        DoScriptText(RAND(
+                        Talk(RAND(
                             YELL_PRINCE_LIAM_GREYMANE_1,
                             YELL_PRINCE_LIAM_GREYMANE_2,
                             YELL_PRINCE_LIAM_GREYMANE_3,
                             YELL_PRINCE_LIAM_GREYMANE_4,
-                            YELL_PRINCE_LIAM_GREYMANE_5),
-                        me);
+                            YELL_PRINCE_LIAM_GREYMANE_5));
 
                         doYell = false;
                     }
@@ -716,9 +714,9 @@ public:
             if (tSay <= diff && onceSay)
             {
                 if (me->GetEntry() == NPC_FRIGHTENED_CITIZEN_1)
-                    DoScriptText(RAND(SAY_CITIZEN_1, SAY_CITIZEN_2, SAY_CITIZEN_3, SAY_CITIZEN_4, SAY_CITIZEN_5, SAY_CITIZEN_6, SAY_CITIZEN_7, SAY_CITIZEN_8), me);
+                    Talk(RAND(SAY_CITIZEN_1, SAY_CITIZEN_2, SAY_CITIZEN_3, SAY_CITIZEN_4, SAY_CITIZEN_5, SAY_CITIZEN_6, SAY_CITIZEN_7, SAY_CITIZEN_8));
                 else
-                    DoScriptText(RAND(SAY_CITIZEN_1b, SAY_CITIZEN_2b, SAY_CITIZEN_3b, SAY_CITIZEN_4b, SAY_CITIZEN_5b), me);
+                    Talk(RAND(SAY_CITIZEN_1b, SAY_CITIZEN_2b, SAY_CITIZEN_3b, SAY_CITIZEN_4b, SAY_CITIZEN_5b));
                 onceSay = false;
             }
             else tSay -= diff;
@@ -1733,7 +1731,7 @@ public:
                         {
                             case (0):
                             {
-                                me->AI()->Talk(SAY_JOSAIH_AVERY_TRIGGER, PlayerGUID); // Tell Player they have been bitten
+                                Talk(SAY_JOSAIH_AVERY_TRIGGER, PlayerGUID); // Tell Player they have been bitten
                                 tEvent = 200;
                                 Phase++;
                                 break;
@@ -1818,14 +1816,14 @@ public:
 
         uint32 tSay, tPlayerCheck;
         uint64 PlayerGUID;
-        bool Talk;
+        bool bTalk;
 
         void Reset()
         {
             tSay        = urand(2000, 4000);
             PlayerGUID  = 0;
             tPlayerCheck= 500;
-            Talk        = false;
+            bTalk        = false;
         }
 
         void UpdateAI(const uint32 diff)
@@ -1834,15 +1832,15 @@ public:
             {
                 if (Player* player = me->SelectNearestPlayer(10.0f)) // We should only talk when player is close
                 {
-                    Talk = true;
+                    bTalk = true;
                 }
-                else Talk = false;
+                else bTalk = false;
             }
             else tPlayerCheck -= diff;
 
-            if (Talk && tSay <= diff)
+            if (bTalk && tSay <= diff)
             {
-                me->AI()->Talk(SAY_JOSIAH_AVERY_P2);
+                Talk(SAY_JOSIAH_AVERY_P2);
                 tSay = urand(2000, 4000);
             }
             else tSay -= diff;

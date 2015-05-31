@@ -30,27 +30,27 @@ EndScriptData */
 enum Yells
 {
     //Kalecgos dragon form
-    SAY_EVIL_AGGRO                               = -1580000,
-    SAY_EVIL_SPELL1                              = -1580001,
-    SAY_EVIL_SPELL2                              = -1580002,
-    SAY_EVIL_SLAY1                               = -1580003,
-    SAY_EVIL_SLAY2                               = -1580004,
-    SAY_EVIL_ENRAGE                              = -1580005,
+    SAY_EVIL_AGGRO                               = 5,
+    SAY_EVIL_SPELL1                              = 4,
+    SAY_EVIL_SPELL2                              = 3,
+    SAY_EVIL_SLAY1                               = 2,
+    SAY_EVIL_SLAY2                               = 1,
+    SAY_EVIL_ENRAGE                              = 0,
 
     //Kalecgos humanoid form
-    SAY_GOOD_AGGRO                               = -1580006,
-    SAY_GOOD_NEAR_DEATH                          = -1580007,
-    SAY_GOOD_NEAR_DEATH2                         = -1580008,
-    SAY_GOOD_PLRWIN                              = -1580009,
+    SAY_GOOD_AGGRO                               = 3,
+    SAY_GOOD_NEAR_DEATH                          = 2,
+    SAY_GOOD_NEAR_DEATH2                         = 1,
+    SAY_GOOD_PLRWIN                              = 0,
 
     //Sathrovarr
-    SAY_SATH_AGGRO                               = -1580010,
-    SAY_SATH_DEATH                               = -1580011,
-    SAY_SATH_SPELL1                              = -1580012,
-    SAY_SATH_SPELL2                              = -1580013,
-    SAY_SATH_SLAY1                               = -1580014,
-    SAY_SATH_SLAY2                               = -1580015,
-    SAY_SATH_ENRAGE                              = -1580016,
+    SAY_SATH_AGGRO                               = 6,
+    SAY_SATH_DEATH                               = 5,
+    SAY_SATH_SPELL1                              = 4,
+    SAY_SATH_SPELL2                              = 3,
+    SAY_SATH_SLAY1                               = 2,
+    SAY_SATH_SLAY2                               = 1,
+    SAY_SATH_ENRAGE                              = 0,
 };
 
 enum Spells
@@ -349,7 +349,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             me->SetStandState(UNIT_STAND_STATE_STAND);
-            DoScriptText(SAY_EVIL_AGGRO, me);
+            Talk(SAY_EVIL_AGGRO);
             DoZoneInCombat();
 
             if (instance)
@@ -358,7 +358,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_EVIL_SLAY1, SAY_EVIL_SLAY2), me);
+            Talk(RAND(SAY_EVIL_SLAY1, SAY_EVIL_SLAY2));
         }
 
         void MovementInform(uint32 type, uint32 /*id*/)
@@ -397,7 +397,7 @@ public:
                 TalkTimer = 1000;
                 break;
             case 2:
-                DoScriptText(SAY_GOOD_PLRWIN, me);
+                Talk(SAY_GOOD_PLRWIN);
                 TalkTimer = 10000;
                 break;
             case 3:
@@ -415,7 +415,7 @@ public:
             switch (TalkSequence)
             {
             case 1:
-                DoScriptText(SAY_EVIL_ENRAGE, me);
+                Talk(SAY_EVIL_ENRAGE);
                 TalkTimer = 3000;
                 break;
             case 2:
@@ -494,20 +494,20 @@ public:
                 switch (YellSequence)
                 {
                 case 0:
-                    DoScriptText(SAY_GOOD_AGGRO, me);
+                    Talk(SAY_GOOD_AGGRO);
                     ++YellSequence;
                     break;
                 case 1:
                     if (HealthBelowPct(50))
                     {
-                        DoScriptText(SAY_GOOD_NEAR_DEATH, me);
+                        Talk(SAY_GOOD_NEAR_DEATH);
                         ++YellSequence;
                     }
                     break;
                 case 2:
                     if (HealthBelowPct(10))
                     {
-                        DoScriptText(SAY_GOOD_NEAR_DEATH2, me);
+                        Talk(SAY_GOOD_NEAR_DEATH2);
                         ++YellSequence;
                     }
                     break;
@@ -631,7 +631,7 @@ public:
                 me->AddThreat(Kalec, 100.0f);
                 Kalec->setActive(true);
             }
-            DoScriptText(SAY_SATH_AGGRO, me);
+            Talk(SAY_SATH_AGGRO);
         }
 
         void DamageTaken(Unit* done_by, uint32 &damage)
@@ -653,12 +653,12 @@ public:
                 EnterEvadeMode();
                 return;
             }
-            DoScriptText(RAND(SAY_SATH_SLAY1, SAY_SATH_SLAY2), me);
+            Talk(RAND(SAY_SATH_SLAY1, SAY_SATH_SLAY2));
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_SATH_DEATH, me);
+            Talk(SAY_SATH_DEATH);
             me->SetPosition(me->GetPositionX(), me->GetPositionY(), DRAGON_REALM_Z, me->GetOrientation());
             TeleportAllPlayersBack();
             if (Creature* Kalecgos = Unit::GetCreature(*me, KalecgosGUID))
@@ -771,7 +771,7 @@ public:
 
             if (ShadowBoltTimer <= diff)
             {
-                if (!(rand()%5))DoScriptText(SAY_SATH_SPELL1, me);
+                if (!(rand()%5))Talk(SAY_SATH_SPELL1);
                 DoCast(me, SPELL_SHADOW_BOLT);
                 ShadowBoltTimer = 7000+(rand()%3000);
             } else ShadowBoltTimer -= diff;
@@ -786,7 +786,7 @@ public:
 
             if (CorruptionStrikeTimer <= diff)
             {
-                if (!(rand()%5))DoScriptText(SAY_SATH_SPELL2, me);
+                if (!(rand()%5))Talk(SAY_SATH_SPELL2);
                 DoCast(me->getVictim(), SPELL_CORRUPTION_STRIKE);
                 CorruptionStrikeTimer = 13000;
             } else CorruptionStrikeTimer -= diff;

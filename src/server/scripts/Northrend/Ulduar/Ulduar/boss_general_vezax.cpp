@@ -24,21 +24,21 @@
 
 enum VezaxYells
 {
-    SAY_AGGRO                                    = -1603290,
-    SAY_SLAY_1                                   = -1603291,
-    SAY_SLAY_2                                   = -1603292,
-    SAY_SURGE_OF_DARKNESS                        = -1603293,
-    SAY_DEATH                                    = -1603294,
-    SAY_BERSERK                                  = -1603295,
-    SAY_HARDMODE                                 = -1603296,
+    SAY_AGGRO                                    = 9,
+    SAY_SLAY_1                                   = 8,
+    SAY_SLAY_2                                   = 7,
+    SAY_SURGE_OF_DARKNESS                        = 6,
+    SAY_DEATH                                    = 5,
+    SAY_BERSERK                                  = 4,
+    SAY_HARDMODE                                 = 3,
 };
 
 enum VezaxEmotes
 {
-    EMOTE_VAPORS                                 = -1603289,
-    EMOTE_ANIMUS                                 = -1603297,
-    EMOTE_BARRIER                                = -1603298,
-    EMOTE_SURGE_OF_DARKNESS                      = -1603299,
+    EMOTE_VAPORS                                 = 10,
+    EMOTE_ANIMUS                                 = 2,
+    EMOTE_BARRIER                                = 1,
+    EMOTE_SURGE_OF_DARKNESS                      = 0,
 };
 
 enum VezaxSpells
@@ -120,7 +120,7 @@ class boss_general_vezax : public CreatureScript
             {
                 _EnterCombat();
 
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 DoCast(me, SPELL_AURA_OF_DESPAIR);
                 CheckShamanisticRage();
 
@@ -171,8 +171,8 @@ class boss_general_vezax : public CreatureScript
                             break;
                         }
                         case EVENT_SURGE_OF_DARKNESS:
-                            DoScriptText(EMOTE_SURGE_OF_DARKNESS, me);
-                            DoScriptText(SAY_SURGE_OF_DARKNESS, me);
+                            Talk(EMOTE_SURGE_OF_DARKNESS);
+                            Talk(SAY_SURGE_OF_DARKNESS);
                             DoCast(me, SPELL_SURGE_OF_DARKNESS);
                             events.ScheduleEvent(EVENT_SURGE_OF_DARKNESS, urand(50000, 70000));
                             break;
@@ -181,8 +181,8 @@ class boss_general_vezax : public CreatureScript
                             events.ScheduleEvent(EVENT_SARONITE_VAPORS, urand(30000, 35000));
                             if (++vaporCount == 6 && smellSaronite)
                             {
-                                DoScriptText(SAY_HARDMODE, me);
-                                DoScriptText(EMOTE_BARRIER, me);
+                                Talk(SAY_HARDMODE);
+                                Talk(EMOTE_BARRIER);
                                 summons.DespawnAll();
                                 DoCast(me, SPELL_SARONITE_BARRIER);
                                 DoCast(SPELL_SUMMON_SARONITE_ANIMUS);
@@ -192,7 +192,7 @@ class boss_general_vezax : public CreatureScript
                             }
                             break;
                         case EVENT_BERSERK:
-                            DoScriptText(SAY_BERSERK, me);
+                            Talk(SAY_BERSERK);
                             DoCast(me, SPELL_BERSERK);
                             break;
                     }
@@ -209,13 +209,13 @@ class boss_general_vezax : public CreatureScript
 
             void KilledUnit(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+                Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
             }
 
             void JustDied(Unit* /*who*/)
             {
                 _JustDied();
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 instance->DoRemoveAurasDueToSpellOnPlayers(SPELL_AURA_OF_DESPAIR);
             }
 
@@ -314,7 +314,7 @@ class boss_saronite_animus : public CreatureScript
             boss_saronite_animusAI(Creature* creature) : ScriptedAI(creature)
             {
                 instance = me->GetInstanceScript();
-                DoScriptText(EMOTE_BARRIER, me);
+                Talk(EMOTE_BARRIER);
             }
 
             void Reset()
@@ -376,7 +376,7 @@ class npc_saronite_vapors : public CreatureScript
         {
             npc_saronite_vaporsAI(Creature* creature) : ScriptedAI(creature)
             {
-                DoScriptText(EMOTE_VAPORS, me);
+                Talk(EMOTE_VAPORS);
                 instance = me->GetInstanceScript();
                 me->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
                 me->ApplySpellImmune(0, IMMUNITY_ID, 49560, true); // Death Grip jump effect

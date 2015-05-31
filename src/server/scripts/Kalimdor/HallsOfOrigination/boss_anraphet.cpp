@@ -120,7 +120,7 @@ class boss_anraphet : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                //DoScriptText(SAY_AGGRO, me);
+                //Talk(SAY_AGGRO);
 
                 if (instance)
                     instance->SetData(DATA_ANRAPHET_EVENT, IN_PROGRESS);
@@ -136,7 +136,7 @@ class boss_anraphet : public CreatureScript
 
             void KilledUnit(Unit* /*Killed*/)
             {
-                //DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                //Talk(RAND(SAY_KILL_1, SAY_KILL_2));
             }
 
             void WardenKilled()
@@ -151,7 +151,7 @@ class boss_anraphet : public CreatureScript
             {
                 //Enter the room and kill all troggs
 
-                //DoScriptText(SAY_INTRO, me);
+                //Talk(SAY_INTRO);
                 //DoScriptText(SAY_PROTOCOL me);
                 me->GetMotionMaster()->MovePoint(0, X, Y, Z);
                 DoCast(SPELL_DESTRUCTION_PROTOCOL);
@@ -185,7 +185,7 @@ class boss_anraphet : public CreatureScript
                             events.ScheduleEvent(EVENT_NEMESIS_STRIKE, 2000);
                             break;
                         case EVENT_OMEGA_STANCE:
-                            //DoScriptText(SAY_OMEGA, me);
+                            //Talk(SAY_OMEGA);
                             DoCast(me, SPELL_OMEGA_STANCE);
                             events.ScheduleEvent(EVENT_OMEGA_STANCE, 14000);
                             break;
@@ -199,7 +199,7 @@ class boss_anraphet : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                //DoScriptText(SAY_DEATH, me);
+                //Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_ANRAPHET_EVENT, DONE);

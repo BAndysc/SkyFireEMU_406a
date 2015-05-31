@@ -34,25 +34,25 @@ struct Speech
 
 static Speech LackeyDeath[]=
 {
-    {-1585013},
-    {-1585014},
-    {-1585015},
-    {-1585016},
+    {9},
+    {8},
+    {7},
+    {6},
 };
 
 static Speech PlayerDeath[]=
 {
-    {-1585017},
-    {-1585018},
-    {-1585019},
-    {-1585020},
-    {-1585021},
+    {5},
+    {4},
+    {3},
+    {2},
+    {1},
 };
 
 enum eEnums
 {
-    SAY_AGGRO               = -1585012,
-    SAY_DEATH               = -1585022,
+    SAY_AGGRO               = 10,
+    SAY_DEATH               = 0,
 
     SPELL_DISPEL_MAGIC      = 27609,
     SPELL_FLASH_HEAL        = 17843,
@@ -144,7 +144,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             for (uint8 i = 0; i < MAX_ACTIVE_LACKEY; ++i)
             {
@@ -216,7 +216,7 @@ public:
             if (victim->GetTypeId() != TYPEID_PLAYER)
                 return;
 
-            DoScriptText(PlayerDeath[PlayersKilled].id, me);
+            Talk(PlayerDeath[PlayersKilled].id);
 
             if (PlayersKilled < 4)
                 ++PlayersKilled;
@@ -224,7 +224,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (!instance)
                 return;
@@ -421,7 +421,7 @@ struct boss_priestess_lackey_commonAI : public ScriptedAI
             return;
 
         //should delrissa really yell if dead?
-        DoScriptText(LackeyDeath[LackeyDeathCount].id, delrissa);
+        delrissa->AI()->Talk(LackeyDeath[LackeyDeathCount].id);
 
         instance->SetData(DATA_DELRISSA_DEATH_COUNT, SPECIAL);
 

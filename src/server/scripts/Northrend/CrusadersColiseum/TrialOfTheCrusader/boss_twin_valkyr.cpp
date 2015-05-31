@@ -33,17 +33,17 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO           = -1649040,
-    SAY_DEATH           = -1649041,
-    SAY_BERSERK         = -1649042,
-    EMOTE_SHIELD        = -1649043,
-    SAY_SHIELD          = -1649044,
-    SAY_KILL1           = -1649045,
-    SAY_KILL2           = -1649046,
-    EMOTE_LIGHT_VORTEX  = -1649047,
-    SAY_LIGHT_VORTEX    = -1649048,
-    EMOTE_DARK_VORTEX   = -1649049,
-    SAY_DARK_VORTEX     = -1649050,
+    SAY_AGGRO           = 220,
+    SAY_DEATH           = 219,
+    SAY_BERSERK         = 218,
+    EMOTE_SHIELD        = 217,
+    SAY_SHIELD          = 216,
+    SAY_KILL1           = 215,
+    SAY_KILL2           = 214,
+    EMOTE_LIGHT_VORTEX  = 213,
+    SAY_LIGHT_VORTEX    = 212,
+    EMOTE_DARK_VORTEX   = 211,
+    SAY_DARK_VORTEX     = 210,
 };
 
 enum Equipment
@@ -216,7 +216,7 @@ struct boss_twin_baseAI : public ScriptedAI
     {
         if (who->GetTypeId() == TYPEID_PLAYER)
         {
-            DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, me);
+            Talk(urand(0, 1) ? SAY_KILL1 : SAY_KILL2);
             if (m_pInstance)
                 m_pInstance->SetData(DATA_TRIBUTE_TO_IMMORTALITY_ELEGIBLE, 0);
         }
@@ -248,7 +248,7 @@ struct boss_twin_baseAI : public ScriptedAI
 
     void JustDied(Unit* /*killer*/)
     {
-        DoScriptText(SAY_DEATH, me);
+        Talk(SAY_DEATH);
         if (m_pInstance)
         {
             if (Creature* pSister = GetSister())
@@ -290,7 +290,7 @@ struct boss_twin_baseAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VALKIRIES, IN_PROGRESS);
         }
 
-        DoScriptText(SAY_AGGRO, me);
+        Talk(SAY_AGGRO);
         DoCast(me, m_uiSurgeSpellId);
     }
 
@@ -328,8 +328,8 @@ struct boss_twin_baseAI : public ScriptedAI
                 {
                     if (Creature* pSister = GetSister())
                         pSister->AI()->DoAction(ACTION_VORTEX);
-                    DoScriptText(m_uiVortexEmote, me);
-                    DoScriptText(m_uiVortexSay, me);
+                    Talk(m_uiVortexEmote);
+                    Talk(m_uiVortexSay);
                     DoCastAOE(m_uiVortexSpellId);
                     m_uiStage = 0;
                     m_uiSpecialAbilityTimer = MINUTE*IN_MILLISECONDS;
@@ -340,8 +340,8 @@ struct boss_twin_baseAI : public ScriptedAI
             case 2: // Shield+Pact
                 if (m_uiSpecialAbilityTimer <= uiDiff)
                 {
-                    DoScriptText(EMOTE_SHIELD, me);
-                    DoScriptText(SAY_SHIELD, me);
+                    Talk(EMOTE_SHIELD);
+                    Talk(SAY_SHIELD);
                     if (Creature* pSister = GetSister())
                     {
                         pSister->AI()->DoAction(ACTION_PACT);
@@ -379,7 +379,7 @@ struct boss_twin_baseAI : public ScriptedAI
         if (!m_bIsBerserk && m_uiBerserkTimer <= uiDiff)
         {
             DoCast(me, SPELL_BERSERK);
-            DoScriptText(SAY_BERSERK, me);
+            Talk(SAY_BERSERK);
             m_bIsBerserk = true;
         }
         else

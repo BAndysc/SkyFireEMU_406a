@@ -22,9 +22,9 @@
 //Stalagg
 enum StalaggYells
 {
-    SAY_STAL_AGGRO          = -1533023, //not used
-    SAY_STAL_SLAY           = -1533024, //not used
-    SAY_STAL_DEATH          = -1533025  //not used
+    SAY_STAL_AGGRO          = 364, //not used
+    SAY_STAL_SLAY           = 363, //not used
+    SAY_STAL_DEATH          = 362  //not used
 };
 
 enum StalagSpells
@@ -38,9 +38,9 @@ enum StalagSpells
 //Feugen
 enum FeugenYells
 {
-    SAY_FEUG_AGGRO          = -1533026, //not used
-    SAY_FEUG_SLAY           = -1533027, //not used
-    SAY_FEUG_DEATH          = -1533028 //not used
+    SAY_FEUG_AGGRO          = 361, //not used
+    SAY_FEUG_SLAY           = 360, //not used
+    SAY_FEUG_DEATH          = 359 //not used
 };
 
 enum FeugenSpells
@@ -65,17 +65,17 @@ enum ThaddiusActions
 //Thaddius
 enum ThaddiusYells
 {
-    SAY_GREET               = -1533029, //not used
-    SAY_AGGRO_1             = -1533030,
-    SAY_AGGRO_2             = -1533031,
-    SAY_AGGRO_3             = -1533032,
-    SAY_SLAY                = -1533033,
-    SAY_ELECT               = -1533034, //not used
-    SAY_DEATH               = -1533035,
-    SAY_SCREAM1             = -1533036, //not used
-    SAY_SCREAM2             = -1533037, //not used
-    SAY_SCREAM3             = -1533038, //not used
-    SAY_SCREAM4             = -1533039 //not used
+    SAY_GREET               = 358, //not used
+    SAY_AGGRO_1             = 4,
+    SAY_AGGRO_2             = 3,
+    SAY_AGGRO_3             = 2,
+    SAY_SLAY                = 1,
+    SAY_ELECT               = 357, //not used
+    SAY_DEATH               = 0,
+    SAY_SCREAM1             = 356, //not used
+    SAY_SCREAM2             = 355, //not used
+    SAY_SCREAM3             = 354, //not used
+    SAY_SCREAM4             = 353 //not used
 };
 
 enum ThaddiusSpells
@@ -141,13 +141,13 @@ public:
         void KilledUnit(Unit* /*victim*/)
         {
             if (!(rand()%5))
-                DoScriptText(SAY_SLAY, me);
+                Talk(SAY_SLAY);
         }
 
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void DoAction(const int32 action)
@@ -184,7 +184,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
             events.ScheduleEvent(EVENT_SHIFT, 30000);
             events.ScheduleEvent(EVENT_CHAIN, urand(10000, 20000));
             events.ScheduleEvent(EVENT_BERSERK, 360000);

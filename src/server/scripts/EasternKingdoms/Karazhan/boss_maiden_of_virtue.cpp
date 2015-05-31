@@ -26,13 +26,13 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_AGGRO               -1532018
-#define SAY_SLAY1               -1532019
-#define SAY_SLAY2               -1532020
-#define SAY_SLAY3               -1532021
-#define SAY_REPENTANCE1         -1532022
-#define SAY_REPENTANCE2         -1532023
-#define SAY_DEATH               -1532024
+#define SAY_AGGRO               6
+#define SAY_SLAY1               5
+#define SAY_SLAY2               4
+#define SAY_SLAY3               3
+#define SAY_REPENTANCE1         2
+#define SAY_REPENTANCE2         1
+#define SAY_DEATH               0
 
 #define SPELL_REPENTANCE        29511
 #define SPELL_HOLYFIRE          29522
@@ -76,17 +76,17 @@ public:
         void KilledUnit(Unit* /*Victim*/)
         {
             if (urand(0, 1) == 0)
-                DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+                Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void UpdateAI(const uint32 diff)
@@ -109,7 +109,7 @@ public:
             if (Repentance_Timer <= diff)
             {
                 DoCast(me->getVictim(), SPELL_REPENTANCE);
-                DoScriptText(RAND(SAY_REPENTANCE1, SAY_REPENTANCE2), me);
+                Talk(RAND(SAY_REPENTANCE1, SAY_REPENTANCE2));
 
                 Repentance_Timer = urand(25000, 35000);        //A little randomness on that spell
             } else Repentance_Timer -= diff;

@@ -78,11 +78,11 @@ enum AuriayaEvents
 enum AuriayaYells
 {
     // Yells
-    SAY_AGGRO                                    = -1603050,
-    SAY_SLAY_1                                   = -1603051,
-    SAY_SLAY_2                                   = -1603052,
-    SAY_DEATH                                    = -1603053,
-    SAY_BERSERK                                  = -1603054,
+    SAY_AGGRO                                    = 4,
+    SAY_SLAY_1                                   = 3,
+    SAY_SLAY_2                                   = 2,
+    SAY_DEATH                                    = 1,
+    SAY_BERSERK                                  = 0,
 
     // Emotes
     EMOTE_FEAR                                   = -1603055,
@@ -122,7 +122,7 @@ class boss_auriaya : public CreatureScript
             void EnterCombat(Unit* /*who*/)
             {
                 _EnterCombat();
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
 
                 events.ScheduleEvent(EVENT_SCREECH, urand(45000, 65000));
                 events.ScheduleEvent(EVENT_BLAST, urand(20000, 25000));
@@ -134,7 +134,7 @@ class boss_auriaya : public CreatureScript
 
             void KilledUnit(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+                Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
             }
 
             void JustSummoned(Creature* summoned)
@@ -207,7 +207,7 @@ class boss_auriaya : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 _JustDied();
             }
 
@@ -230,7 +230,7 @@ class boss_auriaya : public CreatureScript
                             events.ScheduleEvent(EVENT_SCREECH, urand(40000, 60000));
                             break;
                         case EVENT_TERRIFYING:
-                            DoScriptText(EMOTE_FEAR, me);
+                            //Talk(EMOTE_FEAR);//improper data
                             DoCast(SPELL_TERRIFYING_SCREECH);
                             events.ScheduleEvent(EVENT_TERRIFYING, urand(20000, 30000));
                             break;
@@ -239,7 +239,7 @@ class boss_auriaya : public CreatureScript
                             events.ScheduleEvent(EVENT_BLAST, urand(25000, 35000));
                             break;
                         case EVENT_DEFENDER:
-                            DoScriptText(EMOTE_DEFENDER, me);
+                            //Talk(EMOTE_DEFENDER);//improper data
                             DoCast(SPELL_DEFENDER_TRIGGER);
                             if (Creature* trigger = me->FindNearestCreature(NPC_FERAL_DEFENDER_TRIGGER, 15.0f, true))
                                 DoCast(trigger, SPELL_ACTIVATE_DEFENDER, true);
@@ -263,7 +263,7 @@ class boss_auriaya : public CreatureScript
                             break;
                         case EVENT_BERSERK:
                             DoCast(me, SPELL_BERSERK, true);
-                            DoScriptText(SAY_BERSERK, me);
+                            Talk(SAY_BERSERK);
                             events.CancelEvent(EVENT_BERSERK);
                             break;
                     }

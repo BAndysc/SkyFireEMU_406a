@@ -27,18 +27,18 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "karazhan.h"
 
-#define SAY_AGGRO           -1532091
-#define SAY_AXE_TOSS1       -1532092
-#define SAY_AXE_TOSS2       -1532093
-#define SAY_SPECIAL1        -1532094
-#define SAY_SPECIAL2        -1532095
-#define SAY_SPECIAL3        -1532096
-#define SAY_SLAY1           -1532097
-#define SAY_SLAY2           -1532098
-#define SAY_SLAY3           -1532099
-#define SAY_SUMMON1         -1532100
-#define SAY_SUMMON2         -1532101
-#define SAY_DEATH           -1532102
+#define SAY_AGGRO           11
+#define SAY_AXE_TOSS1       10
+#define SAY_AXE_TOSS2       9
+#define SAY_SPECIAL1        8
+#define SAY_SPECIAL2        7
+#define SAY_SPECIAL3        6
+#define SAY_SLAY1           5
+#define SAY_SLAY2           4
+#define SAY_SLAY3           3
+#define SAY_SUMMON1         2
+#define SAY_SUMMON2         1
+#define SAY_DEATH           0
 
 // 18 Coordinates for Infernal spawns
 struct InfernalPoint
@@ -240,12 +240,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             AxesCleanup();
             ClearWeapons();
@@ -261,7 +261,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->HandleGameObject(instance->GetData64(DATA_GO_NETHER_DOOR), false); // Open the door leading further in
@@ -379,7 +379,7 @@ public:
                 DoCast(Infernal, SPELL_INFERNAL_RELAY);
             }
 
-            DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
+            Talk(RAND(SAY_SUMMON1, SAY_SUMMON2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -411,7 +411,7 @@ public:
                     DoCast(me, SPELL_EQUIP_AXES);
 
                     //text
-                    DoScriptText(SAY_AXE_TOSS1, me);
+                    Talk(SAY_AXE_TOSS1);
 
                     //passive thrash aura
                     DoCast(me, SPELL_THRASH_AURA, true);
@@ -447,7 +447,7 @@ public:
                     //remove thrash
                     me->RemoveAurasDueToSpell(SPELL_THRASH_AURA);
 
-                    DoScriptText(SAY_AXE_TOSS2, me);
+                    Talk(SAY_AXE_TOSS2);
 
                     Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true);
                     for (uint8 i = 0; i < 2; ++i)

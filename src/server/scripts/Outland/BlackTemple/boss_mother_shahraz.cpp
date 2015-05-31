@@ -28,17 +28,17 @@ EndScriptData */
 #include "black_temple.h"
 
 //Speech'n'Sounds
-#define SAY_TAUNT1              -1564018
-#define SAY_TAUNT2              -1564019
-#define SAY_TAUNT3              -1564020
-#define SAY_AGGRO               -1564021
-#define SAY_SPELL1              -1564022
-#define SAY_SPELL2              -1564023
-#define SAY_SPELL3              -1564024
-#define SAY_SLAY1               -1564025
-#define SAY_SLAY2               -1564026
-#define SAY_ENRAGE              -1564027
-#define SAY_DEATH               -1564028
+#define SAY_TAUNT1              10
+#define SAY_TAUNT2              9
+#define SAY_TAUNT3              8
+#define SAY_AGGRO               7
+#define SAY_SPELL1              6
+#define SAY_SPELL2              5
+#define SAY_SPELL3              4
+#define SAY_SLAY1               3
+#define SAY_SLAY2               2
+#define SAY_ENRAGE              1
+#define SAY_DEATH               0
 
 //Spells
 #define SPELL_BEAM_SINISTER     40859
@@ -142,12 +142,12 @@ public:
                 instance->SetData(DATA_MOTHERSHAHRAZEVENT, IN_PROGRESS);
 
             DoZoneInCombat();
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
@@ -155,7 +155,7 @@ public:
             if (instance)
                 instance->SetData(DATA_MOTHERSHAHRAZEVENT, DONE);
 
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void TeleportPlayers()
@@ -185,7 +185,7 @@ public:
             {
                 Enraged = true;
                 DoCast(me, SPELL_ENRAGE, true);
-                DoScriptText(SAY_ENRAGE, me);
+                Talk(SAY_ENRAGE);
             }
 
             //Randomly cast one beam.
@@ -235,7 +235,7 @@ public:
 
                 TeleportPlayers();
 
-                DoScriptText(RAND(SAY_SPELL2, SAY_SPELL3), me);
+                Talk(RAND(SAY_SPELL2, SAY_SPELL3));
                 FatalAttractionExplodeTimer = 2000;
                 FatalAttractionTimer = urand(40, 71) * 1000;
             } else FatalAttractionTimer -= diff;
@@ -285,14 +285,14 @@ public:
                 if (EnrageTimer <= diff)
                 {
                     DoCast(me, SPELL_BERSERK);
-                    DoScriptText(SAY_ENRAGE, me);
+                    Talk(SAY_ENRAGE);
                 } else EnrageTimer -= diff;
             }
 
             //Random taunts
             if (RandomYellTimer <= diff)
             {
-                DoScriptText(RAND(SAY_TAUNT1, SAY_TAUNT2, SAY_TAUNT3), me);
+                Talk(RAND(SAY_TAUNT1, SAY_TAUNT2, SAY_TAUNT3));
                 RandomYellTimer = urand(60, 151) * 1000;
             } else RandomYellTimer -= diff;
 

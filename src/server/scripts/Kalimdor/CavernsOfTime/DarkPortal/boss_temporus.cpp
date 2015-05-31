@@ -29,12 +29,12 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_ENTER               = -1269000,
-    SAY_AGGRO               = -1269001,
-    SAY_BANISH              = -1269002,
-    SAY_SLAY1               = -1269003,
-    SAY_SLAY2               = -1269004,
-    SAY_DEATH               = -1269005,
+    SAY_ENTER               = 5,
+    SAY_AGGRO               = 4,
+    SAY_BANISH              = 3,
+    SAY_SLAY1               = 2,
+    SAY_SLAY2               = 1,
+    SAY_DEATH               = 0,
 
     SPELL_HASTE             = 31458,
     SPELL_MORTAL_WOUND      = 31464,
@@ -77,17 +77,17 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(TYPE_RIFT, SPECIAL);
@@ -100,7 +100,7 @@ public:
             {
                 if (me->IsWithinDistInMap(who, 20.0f))
                 {
-                    DoScriptText(SAY_BANISH, me);
+                    Talk(SAY_BANISH);
 
                     me->DealDamage(who, who->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 }

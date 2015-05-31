@@ -36,12 +36,12 @@ enum Spells
 //not in db
 enum Yells
 {
-    SAY_AGGRO                                     = -1600000,
-    SAY_KILL                                      = -1600001,
-    SAY_DEATH                                     = -1600002,
-    SAY_NECRO_ADD                                 = -1600003,
-    SAY_REUBBLE_1                                 = -1600004,
-    SAY_REUBBLE_2                                 = -1600005
+    SAY_AGGRO                                     = 5,
+    SAY_KILL                                      = 4,
+    SAY_DEATH                                     = 3,
+    SAY_NECRO_ADD                                 = 2,
+    SAY_REUBBLE_1                                 = 1,
+    SAY_REUBBLE_2                                 = 0
 };
 
 enum Creatures
@@ -123,7 +123,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             Phase = PHASE_1;
             uiCrystalHandlerTimer = 30*IN_MILLISECONDS;
             uiTimer = 1*IN_MILLISECONDS;
@@ -159,7 +159,7 @@ public:
                     {
                         if (uiCrystalHandlerTimer <= diff)
                         {
-                            DoScriptText(SAY_NECRO_ADD, me);
+                            Talk(SAY_NECRO_ADD);
                             Creature* pCrystalHandler = me->SummonCreature(CREATURE_CRYSTAL_HANDLER, CrystalHandlerSpawnPoint, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 20*IN_MILLISECONDS);
                             pCrystalHandler->GetMotionMaster()->MovePoint(0, AddDestinyPoint);
                             uiCrystalHandlerTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
@@ -181,7 +181,7 @@ public:
         }
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             if (instance)
                 instance->SetData(DATA_NOVOS_EVENT, DONE);
             lSummons.DespawnAll();
@@ -191,7 +191,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(SAY_KILL, me);
+            Talk(SAY_KILL);
         }
 
         void JustSummoned(Creature* summon)

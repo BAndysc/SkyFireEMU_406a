@@ -296,8 +296,6 @@ void ScriptMgr::Unload()
 
 void ScriptMgr::LoadDatabase()
 {
-    sScriptSystemMgr->LoadScriptTexts();
-    sScriptSystemMgr->LoadScriptTextsCustom();
     sScriptSystemMgr->LoadScriptWaypoints();
 }
 

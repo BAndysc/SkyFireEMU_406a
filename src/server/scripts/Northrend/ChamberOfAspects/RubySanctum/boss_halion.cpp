@@ -84,20 +84,20 @@ enum Halion
     FR_RADIUS                           = 45,
 
     //SAYS
-    SAY_HALION_SPAWN                    = -1666100, //17499 Meddlesome insects, you're too late! The Ruby Sanctum is lost.
-    SAY_HALION_AGGRO                    = -1666101, //17500 Your world teeters on the brink of annihilation. You will all bear witness to the coming of a new age of destruction!
-    SAY_HALION_SLAY_1                   = -1666102, //17501 Another hero falls.
-    SAY_HALION_SLAY_2                   = -1666103, //17502 Ha Ha Ha!
-    SAY_HALION_DEATH                    = -1666104, //17503 Relish this victory mortals, for it will be your last. This world will burn with the Master's return!
-    SAY_HALION_BERSERK                  = -1666105, //17504 Not good enough!
-    SAY_HALION_SPECIAL_1                = -1666106, //17505 The heavens burn!
-    SAY_HALION_SPECIAL_2                = -1666107, //17506 Beware the shadow!
-    SAY_HALION_PHASE_2                  = -1666108, //17507 You will find only suffering within the realm of Twilight. Enter if you dare.
-    SAY_HALION_PHASE_3                  = -1666109, //17508 I am the light AND the darkness! Cower mortals before the Herald of Deathwing!
-    EMOTE_WARNING                       = -1666110, //orbs charge warning
-    EMOTE_REAL_PUSH                     = -1666111, // Out of real world message
-    EMOTE_REAL_PULL                     = -1666112, // To real world message
-    EMOTE_TWIL_PUSH                     = -1666113, // Out of twilight world message
+    SAY_HALION_SPAWN                    = 139, //17499 Meddlesome insects, you're too late! The Ruby Sanctum is lost.
+    SAY_HALION_AGGRO                    = 138, //17500 Your world teeters on the brink of annihilation. You will all bear witness to the coming of a new age of destruction!
+    SAY_HALION_SLAY_1                   = 137, //17501 Another hero falls.
+    SAY_HALION_SLAY_2                   = 136, //17502 Ha Ha Ha!
+    SAY_HALION_DEATH                    = 135, //17503 Relish this victory mortals, for it will be your last. This world will burn with the Master's return!
+    SAY_HALION_BERSERK                  = 134, //17504 Not good enough!
+    SAY_HALION_SPECIAL_1                = 133, //17505 The heavens burn!
+    SAY_HALION_SPECIAL_2                = 132, //17506 Beware the shadow!
+    SAY_HALION_PHASE_2                  = 131, //17507 You will find only suffering within the realm of Twilight. Enter if you dare.
+    SAY_HALION_PHASE_3                  = 130, //17508 I am the light AND the darkness! Cower mortals before the Herald of Deathwing!
+    EMOTE_WARNING                       = 129, //orbs charge warning
+    EMOTE_REAL_PUSH                     = 128, // Out of real world message
+    EMOTE_REAL_PULL                     = 127, // To real world message
+    EMOTE_TWIL_PUSH                     = 126, // Out of twilight world message
     EMOTE_TWIL_PULL                     = -1666114  // To twilight world message
 };
 
@@ -211,7 +211,7 @@ public:
             {
                 if (!intro && who->IsWithinDistInMap(me, 60.0f))
                     {
-                        DoScriptText(-1666100, me);
+                        Talk(139);
                         intro = true;
                     }
 
@@ -256,7 +256,7 @@ public:
 
             if (GameObject* goPortal = me->FindNearestGameObject(GO_HALION_PORTAL_1, 50.0f))
                 goPortal->Delete();
-            DoScriptText(-1666104, me);
+            Talk(135);
 
             if (Creature* clone = me->GetMap()->GetCreature(instance->GetData64(NPC_HALION_TWILIGHT)))
             {
@@ -292,10 +292,10 @@ public:
             switch (urand(0, 1))
             {
                 case 0:
-                    DoScriptText(-1666106, me, victim);
+                    Talk(133, victim->GetGUID());
                     break;
                 case 1:
-                    DoScriptText(-1666107, me, victim);
+                    Talk(132, victim->GetGUID());
                     break;
             }
         }
@@ -309,7 +309,7 @@ public:
             DoCast(SPELL_TWILIGHT_PRECISION);
             me->SetInCombatWithZone();
             instance->SetData(DATA_HALION, IN_PROGRESS);
-            DoScriptText(-1666101, me);
+            Talk(138);
         }
 
         void MovementInform(uint32 type, uint32 id)
@@ -427,7 +427,7 @@ public:
                     break;
                 case 1: // Switch to phase 2
                     {
-                        DoScriptText(-1666108, me);
+                        Talk(131);
                         instance->SetData(DATA_HALION_EVENT, NOT_STARTED);
                         StartMovement(0);
                         {
@@ -498,7 +498,7 @@ public:
                         }
                     return;
                 case 6: // Switch to phase 3
-                    DoScriptText(-1666109, me);
+                    Talk(130);
                     instance->SetData(DATA_HALION_EVENT, SPECIAL);
                     setStage(7);
                     break;
@@ -548,7 +548,7 @@ public:
             {
                  DoCast(SPELL_BERSERK);
                  Enrage = 600*IN_MILLISECONDS;
-                 DoScriptText(-1666105, me);
+                 Talk(134);
             } else Enrage -= diff;
 
             DoMeleeAttackIfReady();
@@ -686,10 +686,10 @@ public:
             switch (urand(0, 1))
             {
                 case 0:
-                    DoScriptText(-1666106, me, victim);
+                    Talk(133, victim->GetGUID());
                     break;
                 case 1:
-                    DoScriptText(-1666107, me, victim);
+                    Talk(132, victim->GetGUID());
                     break;
             }
         }
@@ -782,7 +782,7 @@ public:
                     break;
                 case 2: //To two realms
                     instance->SetData(DATA_HALION_EVENT, IN_PROGRESS);
-                    DoScriptText(-1666109, me);
+                    Talk(130);
                     if (GameObject* goPortal = me->SummonGameObject(GO_HALION_PORTAL_EXIT, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z, 4.47206f, 0, 0, 0.786772f, -0.617243f, 99999999))
                     {
                         goPortal->SetPhaseMask(32, true);
@@ -829,7 +829,7 @@ public:
             {
                 DoCast(SPELL_BERSERK);
                 Enrage = 600*IN_MILLISECONDS;
-                DoScriptText(-1666105, me);
+                Talk(134);
             } else Enrage -= diff;
 
             DoMeleeAttackIfReady();
@@ -1009,13 +1009,13 @@ public:
 
                 if (_lastCorreal - Buff[buffnum].disp_corp < 0)
                 {
-                    DoScriptText(EMOTE_REAL_PULL, halion);
-                    DoScriptText(EMOTE_TWIL_PUSH, halionTwilight);
+                    halion->AI()->Talk(EMOTE_REAL_PULL);
+                    halionTwilight->AI()->Talk(EMOTE_TWIL_PUSH);
                 }
                 else if (_lastCorreal - Buff[buffnum].disp_corp > 0)
                 {
-                    DoScriptText(EMOTE_REAL_PUSH, halion);
-                    DoScriptText(EMOTE_TWIL_PULL, halionTwilight);
+                    halion->AI()->Talk(EMOTE_REAL_PUSH);
+                    //halionTwilight->AI()->Talk(EMOTE_TWIL_PULL);//improper data
                 }
 
                 _lastBuffReal = Buff[buffnum].halion;
@@ -1132,7 +1132,7 @@ public:
 
             if (_timer%30000 - 3000 <= diff && !_warning)
             {
-                DoScriptText(-1666110, me);
+                Talk(129);
                 _warning = true;
             }
 
@@ -1141,7 +1141,7 @@ public:
                 Creature * halionTwilight = me->GetMap()->GetCreature(instance->GetData64(NPC_HALION_TWILIGHT));
                 if (halionTwilight)
                 {
-                    DoScriptText(SAY_HALION_SPECIAL_2, halionTwilight);
+                    halionTwilight->AI()->Talk(SAY_HALION_SPECIAL_2);
                     _warning2 = true;
                 }
             }

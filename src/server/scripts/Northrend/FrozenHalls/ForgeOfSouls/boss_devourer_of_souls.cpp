@@ -27,27 +27,27 @@
 
 enum Yells
 {
-    SAY_FACE_ANGER_AGGRO                          = -1632010,
-    SAY_FACE_DESIRE_AGGRO                         = -1632011,
-    SAY_FACE_ANGER_SLAY_1                         = -1632012,
-    SAY_FACE_SORROW_SLAY_1                        = -1632013,
-    SAY_FACE_DESIRE_SLAY_1                        = -1632014,
-    SAY_FACE_ANGER_SLAY_2                         = -1632015,
-    SAY_FACE_SORROW_SLAY_2                        = -1632016,
-    SAY_FACE_DESIRE_SLAY_2                        = -1632017,
-    SAY_FACE_SORROW_DEATH                         = -1632019,
-    SAY_FACE_DESIRE_DEATH                         = -1632020,
-    EMOTE_MIRRORED_SOUL                           = -1632021,
-    EMOTE_UNLEASH_SOUL                            = -1632022,
-    SAY_FACE_ANGER_UNLEASH_SOUL                   = -1632023,
-    SAY_FACE_SORROW_UNLEASH_SOUL                  = -1632024,
-    SAY_FACE_DESIRE_UNLEASH_SOUL                  = -1632025,
-    EMOTE_WAILING_SOUL                            = -1632026,
-    SAY_FACE_ANGER_WAILING_SOUL                   = -1632027,
-    SAY_FACE_DESIRE_WAILING_SOUL                  = -1632028,
+    SAY_FACE_ANGER_AGGRO                          = 18,
+    SAY_FACE_DESIRE_AGGRO                         = 17,
+    SAY_FACE_ANGER_SLAY_1                         = 16,
+    SAY_FACE_SORROW_SLAY_1                        = 15,
+    SAY_FACE_DESIRE_SLAY_1                        = 14,
+    SAY_FACE_ANGER_SLAY_2                         = 13,
+    SAY_FACE_SORROW_SLAY_2                        = 12,
+    SAY_FACE_DESIRE_SLAY_2                        = 11,
+    SAY_FACE_SORROW_DEATH                         = 9,
+    SAY_FACE_DESIRE_DEATH                         = 8,
+    EMOTE_MIRRORED_SOUL                           = 7,
+    EMOTE_UNLEASH_SOUL                            = 6,
+    SAY_FACE_ANGER_UNLEASH_SOUL                   = 5,
+    SAY_FACE_SORROW_UNLEASH_SOUL                  = 4,
+    SAY_FACE_DESIRE_UNLEASH_SOUL                  = 3,
+    EMOTE_WAILING_SOUL                            = 2,
+    SAY_FACE_ANGER_WAILING_SOUL                   = 1,
+    SAY_FACE_DESIRE_WAILING_SOUL                  = 0,
 
-    SAY_JAINA_OUTRO                               = -1632029,
-    SAY_SYLVANAS_OUTRO                            = -1632030,
+    SAY_JAINA_OUTRO                               = 0,
+    SAY_SYLVANAS_OUTRO                            = 0,
 };
 
 enum Spells
@@ -155,7 +155,7 @@ class boss_devourer_of_souls : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_FACE_ANGER_AGGRO, SAY_FACE_DESIRE_AGGRO), me);
+                Talk(RAND(SAY_FACE_ANGER_AGGRO, SAY_FACE_DESIRE_AGGRO));
 
                 if (!me->FindNearestCreature(NPC_CRUCIBLE_OF_SOULS, 60)) // Prevent double spawn
                     instance->instance->SummonCreature(NPC_CRUCIBLE_OF_SOULS, CrucibleSummonPos);
@@ -207,7 +207,7 @@ class boss_devourer_of_souls : public CreatureScript
                 }
 
                 if (textId)
-                    DoScriptText(textId, me);
+                    Talk(textId);
             }
 
             void JustDied(Unit* /*killer*/)
@@ -216,7 +216,7 @@ class boss_devourer_of_souls : public CreatureScript
 
                 Position spawnPoint = {5618.139f, 2451.873f, 705.854f, 0};
 
-                DoScriptText(RAND(SAY_FACE_SORROW_DEATH, SAY_FACE_DESIRE_DEATH), me);
+                Talk(RAND(SAY_FACE_SORROW_DEATH, SAY_FACE_DESIRE_DEATH));
 
                 instance->SetData(DATA_DEVOURER_EVENT, DONE);
 
@@ -232,9 +232,9 @@ class boss_devourer_of_souls : public CreatureScript
                     {
                         summon->GetMotionMaster()->MovePoint(0, outroPositions[i].movePosition);
                         if (summon->GetEntry() == NPC_JAINA_PART2)
-                            DoScriptText(SAY_JAINA_OUTRO, summon);
+                            summon->AI()->Talk(SAY_JAINA_OUTRO);
                         else if (summon->GetEntry() == NPC_SYLVANAS_PART2)
-                            DoScriptText(SAY_SYLVANAS_OUTRO, summon);
+                            summon->AI()->Talk(SAY_SYLVANAS_OUTRO);
                     }
                 }
             }
@@ -277,7 +277,7 @@ class boss_devourer_of_souls : public CreatureScript
                             {
                                 mirroredSoulTarget = target->GetGUID();
                                 DoCast(target, SPELL_MIRRORED_SOUL);
-                                DoScriptText(EMOTE_MIRRORED_SOUL, me);
+                                Talk(EMOTE_MIRRORED_SOUL);
                             }
                             events.ScheduleEvent(EVENT_MIRRORED_SOUL, urand(15000, 30000));
                             break;
@@ -290,8 +290,8 @@ class boss_devourer_of_souls : public CreatureScript
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                                 DoCast(target, SPELL_UNLEASHED_SOULS);
                             me->SetDisplayId(DISPLAY_SORROW);
-                            DoScriptText(RAND(SAY_FACE_ANGER_UNLEASH_SOUL, SAY_FACE_SORROW_UNLEASH_SOUL, SAY_FACE_DESIRE_UNLEASH_SOUL), me);
-                            DoScriptText(EMOTE_UNLEASH_SOUL, me);
+                            Talk(RAND(SAY_FACE_ANGER_UNLEASH_SOUL, SAY_FACE_SORROW_UNLEASH_SOUL, SAY_FACE_DESIRE_UNLEASH_SOUL));
+                            Talk(EMOTE_UNLEASH_SOUL);
                             events.ScheduleEvent(EVENT_UNLEASHED_SOULS, 30000);
                             events.ScheduleEvent(EVENT_FACE_ANGER, 5000);
                             break;
@@ -301,8 +301,8 @@ class boss_devourer_of_souls : public CreatureScript
 
                         case EVENT_WAILING_SOULS:
                             me->SetDisplayId(DISPLAY_DESIRE);
-                            DoScriptText(RAND(SAY_FACE_ANGER_WAILING_SOUL, SAY_FACE_DESIRE_WAILING_SOUL), me);
-                            DoScriptText(EMOTE_WAILING_SOUL, me);
+                            Talk(RAND(SAY_FACE_ANGER_WAILING_SOUL, SAY_FACE_DESIRE_WAILING_SOUL));
+                            Talk(EMOTE_WAILING_SOUL);
                             DoCast(me, SPELL_WAILING_SOULS_STARTING);
                             if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                             {

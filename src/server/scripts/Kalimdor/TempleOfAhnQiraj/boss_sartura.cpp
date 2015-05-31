@@ -26,9 +26,9 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_AGGRO                   -1531008
-#define SAY_SLAY                    -1531009
-#define SAY_DEATH                   -1531010
+#define SAY_AGGRO                   2
+#define SAY_SLAY                    1
+#define SAY_DEATH                   0
 
 #define SPELL_WHIRLWIND                              26083
 #define SPELL_ENRAGE                                 28747            //Not sure if right ID.
@@ -81,17 +81,17 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
          void JustDied(Unit* /*Killer*/)
          {
-             DoScriptText(SAY_DEATH, me);
+             Talk(SAY_DEATH);
          }
 
          void KilledUnit(Unit* /*victim*/)
          {
-             DoScriptText(SAY_SLAY, me);
+             Talk(SAY_SLAY);
          }
 
         void UpdateAI(const uint32 diff)

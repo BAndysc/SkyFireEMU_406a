@@ -33,15 +33,15 @@ EndContentData */
 #include "ScriptPCH.h"
 #include "dark_portal.h"
 
-#define SAY_ENTER               -1269020                    //where does this belong?
-#define SAY_INTRO               -1269021
-#define SAY_WEAK75              -1269022
-#define SAY_WEAK50              -1269023
-#define SAY_WEAK25              -1269024
-#define SAY_DEATH               -1269025
-#define SAY_WIN                 -1269026
-#define SAY_ORCS_ENTER          -1269027
-#define SAY_ORCS_ANSWER         -1269028
+#define SAY_ENTER               8                    //where does this belong?
+#define SAY_INTRO               7
+#define SAY_WEAK75              6
+#define SAY_WEAK50              5
+#define SAY_WEAK25              4
+#define SAY_DEATH               3
+#define SAY_WIN                 2
+#define SAY_ORCS_ENTER          1
+#define SAY_ORCS_ANSWER         0
 
 #define SPELL_CHANNEL           31556
 #define SPELL_PORTAL_RUNE       32570                       //aura(portal on ground effect)
@@ -108,7 +108,7 @@ public:
                 if (instance->GetData(TYPE_MEDIVH) == IN_PROGRESS || instance->GetData(TYPE_MEDIVH) == DONE)
                     return;
 
-                DoScriptText(SAY_INTRO, me);
+                Talk(SAY_INTRO);
                 instance->SetData(TYPE_MEDIVH, IN_PROGRESS);
                 DoCast(me, SPELL_CHANNEL, false);
                 Check_Timer = 5000;
@@ -159,7 +159,7 @@ public:
             if (Killer->GetEntry() == me->GetEntry())
                 return;
 
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void UpdateAI(const uint32 diff)
@@ -193,17 +193,17 @@ public:
 
                     if (Life25 && pct <= 25)
                     {
-                        DoScriptText(SAY_WEAK25, me);
+                        Talk(SAY_WEAK25);
                         Life25 = false;
                     }
                     else if (Life50 && pct <= 50)
                     {
-                        DoScriptText(SAY_WEAK50, me);
+                        Talk(SAY_WEAK50);
                         Life50 = false;
                     }
                     else if (Life75 && pct <= 75)
                     {
-                        DoScriptText(SAY_WEAK75, me);
+                        Talk(SAY_WEAK75);
                         Life75 = false;
                     }
 
@@ -218,7 +218,7 @@ public:
 
                     if (instance->GetData(TYPE_RIFT) == DONE)
                     {
-                        DoScriptText(SAY_WIN, me);
+                        Talk(SAY_WIN);
                         Check_Timer = 0;
 
                         if (me->HasAura(SPELL_CHANNEL))
@@ -360,7 +360,7 @@ public:
     };
 };
 
-#define SAY_SAAT_WELCOME        -1269019
+#define SAY_SAAT_WELCOME        0
 
 #define GOSSIP_ITEM_OBTAIN      "[PH] Obtain Chrono-Beacon"
 #define SPELL_CHRONO_BEACON     34975

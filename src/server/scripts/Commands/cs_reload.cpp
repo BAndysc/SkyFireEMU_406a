@@ -38,7 +38,7 @@ EndScriptData */
 #include "Chat.h"
 #include "WaypointManager.h"
 #include "WardenCheckMgr.h"
-#include "CreatureEventAIMgr.h"
+
 
 class reload_commandscript : public CommandScript
 {
@@ -77,7 +77,6 @@ public:
             { "conditions",                   SEC_ADMINISTRATOR, true,  &HandleReloadConditions,                        "", NULL },
             { "config",                       SEC_ADMINISTRATOR, true,  &HandleReloadConfigCommand,                     "", NULL },
             { "creature_text",                SEC_ADMINISTRATOR, true,  &HandleReloadCreatureText,                      "", NULL },
-            { "creature_ai_texts",            SEC_ADMINISTRATOR, true,  &HandleReloadEventAITextsCommand,               "", NULL },
             { "creature_involvedrelation",    SEC_ADMINISTRATOR, true,  &HandleReloadCreatureQuestInvRelationsCommand,  "", NULL },
             { "creature_linked_respawn",      SEC_GAMEMASTER,    true,  &HandleReloadLinkedRespawnCommand,              "", NULL },
             { "creature_loot_template",       SEC_ADMINISTRATOR, true,  &HandleReloadLootTemplatesCreatureCommand,      "", NULL },
@@ -217,14 +216,6 @@ public:
         HandleReloadGameGraveyardZoneCommand(handler, "");
         return true;
     }
-
-	static bool HandleReloadEventAITextsCommand(ChatHandler* handler, const char* /*args*/)
-	{
-		sLog->outString("Re-Loading Texts from `creature_ai_texts`...");
-		sEventAIMgr->LoadCreatureEventAI_Texts();
-		handler->SendGlobalGMSysMessage("DB table `creature_ai_texts` reloaded.");
-		return true;
-	}
 
     static bool HandleReloadAllLootCommand(ChatHandler* handler, const char* /*args*/)
     {

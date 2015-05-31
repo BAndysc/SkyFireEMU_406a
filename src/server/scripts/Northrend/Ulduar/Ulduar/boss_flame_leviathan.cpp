@@ -151,22 +151,22 @@ enum Vehicles
 
 enum Yells
 {
-    SAY_AGGRO            = -1603060,
-    SAY_SLAY             = -1603061,
-    SAY_DEATH            = -1603062,
-    SAY_TARGET_1         = -1603063,
-    SAY_TARGET_2         = -1603064,
-    SAY_TARGET_3         = -1603065,
-    SAY_HARDMODE         = -1603066,
-    SAY_TOWER_NONE       = -1603067,
-    SAY_TOWER_FROST      = -1603068,
-    SAY_TOWER_FLAME      = -1603069,
-    SAY_TOWER_NATURE     = -1603070,
-    SAY_TOWER_STORM      = -1603071,
-    SAY_PLAYER_RIDING    = -1603072,
-    SAY_OVERLOAD_1       = -1603073,
-    SAY_OVERLOAD_2       = -1603074,
-    SAY_OVERLOAD_3       = -1603075,
+    SAY_AGGRO            = 15,
+    SAY_SLAY             = 14,
+    SAY_DEATH            = 13,
+    SAY_TARGET_1         = 12,
+    SAY_TARGET_2         = 11,
+    SAY_TARGET_3         = 10,
+    SAY_HARDMODE         = 9,
+    SAY_TOWER_NONE       = 8,
+    SAY_TOWER_FROST      = 7,
+    SAY_TOWER_FLAME      = 6,
+    SAY_TOWER_NATURE     = 5,
+    SAY_TOWER_STORM      = 4,
+    SAY_PLAYER_RIDING    = 3,
+    SAY_OVERLOAD_1       = 2,
+    SAY_OVERLOAD_2       = 1,
+    SAY_OVERLOAD_3       = 0,
 };
 
 enum MiscellanousData
@@ -320,12 +320,12 @@ class boss_flame_leviathan : public CreatureScript
                     }
 
                     if (!towerOfLife && !towerOfFrost && !towerOfFlames && !towerOfStorms)
-                        DoScriptText(SAY_TOWER_NONE, me);
+                        Talk(SAY_TOWER_NONE);
                     else
-                        DoScriptText(SAY_HARDMODE, me);
+                        Talk(SAY_HARDMODE);
                 }
                 else
-                    DoScriptText(SAY_AGGRO, me);
+                    Talk(SAY_AGGRO);
             }
 
             void JustDied(Unit* /*victim*/)
@@ -334,7 +334,7 @@ class boss_flame_leviathan : public CreatureScript
                 // Set Field Flags 67108928 = 64 | 67108864 = UNIT_FLAG_UNK_6 | UNIT_FLAG_SKINNABLE
                 // Set DynFlags 12
                 // Set NPCFlags 0
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
             }
 
             void SpellHit(Unit* /*caster*/, SpellInfo const* spell)
@@ -397,7 +397,7 @@ class boss_flame_leviathan : public CreatureScript
                     switch (eventId)
                     {
                         case EVENT_PURSUE:
-                            DoScriptText(RAND(SAY_TARGET_1, SAY_TARGET_2, SAY_TARGET_3), me);
+                            Talk(RAND(SAY_TARGET_1, SAY_TARGET_2, SAY_TARGET_3));
                             DoCast(SPELL_PURSUED);  // Will select target in spellscript
                             events.ScheduleEvent(EVENT_PURSUE, 35*IN_MILLISECONDS);
                             break;
@@ -420,7 +420,7 @@ class boss_flame_leviathan : public CreatureScript
                             events.ScheduleEvent(EVENT_SUMMON, 2*IN_MILLISECONDS);
                             break;
                         case EVENT_SHUTDOWN:
-                            DoScriptText(RAND(SAY_OVERLOAD_1, SAY_OVERLOAD_2, SAY_OVERLOAD_3), me);
+                            Talk(RAND(SAY_OVERLOAD_1, SAY_OVERLOAD_2, SAY_OVERLOAD_3));
                             me->MonsterTextEmote(EMOTE_OVERLOAD, 0, true);
                             me->CastSpell(me, SPELL_SYSTEMS_SHUTDOWN, true);
                             if (Shutout)
@@ -440,12 +440,12 @@ class boss_flame_leviathan : public CreatureScript
                                 if (Creature* thorim = DoSummon(NPC_THORIM_BEACON, me, float(urand(20, 60)), 20000, TEMPSUMMON_TIMED_DESPAWN))
                                     thorim->GetMotionMaster()->MoveRandom(100);
                             }
-                            DoScriptText(SAY_TOWER_STORM, me);
+                            Talk(SAY_TOWER_STORM);
                             events.CancelEvent(EVENT_THORIM_S_HAMMER);
                             break;
                         case EVENT_MIMIRON_S_INFERNO: // Tower of Flames
                             me->SummonCreature(NPC_MIMIRON_BEACON, InfernoStart->GetPositionX(), InfernoStart->GetPositionY(), InfernoStart->GetPositionZ());
-                            DoScriptText(SAY_TOWER_FLAME, me);
+                            Talk(SAY_TOWER_FLAME);
                             events.CancelEvent(EVENT_MIMIRON_S_INFERNO);
                             break;
                         case EVENT_HODIR_S_FURY:      // Tower of Frost
@@ -454,11 +454,11 @@ class boss_flame_leviathan : public CreatureScript
                                 if (Creature* hodir = DoSummon(NPC_HODIR_BEACON, me, 50, 0))
                                     hodir->GetMotionMaster()->MoveRandom(100);
                             }
-                            DoScriptText(SAY_TOWER_FROST, me);
+                            Talk(SAY_TOWER_FROST);
                             events.CancelEvent(EVENT_HODIR_S_FURY);
                             break;
                         case EVENT_FREYA_S_WARD:    // Tower of Nature
-                            DoScriptText(SAY_TOWER_NATURE, me);
+                            Talk(SAY_TOWER_NATURE);
                             for (int32 i = 0; i < 4; ++i)
                                 me->SummonCreature(NPC_FREYA_BEACON, FreyaBeacons[i]);
 
@@ -594,7 +594,7 @@ class boss_flame_leviathan_seat : public CreatureScript
                     if (!apply)
                         return;
                     else
-                        DoScriptText(SAY_PLAYER_RIDING, me);
+                        Talk(SAY_PLAYER_RIDING);
 
                     if (Creature* turret = me->GetVehicleKit()->GetPassenger(SEAT_TURRET)->ToCreature())
                     {
@@ -1187,7 +1187,7 @@ class npc_lorekeeper : public CreatureScript
                             if (Creature* Branz = creature->FindNearestCreature(NPC_BRANZ_BRONZBEARD, 1000, true))
                             {
                                 Delorah->GetMotionMaster()->MovePoint(0, Branz->GetPositionX()-4, Branz->GetPositionY(), Branz->GetPositionZ());
-                                //TODO DoScriptText(xxxx, Delorah, Branz); when reached at branz
+                                //TODO Delorah->AI()->Talk(xxxx, Branz->GetGUID()); when reached at branz
                             }
                         }
                     }

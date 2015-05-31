@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS creature_ai_texts;

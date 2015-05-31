@@ -35,18 +35,18 @@ enum eEnums
     SPELL_ELIXIR_OF_FORTITUDE   = 3593, 
     SPELL_BLUE_FIREWORK         = 11540, 
 
-    SAY_AGGRO1                  = -1999910, 
-    SAY_AGGRO2                  = -1999911, 
-    SAY_WP_1                    = -1999912, 
-    SAY_WP_2                    = -1999913, 
-    SAY_WP_3                    = -1999914, 
-    SAY_WP_4                    = -1999915, 
-    SAY_DEATH_1                 = -1999916, 
-    SAY_DEATH_2                 = -1999917, 
-    SAY_DEATH_3                 = -1999918, 
-    SAY_SPELL                   = -1999919, 
-    SAY_RAND_1                  = -1999920, 
-    SAY_RAND_2                  = -1999921
+    SAY_AGGRO1                  = 53, 
+    SAY_AGGRO2                  = 52, 
+    SAY_WP_1                    = 51, 
+    SAY_WP_2                    = 50, 
+    SAY_WP_3                    = 49, 
+    SAY_WP_4                    = 48, 
+    SAY_DEATH_1                 = 47, 
+    SAY_DEATH_2                 = 46, 
+    SAY_DEATH_3                 = 45, 
+    SAY_SPELL                   = 44, 
+    SAY_RAND_1                  = 43, 
+    SAY_RAND_2                  = 42
 };
 
 #define GOSSIP_ITEM_1   "Click to Test Escort(Attack, Run)"
@@ -81,19 +81,19 @@ class example_escort : public CreatureScript
                 switch (uiWP)
                 {
                     case 1:
-                        DoScriptText(SAY_WP_1, me);
+                        Talk(SAY_WP_1);
                         break;
                     case 3:
-                        DoScriptText(SAY_WP_2, me);
+                        Talk(SAY_WP_2);
                         me->SummonCreature(NPC_FELBOAR, me->GetPositionX()+5.0f, me->GetPositionY()+7.0f, me->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
                         break;
                     case 4:
                         if (Player* player = GetPlayerForEscort())
                         {
                             //pTmpPlayer is the target of the text
-                            DoScriptText(SAY_WP_3, me, player);
+                            Talk(SAY_WP_3, player->GetGUID());
                             //pTmpPlayer is the source of the text
-                            DoScriptText(SAY_WP_4, player);
+                            Talk(SAY_WP_4);
                         }
                         break;
                 }
@@ -104,10 +104,10 @@ class example_escort : public CreatureScript
                 if (HasEscortState(STATE_ESCORT_ESCORTING))
                 {
                     if (Player* player = GetPlayerForEscort())
-                        DoScriptText(SAY_AGGRO1, me, player);
+                        Talk(SAY_AGGRO1, player->GetGUID());
                 }
                 else
-                    DoScriptText(SAY_AGGRO2, me);
+                    Talk(SAY_AGGRO2);
             }
 
             void Reset()
@@ -125,14 +125,14 @@ class example_escort : public CreatureScript
                         // not a likely case, code here for the sake of example
                         if (killer == me)
                         {
-                            DoScriptText(SAY_DEATH_1, me, player);
+                            Talk(SAY_DEATH_1, player->GetGUID());
                         }
                         else
-                            DoScriptText(SAY_DEATH_2, me, player);
+                            Talk(SAY_DEATH_2, player->GetGUID());
                     }
                 }
                 else
-                    DoScriptText(SAY_DEATH_3, me);
+                    Talk(SAY_DEATH_3);
             }
 
             void UpdateAI(const uint32 uiDiff)
@@ -145,7 +145,7 @@ class example_escort : public CreatureScript
                 {
                     if (m_uiDeathCoilTimer <= uiDiff)
                     {
-                        DoScriptText(SAY_SPELL, me);
+                        Talk(SAY_SPELL);
                         DoCast(me->getVictim(), SPELL_DEATH_COIL, false);
                         m_uiDeathCoilTimer = 4000;
                     }
@@ -161,12 +161,12 @@ class example_escort : public CreatureScript
                         {
                             if (me->HasAura(SPELL_ELIXIR_OF_FORTITUDE, 0))
                             {
-                                DoScriptText(SAY_RAND_1, me);
+                                Talk(SAY_RAND_1);
                                 DoCast(me, SPELL_BLUE_FIREWORK, false);
                             }
                             else
                             {
-                                DoScriptText(SAY_RAND_2, me);
+                                Talk(SAY_RAND_2);
                                 DoCast(me, SPELL_ELIXIR_OF_FORTITUDE, false);
                             }
 

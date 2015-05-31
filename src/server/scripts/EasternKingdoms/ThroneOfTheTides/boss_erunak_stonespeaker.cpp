@@ -52,14 +52,14 @@ enum Spells
 
 enum Yells
 {
-    SAY_PHASE_1_END_MINDBENDER      = -1643011,
-    SAY_PHASE_1_END_ERUNAK          = -1643012,
-    SAY_MIND_CONTROL_1              = -1643013,
-    SAY_MIND_CONTROL_2              = -1643014,
-    SAY_MIND_CONTROL_3              = -1643015,
-    SAY_MIND_FOG                    = -1643016,
-    SAY_DEATH                       = -1643017,
-    SAY_WIN_ERUNAK                  = -1643018,
+    SAY_PHASE_1_END_MINDBENDER      = 3,
+    SAY_PHASE_1_END_ERUNAK          = 0,
+    SAY_MIND_CONTROL_1              = 2,
+    SAY_MIND_CONTROL_2              = 1,
+    SAY_MIND_CONTROL_3              = 0,
+    SAY_MIND_FOG                    = 2,
+    SAY_DEATH                       = 1,
+    SAY_WIN_ERUNAK                  = 0,
 };
 
 // predicate function to select not charmed target
@@ -175,7 +175,7 @@ public:
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 me->setFaction(35);
                 me->HandleEmoteCommand(68);
-                DoScriptText(SAY_PHASE_1_END_ERUNAK, me);
+                Talk(SAY_PHASE_1_END_ERUNAK);
                 Position pos;
                 me->GetPosition(&pos);
                 me->SummonCreature(BOSS_MINDBENDER_GHURSHA, pos, TEMPSUMMON_MANUAL_DESPAWN);
@@ -260,7 +260,7 @@ public:
             erunak->HandleEmoteCommand(68);
             erunak->setFaction(35);
             me->SetReactState(REACT_AGGRESSIVE);
-            DoScriptText(SAY_PHASE_1_END_MINDBENDER, me);
+            Talk(SAY_PHASE_1_END_MINDBENDER);
 
             TargetTimer = 3000;
             EnslaveTimer = 5000;
@@ -328,7 +328,7 @@ public:
                     DoCast(EnslaveTarget, SPELL_ENSLAVE);
                     DoCast(EnslaveTarget, SPELL_ENSLAVE_BUFF);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    DoScriptText(RAND(SAY_MIND_CONTROL_1,SAY_MIND_CONTROL_2,SAY_MIND_CONTROL_3), me);
+                    Talk(RAND(SAY_MIND_CONTROL_1,SAY_MIND_CONTROL_2,SAY_MIND_CONTROL_3));
                     Enslaved = true;
                     EnslaveTimer = 180000;
                     AbsorbMagicTimer = 180000;
@@ -420,7 +420,7 @@ public:
             if (MindFogTimer <= diff && Enslaved == false)
             {
                 DoCast(me, SPELL_MIND_FOG_SUMMON);
-                DoScriptText(SAY_MIND_FOG, me);
+                Talk(SAY_MIND_FOG);
                 MindFogTimer = 18000;
             } else MindFogTimer -= diff;
 
@@ -435,8 +435,8 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
-            DoScriptText(SAY_WIN_ERUNAK, erunak);
+            Talk(SAY_DEATH);
+            erunak->AI()->Talk(SAY_WIN_ERUNAK);
             RemoveSummons();
             erunak->setFaction(35);
 

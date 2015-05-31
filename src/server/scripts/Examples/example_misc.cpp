@@ -27,11 +27,6 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "ScriptMgr.h"
 
-enum eSay
-{
-    SAY_HI  = -1999925
-};
-
 class AT_example_areatrigger : public AreaTriggerScript
 {
     public:
@@ -43,7 +38,7 @@ class AT_example_areatrigger : public AreaTriggerScript
 
         bool OnTrigger(Player* player, AreaTriggerEntry const* /*trigger*/)
         {
-            DoScriptText(SAY_HI, player);
+			player->MonsterSay("Hi", 0, 0);
             return true;
         }
 };

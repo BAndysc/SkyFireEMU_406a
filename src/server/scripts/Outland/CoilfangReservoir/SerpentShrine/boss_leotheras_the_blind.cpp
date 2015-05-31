@@ -55,18 +55,18 @@ EndScriptData */
 #define DEMON_FORM              21875
 #define MOB_SPELLBINDER         21806
 
-#define SAY_AGGRO               -1548009
-#define SAY_SWITCH_TO_DEMON     -1548010
-#define SAY_INNER_DEMONS        -1548011
-#define SAY_DEMON_SLAY1         -1548012
-#define SAY_DEMON_SLAY2         -1548013
-#define SAY_DEMON_SLAY3         -1548014
-#define SAY_NIGHTELF_SLAY1      -1548015
-#define SAY_NIGHTELF_SLAY2      -1548016
-#define SAY_NIGHTELF_SLAY3      -1548017
-#define SAY_FINAL_FORM          -1548018
-#define SAY_FREE                -1548019
-#define SAY_DEATH               -1548020
+#define SAY_AGGRO               11
+#define SAY_SWITCH_TO_DEMON     10
+#define SAY_INNER_DEMONS        9
+#define SAY_DEMON_SLAY1         8
+#define SAY_DEMON_SLAY2         7
+#define SAY_DEMON_SLAY3         6
+#define SAY_NIGHTELF_SLAY1      5
+#define SAY_NIGHTELF_SLAY2      4
+#define SAY_NIGHTELF_SLAY3      3
+#define SAY_FINAL_FORM          2
+#define SAY_FREE                1
+#define SAY_DEATH               0
 
 class mob_inner_demon : public CreatureScript
 {
@@ -271,7 +271,7 @@ public:
 
         void StartEvent()
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             if (instance)
                 instance->SetData(DATA_LEOTHERASTHEBLINDEVENT, IN_PROGRESS);
         }
@@ -373,17 +373,17 @@ public:
 
             if (DemonForm)
             {
-                DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
+                Talk(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3));
             }
             else
             {
-                DoScriptText(RAND(SAY_NIGHTELF_SLAY1, SAY_NIGHTELF_SLAY2, SAY_NIGHTELF_SLAY3), me);
+                Talk(RAND(SAY_NIGHTELF_SLAY1, SAY_NIGHTELF_SLAY2, SAY_NIGHTELF_SLAY3));
             }
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             //despawn copy
             if (Demon)
@@ -475,7 +475,7 @@ public:
                         //switch to demon form
                         me->RemoveAurasDueToSpell(SPELL_WHIRLWIND, 0);
                         me->SetDisplayId(MODEL_DEMON);
-                        DoScriptText(SAY_SWITCH_TO_DEMON, me);
+                        Talk(SAY_SWITCH_TO_DEMON);
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID  , 0);
                         me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID+1, 0);
                         DemonForm = true;
@@ -538,7 +538,7 @@ public:
                             }
                         }
                     }
-                    DoScriptText(SAY_INNER_DEMONS, me);
+                    Talk(SAY_INNER_DEMONS);
 
                     InnerDemons_Timer = 999999;
                 } else InnerDemons_Timer -= diff;
@@ -577,7 +577,7 @@ public:
                 IsFinalForm = true;
                 DemonForm = false;
 
-                DoScriptText(SAY_FINAL_FORM, me);
+                Talk(SAY_FINAL_FORM);
                 me->SetDisplayId(MODEL_NIGHTELF);
                 me->LoadEquipment(me->GetEquipmentId());
             }
@@ -611,7 +611,7 @@ public:
 
         void StartEvent()
         {
-            DoScriptText(SAY_FREE, me);
+            Talk(SAY_FREE);
         }
 
         void KilledUnit(Unit* victim)
@@ -619,7 +619,7 @@ public:
             if (victim->GetTypeId() != TYPEID_PLAYER)
                 return;
 
-            DoScriptText(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3), me);
+            Talk(RAND(SAY_DEMON_SLAY1, SAY_DEMON_SLAY2, SAY_DEMON_SLAY3));
         }
 
         void JustDied(Unit* /*victim*/)

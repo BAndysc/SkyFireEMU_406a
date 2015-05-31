@@ -22,27 +22,27 @@
 enum eEnums
 {
     //Sartharion Yell
-    SAY_SARTHARION_AGGRO                        = -1615018,
-    SAY_SARTHARION_BERSERK                      = -1615019,
-    SAY_SARTHARION_BREATH                       = -1615020,
-    SAY_SARTHARION_CALL_SHADRON                 = -1615021,
-    SAY_SARTHARION_CALL_TENEBRON                = -1615022,
-    SAY_SARTHARION_CALL_VESPERON                = -1615023,
-    SAY_SARTHARION_DEATH                        = -1615024,
-    SAY_SARTHARION_SPECIAL_1                    = -1615025,
-    SAY_SARTHARION_SPECIAL_2                    = -1615026,
-    SAY_SARTHARION_SPECIAL_3                    = -1615027,
-    SAY_SARTHARION_SPECIAL_4                    = -1615028,
-    SAY_SARTHARION_SLAY_1                       = -1615029,
-    SAY_SARTHARION_SLAY_2                       = -1615030,
-    SAY_SARTHARION_SLAY_3                       = -1615031,
+    SAY_SARTHARION_AGGRO                        = 16,
+    SAY_SARTHARION_BERSERK                      = 15,
+    SAY_SARTHARION_BREATH                       = 14,
+    SAY_SARTHARION_CALL_SHADRON                 = 13,
+    SAY_SARTHARION_CALL_TENEBRON                = 12,
+    SAY_SARTHARION_CALL_VESPERON                = 11,
+    SAY_SARTHARION_DEATH                        = 10,
+    SAY_SARTHARION_SPECIAL_1                    = 9,
+    SAY_SARTHARION_SPECIAL_2                    = 8,
+    SAY_SARTHARION_SPECIAL_3                    = 7,
+    SAY_SARTHARION_SPECIAL_4                    = 6,
+    SAY_SARTHARION_SLAY_1                       = 5,
+    SAY_SARTHARION_SLAY_2                       = 4,
+    SAY_SARTHARION_SLAY_3                       = 3,
 
-    WHISPER_LAVA_CHURN                          = -1615032,
+    WHISPER_LAVA_CHURN                          = 2,
 
-    WHISPER_SHADRON_DICIPLE                     = -1615008,
-    WHISPER_VESPERON_DICIPLE                    = -1615041,
-    WHISPER_HATCH_EGGS                          = -1615017,
-    WHISPER_OPEN_PORTAL                         = -1615042, // whisper, shared by two dragons
+    WHISPER_SHADRON_DICIPLE                     = 18,
+    WHISPER_VESPERON_DICIPLE                    = 1,
+    WHISPER_HATCH_EGGS                          = 17,
+    WHISPER_OPEN_PORTAL                         = 0, // whisper, shared by two dragons
 
     //Sartharion Spells
     SPELL_BERSERK                               = 61632,    // Increases the caster's attack speed by 150% and all damage it deals by 500% for 5 min.
@@ -359,7 +359,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_SARTHARION_AGGRO, me);
+            Talk(SAY_SARTHARION_AGGRO);
             DoZoneInCombat();
 
             if (instance)
@@ -371,7 +371,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_SARTHARION_DEATH, me);
+            Talk(SAY_SARTHARION_DEATH);
 
             if (instance)
             {
@@ -394,7 +394,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SARTHARION_SLAY_1, SAY_SARTHARION_SLAY_2, SAY_SARTHARION_SLAY_3), me);
+            Talk(RAND(SAY_SARTHARION_SLAY_1, SAY_SARTHARION_SLAY_2, SAY_SARTHARION_SLAY_3));
         }
 
         // me->ResetLootMode() is called from Reset()
@@ -513,7 +513,7 @@ public:
                                 break;
                         }
 
-                        DoScriptText(iTextId, me);
+                        Talk(iTextId);
                     }
                 }
             }
@@ -529,7 +529,7 @@ public:
                     if (!PlayerList.isEmpty())
                         for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
                             if (i->getSource() && i->getSource()->isAlive())
-                                DoScriptText(WHISPER_LAVA_CHURN, me, i->getSource());
+                                Talk(WHISPER_LAVA_CHURN, i->getSource()->GetGUID());
                 }
         }
 
@@ -568,7 +568,7 @@ public:
             if (!_bIsBerserk && !HealthAbovePct(35)
                 && ((tene && tene->isAlive()) || (shad && shad->isAlive()) || (vesp && vesp->isAlive())))
             {
-                DoScriptText(SAY_SARTHARION_BERSERK, me);
+                Talk(SAY_SARTHARION_BERSERK);
                 DoCast(me, SPELL_BERSERK);
                 _bIsBerserk = true;
             }
@@ -626,7 +626,7 @@ public:
             // flame breath
             if (FlameBreathTimer <= Diff)
             {
-                DoScriptText(SAY_SARTHARION_BREATH, me);
+                Talk(SAY_SARTHARION_BREATH);
                 DoCast(me->getVictim(), RAID_MODE(SPELL_FLAME_BREATH, SPELL_FLAME_BREATH_H));
                 FlameBreathTimer = urand(25000, 35000);
             }
@@ -659,7 +659,7 @@ public:
                     CastLavaStrikeOnTarget(target);
 
                     if (urand(0, 5) == 0)
-                        DoScriptText(RAND(SAY_SARTHARION_SPECIAL_1, SAY_SARTHARION_SPECIAL_2, SAY_SARTHARION_SPECIAL_3), me);
+                        Talk(RAND(SAY_SARTHARION_SPECIAL_1, SAY_SARTHARION_SPECIAL_2, SAY_SARTHARION_SPECIAL_3));
                 }
                 LavaStrikeTimer = (_bIsSoftEnraged ? urand(1400, 2000) : urand(5000, 20000));
             }
@@ -702,38 +702,38 @@ public:
 
 enum TeneText
 {
-    SAY_TENEBRON_AGGRO                      = -1615009,
-    SAY_TENEBRON_SLAY_1                     = -1615010,
-    SAY_TENEBRON_SLAY_2                     = -1615011,
-    SAY_TENEBRON_DEATH                      = -1615012,
-    SAY_TENEBRON_BREATH                     = -1615013,
-    SAY_TENEBRON_RESPOND                    = -1615014,
-    SAY_TENEBRON_SPECIAL_1                  = -1615015,
-    SAY_TENEBRON_SPECIAL_2                  = -1615016
+    SAY_TENEBRON_AGGRO                      = 7,
+    SAY_TENEBRON_SLAY_1                     = 6,
+    SAY_TENEBRON_SLAY_2                     = 5,
+    SAY_TENEBRON_DEATH                      = 4,
+    SAY_TENEBRON_BREATH                     = 3,
+    SAY_TENEBRON_RESPOND                    = 2,
+    SAY_TENEBRON_SPECIAL_1                  = 1,
+    SAY_TENEBRON_SPECIAL_2                  = 0
 };
 
 enum ShadText
 {
-    SAY_SHADRON_AGGRO                       = -1615000,
-    SAY_SHADRON_SLAY_1                      = -1615001,
-    SAY_SHADRON_SLAY_2                      = -1615002,
-    SAY_SHADRON_DEATH                       = -1615003,
-    SAY_SHADRON_BREATH                      = -1615004,
-    SAY_SHADRON_RESPOND                     = -1615005,
-    SAY_SHADRON_SPECIAL_1                   = -1615006,
-    SAY_SHADRON_SPECIAL_2                   = -1615007
+    SAY_SHADRON_AGGRO                       = 7,
+    SAY_SHADRON_SLAY_1                      = 6,
+    SAY_SHADRON_SLAY_2                      = 5,
+    SAY_SHADRON_DEATH                       = 4,
+    SAY_SHADRON_BREATH                      = 3,
+    SAY_SHADRON_RESPOND                     = 2,
+    SAY_SHADRON_SPECIAL_1                   = 1,
+    SAY_SHADRON_SPECIAL_2                   = 0
 };
 
 enum VespText
 {
-    SAY_VESPERON_AGGRO                      = -1615033,
-    SAY_VESPERON_SLAY_1                     = -1615034,
-    SAY_VESPERON_SLAY_2                     = -1615035,
-    SAY_VESPERON_DEATH                      = -1615036,
-    SAY_VESPERON_BREATH                     = -1615037,
-    SAY_VESPERON_RESPOND                    = -1615038,
-    SAY_VESPERON_SPECIAL_1                  = -1615039,
-    SAY_VESPERON_SPECIAL_2                  = -1615040
+    SAY_VESPERON_AGGRO                      = 7,
+    SAY_VESPERON_SLAY_1                     = 6,
+    SAY_VESPERON_SLAY_2                     = 5,
+    SAY_VESPERON_DEATH                      = 4,
+    SAY_VESPERON_BREATH                     = 3,
+    SAY_VESPERON_RESPOND                    = 2,
+    SAY_VESPERON_SPECIAL_1                  = 1,
+    SAY_VESPERON_SPECIAL_2                  = 0
 };
 
 //to control each dragons common abilities
@@ -830,7 +830,7 @@ struct dummy_dragonAI : public ScriptedAI
             if (!PlayerList.isEmpty())
             {
                 for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-                    DoScriptText(iTextId, me, i->getSource());
+                    Talk(iTextId, i->getSource()->GetGUID());
             }
         }
     }
@@ -948,7 +948,7 @@ struct dummy_dragonAI : public ScriptedAI
                 break;
         }
 
-        DoScriptText(iTextId, me);
+        Talk(iTextId);
 
         me->RemoveAurasDueToSpell(SpellId);
 
@@ -1021,14 +1021,14 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_TENEBRON_AGGRO, me);
+            Talk(SAY_TENEBRON_AGGRO);
             DoZoneInCombat();
             DoCast(me, SPELL_POWER_OF_TENEBRON);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_TENEBRON_SLAY_1, SAY_TENEBRON_SLAY_2), me);
+            Talk(RAND(SAY_TENEBRON_SLAY_1, SAY_TENEBRON_SLAY_2));
         }
 
         void UpdateAI(const uint32 Diff)
@@ -1063,7 +1063,7 @@ public:
             // shadow breath
             if (ShadowBreathTimer <= Diff)
             {
-                DoScriptText(SAY_TENEBRON_BREATH, me);
+                Talk(SAY_TENEBRON_BREATH);
                 DoCast(me->getVictim(), RAID_MODE(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
                 ShadowBreathTimer = urand(20000, 25000);
             }
@@ -1113,14 +1113,14 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_SHADRON_AGGRO, me);
+            Talk(SAY_SHADRON_AGGRO);
             DoZoneInCombat();
             DoCast(me, SPELL_POWER_OF_SHADRON);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SHADRON_SLAY_1, SAY_SHADRON_SLAY_2), me);
+            Talk(RAND(SAY_SHADRON_SLAY_1, SAY_SHADRON_SLAY_2));
         }
 
         void UpdateAI(const uint32 Diff)
@@ -1164,7 +1164,7 @@ public:
             // shadow breath
             if (ShadowBreathTimer <= Diff)
             {
-                DoScriptText(SAY_SHADRON_BREATH, me);
+                Talk(SAY_SHADRON_BREATH);
                 DoCast(me->getVictim(), RAID_MODE(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
                 ShadowBreathTimer = urand(20000, 25000);
             }
@@ -1208,14 +1208,14 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_VESPERON_AGGRO, me);
+            Talk(SAY_VESPERON_AGGRO);
             DoZoneInCombat();
             DoCast(me, SPELL_POWER_OF_VESPERON);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_VESPERON_SLAY_1, SAY_VESPERON_SLAY_2), me);
+            Talk(RAND(SAY_VESPERON_SLAY_1, SAY_VESPERON_SLAY_2));
         }
 
         void UpdateAI(const uint32 Diff)
@@ -1256,7 +1256,7 @@ public:
             // shadow breath
             if (ShadowBreathTimer <= Diff)
             {
-                DoScriptText(SAY_VESPERON_BREATH, me);
+                Talk(SAY_VESPERON_BREATH);
                 DoCast(me->getVictim(), RAID_MODE(SPELL_SHADOW_BREATH, SPELL_SHADOW_BREATH_H));
                 ShadowBreathTimer = urand(20000, 25000);
             }

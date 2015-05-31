@@ -37,13 +37,13 @@ EndContentData */
 
 enum Northshire
 {
-    SAY_BLACKROCK_COMBAT_1    = -1000015,
-    SAY_BLACKROCK_COMBAT_2    = -1000016,
-    SAY_BLACKROCK_COMBAT_3    = -1000017,
-    SAY_BLACKROCK_COMBAT_4    = -1000018,
-    SAY_BLACKROCK_COMBAT_5    = -1000019,
-    SAY_ASSASSIN_COMBAT_1     = -1000020,
-    SAY_ASSASSIN_COMBAT_2     = -1000021,
+    SAY_BLACKROCK_COMBAT_1    = 4,
+    SAY_BLACKROCK_COMBAT_2    = 3,
+    SAY_BLACKROCK_COMBAT_3    = 2,
+    SAY_BLACKROCK_COMBAT_4    = 1,
+    SAY_BLACKROCK_COMBAT_5    = 0,
+    SAY_ASSASSIN_COMBAT_1     = 1,
+    SAY_ASSASSIN_COMBAT_2     = 0,
     SPELL_SPYING              = 92857,
     SPELL_SNEAKING            = 93046,
     SPELL_SPYGLASS            = 80676,
@@ -120,7 +120,7 @@ public:
                 me->SetStandState(UNIT_STAND_STATE_STAND);
                 me->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0);
                 //me->RemoveAllAuras();
-                DoScriptText(SAY_HEAL, me);
+               // Talk(SAY_HEAL);//improper data
                 spellHit = true;
             }
         }
@@ -195,7 +195,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(RAND(SAY_BLACKROCK_COMBAT_1, SAY_BLACKROCK_COMBAT_2, SAY_BLACKROCK_COMBAT_3, SAY_BLACKROCK_COMBAT_4, SAY_BLACKROCK_COMBAT_5), me);
+            Talk(RAND(SAY_BLACKROCK_COMBAT_1, SAY_BLACKROCK_COMBAT_2, SAY_BLACKROCK_COMBAT_3, SAY_BLACKROCK_COMBAT_4, SAY_BLACKROCK_COMBAT_5));
         }
 
         void UpdateAI(const uint32 /*diff*/)
@@ -230,7 +230,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(RAND(SAY_BLACKROCK_COMBAT_1, SAY_BLACKROCK_COMBAT_2, SAY_BLACKROCK_COMBAT_3, SAY_BLACKROCK_COMBAT_4, SAY_BLACKROCK_COMBAT_5), me);
+            Talk(RAND(SAY_BLACKROCK_COMBAT_1, SAY_BLACKROCK_COMBAT_2, SAY_BLACKROCK_COMBAT_3, SAY_BLACKROCK_COMBAT_4, SAY_BLACKROCK_COMBAT_5));
         }
 
         void UpdateAI(const uint32 /*diff*/)
@@ -267,7 +267,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(RAND(SAY_ASSASSIN_COMBAT_1, SAY_ASSASSIN_COMBAT_2), me);
+            Talk(RAND(SAY_ASSASSIN_COMBAT_1, SAY_ASSASSIN_COMBAT_2));
         }
 
         void UpdateAI(const uint32 /*diff*/)
@@ -340,7 +340,7 @@ public:
                 {
                     if (cYell < INFANTRY_YELL_CHANCE)//Roll for random chance to Yell phrase
                     {
-                        me->AI()->Talk(SAY_INFANTRY_YELL); //Yell phrase
+                        Talk(SAY_INFANTRY_YELL); //Yell phrase
                         tYell=urand(10000, 120000);//After First yell, change time range from 10 to 120 seconds
                     }
                     else

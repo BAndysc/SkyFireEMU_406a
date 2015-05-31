@@ -27,16 +27,16 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "gruuls_lair.h"
 
-#define SAY_AGGRO               -1565000
-#define SAY_ENRAGE              -1565001
-#define SAY_OGRE_DEATH1         -1565002
-#define SAY_OGRE_DEATH2         -1565003
-#define SAY_OGRE_DEATH3         -1565004
-#define SAY_OGRE_DEATH4         -1565005
-#define SAY_SLAY1               -1565006
-#define SAY_SLAY2               -1565007
-#define SAY_SLAY3               -1565008
-#define SAY_DEATH               -1565009
+#define SAY_AGGRO               9
+#define SAY_ENRAGE              8
+#define SAY_OGRE_DEATH1         7
+#define SAY_OGRE_DEATH2         6
+#define SAY_OGRE_DEATH3         5
+#define SAY_OGRE_DEATH4         4
+#define SAY_SLAY1               3
+#define SAY_SLAY2               2
+#define SAY_SLAY3               1
+#define SAY_DEATH               0
 
 // High King Maulgar
 #define SPELL_ARCING_SMASH      39144
@@ -171,12 +171,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (CheckAllBossDied(instance, me))
                 instance->SetData(DATA_MAULGAREVENT, DONE);
@@ -184,7 +184,7 @@ public:
 
            void AddDeath()
            {
-                DoScriptText(RAND(SAY_OGRE_DEATH1, SAY_OGRE_DEATH2, SAY_OGRE_DEATH3, SAY_OGRE_DEATH4), me);
+                Talk(RAND(SAY_OGRE_DEATH1, SAY_OGRE_DEATH2, SAY_OGRE_DEATH3, SAY_OGRE_DEATH4));
            }
 
         void EnterCombat(Unit* who)
@@ -211,7 +211,7 @@ public:
 
             GetCouncil();
 
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             instance->SetData64(DATA_MAULGAREVENT_TANK, who->GetGUID());
             instance->SetData(DATA_MAULGAREVENT, IN_PROGRESS);
@@ -269,7 +269,7 @@ public:
             if (!Phase2 && HealthBelowPct(50))
             {
                 Phase2 = true;
-                DoScriptText(SAY_ENRAGE, me);
+                Talk(SAY_ENRAGE);
 
                 DoCast(me, SPELL_DUAL_WIELD, true);
                 me->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 0);

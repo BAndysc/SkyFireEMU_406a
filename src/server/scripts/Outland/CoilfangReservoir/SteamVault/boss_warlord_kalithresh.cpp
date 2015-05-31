@@ -27,14 +27,14 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "steam_vault.h"
 
-#define SAY_INTRO                   -1545016
-#define SAY_REGEN                   -1545017
-#define SAY_AGGRO1                  -1545018
-#define SAY_AGGRO2                  -1545019
-#define SAY_AGGRO3                  -1545020
-#define SAY_SLAY1                   -1545021
-#define SAY_SLAY2                   -1545022
-#define SAY_DEATH                   -1545023
+#define SAY_INTRO                   7
+#define SAY_REGEN                   6
+#define SAY_AGGRO1                  5
+#define SAY_AGGRO2                  4
+#define SAY_AGGRO3                  3
+#define SAY_SLAY1                   2
+#define SAY_SLAY2                   1
+#define SAY_DEATH                   0
 
 #define SPELL_SPELL_REFLECTION      31534
 #define SPELL_IMPALE                39061
@@ -137,7 +137,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3));
 
             if (instance)
                 instance->SetData(TYPE_WARLORD_KALITHRESH, IN_PROGRESS);
@@ -145,7 +145,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void SpellHit(Unit* /*caster*/, const SpellInfo* spell)
@@ -159,7 +159,7 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(TYPE_WARLORD_KALITHRESH, DONE);
@@ -174,7 +174,7 @@ public:
             {
                 if (Creature* distiller = me->FindNearestCreature(17954, 100.0f))
                 {
-                    DoScriptText(SAY_REGEN, me);
+                    Talk(SAY_REGEN);
                     DoCast(me, SPELL_WARLORDS_RAGE);
                     CAST_AI(mob_naga_distiller::mob_naga_distillerAI, distiller->AI())->StartRageGen(me);
                 }

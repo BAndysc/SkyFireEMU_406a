@@ -125,20 +125,20 @@ public:
     };
 };
 
-#define SAY_INTRO                   -1558000
-#define SAY_SUMMON                  -1558001
+#define SAY_INTRO                   9
+#define SAY_SUMMON                  8
 
-#define SAY_AGGRO_1                 -1558002
-#define SAY_AGGRO_2                 -1558003
-#define SAY_AGGRO_3                 -1558004
+#define SAY_AGGRO_1                 7
+#define SAY_AGGRO_2                 6
+#define SAY_AGGRO_3                 5
 
-#define SAY_ROAR                    -1558005
-#define SAY_SOUL_CLEAVE             -1558006
+#define SAY_ROAR                    4
+#define SAY_SOUL_CLEAVE             3
 
-#define SAY_SLAY_1                  -1558007
-#define SAY_SLAY_2                  -1558008
+#define SAY_SLAY_1                  2
+#define SAY_SLAY_2                  1
 
-#define SAY_DEATH                   -1558009
+#define SAY_DEATH                   0
 
 #define SPELL_RIBBON_OF_SOULS       32422
 #define SPELL_SOUL_SCREAM           32421
@@ -195,7 +195,7 @@ public:
         {
             if (!HasTaunted && me->IsWithinDistInMap(who, 150.0f))
             {
-                DoScriptText(SAY_INTRO, me);
+                Talk(SAY_INTRO);
                 HasTaunted = true;
             }
 
@@ -204,7 +204,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
         }
 
         void JustSummoned(Creature* summoned)
@@ -229,12 +229,12 @@ public:
             if (rand()%2)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             //When Exarch Maladar is defeated D'ore appear.
             me->SummonCreature(19412, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 600000);
         }
@@ -249,7 +249,7 @@ public:
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(true);
 
-                DoScriptText(SAY_SUMMON, me);
+                Talk(SAY_SUMMON);
 
                 DoCast(me, SPELL_SUMMON_AVATAR);
                 Avatar_summoned = true;
@@ -267,9 +267,9 @@ public:
 
                         uint32 i = urand(1, 2);
                         if (i == 1)
-                            DoScriptText(SAY_ROAR, me);
+                            Talk(SAY_ROAR);
                         else
-                            DoScriptText(SAY_SOUL_CLEAVE, me);
+                            Talk(SAY_SOUL_CLEAVE);
 
                         soulmodel = target->GetDisplayId();
                         soulholder = target->GetGUID();

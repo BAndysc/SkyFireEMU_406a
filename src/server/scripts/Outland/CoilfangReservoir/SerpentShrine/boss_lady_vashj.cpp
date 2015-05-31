@@ -28,20 +28,20 @@ EndScriptData */
 #include "serpent_shrine.h"
 #include "Spell.h"
 
-#define SAY_INTRO                   -1548042
-#define SAY_AGGRO1                  -1548043
-#define SAY_AGGRO2                  -1548044
-#define SAY_AGGRO3                  -1548045
-#define SAY_AGGRO4                  -1548046
-#define SAY_PHASE1                  -1548047
-#define SAY_PHASE2                  -1548048
-#define SAY_PHASE3                  -1548049
-#define SAY_BOWSHOT1                -1548050
-#define SAY_BOWSHOT2                -1548051
-#define SAY_SLAY1                   -1548052
-#define SAY_SLAY2                   -1548053
-#define SAY_SLAY3                   -1548054
-#define SAY_DEATH                   -1548055
+#define SAY_INTRO                   13
+#define SAY_AGGRO1                  12
+#define SAY_AGGRO2                  11
+#define SAY_AGGRO3                  10
+#define SAY_AGGRO4                  9
+#define SAY_PHASE1                  8
+#define SAY_PHASE2                  7
+#define SAY_PHASE3                  6
+#define SAY_BOWSHOT1                5
+#define SAY_BOWSHOT2                4
+#define SAY_SLAY1                   3
+#define SAY_SLAY2                   2
+#define SAY_SLAY3                   1
+#define SAY_DEATH                   0
 
 #define SPELL_SURGE                 38044
 #define SPELL_MULTI_SHOT            38310
@@ -223,12 +223,12 @@ public:
         }
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_LADYVASHJEVENT, DONE);
@@ -236,7 +236,7 @@ public:
 
         void StartEvent()
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3, SAY_AGGRO4), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3, SAY_AGGRO4));
 
             Phase = 1;
 
@@ -266,7 +266,7 @@ public:
             if (!Intro)
             {
                 Intro = true;
-                DoScriptText(SAY_INTRO, me);
+                Talk(SAY_INTRO);
             }
             if (!CanAttack)
                 return;
@@ -304,7 +304,7 @@ public:
             }
             if (rand()%3)
             {
-                DoScriptText(RAND(SAY_BOWSHOT1, SAY_BOWSHOT2), me);
+                Talk(RAND(SAY_BOWSHOT1, SAY_BOWSHOT2));
             }
         }
 
@@ -394,7 +394,7 @@ public:
                             if (Creature* creature = me->SummonCreature(SHIED_GENERATOR_CHANNEL, ShieldGeneratorChannelPos[i][0],  ShieldGeneratorChannelPos[i][1],  ShieldGeneratorChannelPos[i][2],  ShieldGeneratorChannelPos[i][3], TEMPSUMMON_CORPSE_DESPAWN, 0))
                                 ShieldGeneratorChannel[i] = creature->GetGUID();
 
-                        DoScriptText(SAY_PHASE2, me);
+                        Talk(SAY_PHASE2);
                     }
                 }
                 // Phase 3
@@ -523,7 +523,7 @@ public:
 
                         me->RemoveAurasDueToSpell(SPELL_MAGIC_BARRIER);
 
-                        DoScriptText(SAY_PHASE3, me);
+                        Talk(SAY_PHASE3);
 
                         Phase = 3;
 

@@ -29,13 +29,13 @@ EndScriptData */
 
 enum eFireheart
 {
-    SAY_AGGRO                      = -1585000,
-    SAY_ENERGY                     = -1585001,
-    SAY_EMPOWERED                  = -1585002,
-    SAY_KILL_1                     = -1585003,
-    SAY_KILL_2                     = -1585004,
-    SAY_DEATH                      = -1585005,
-    EMOTE_CRYSTAL                  = -1585006,
+    SAY_AGGRO                      = 6,
+    SAY_ENERGY                     = 5,
+    SAY_EMPOWERED                  = 4,
+    SAY_KILL_1                     = 3,
+    SAY_KILL_2                     = 2,
+    SAY_DEATH                      = 1,
+    EMOTE_CRYSTAL                  = 0,
 
     //Crystal effect spells
     SPELL_FEL_CRYSTAL_COSMETIC     = 44374,
@@ -168,8 +168,8 @@ public:
             }
             if (CrystalChosen)
             {
-                DoScriptText(SAY_ENERGY, me);
-                DoScriptText(EMOTE_CRYSTAL, me);
+                Talk(SAY_ENERGY);
+                Talk(EMOTE_CRYSTAL);
 
                 CrystalChosen->CastSpell(CrystalChosen, SPELL_FEL_CRYSTAL_COSMETIC, true);
 
@@ -199,7 +199,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->HandleGameObject(instance->GetData64(DATA_SELIN_ENCOUNTER_DOOR), false);
@@ -208,7 +208,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+            Talk(RAND(SAY_KILL_1, SAY_KILL_2));
         }
 
         void MovementInform(uint32 type, uint32 id)
@@ -235,7 +235,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (!instance)
                 return;
@@ -309,7 +309,7 @@ public:
                         IsDraining = false;
                         DrainingCrystal = false;
 
-                        DoScriptText(SAY_EMPOWERED, me);
+                        Talk(SAY_EMPOWERED);
 
                         Unit* CrystalChosen = Unit::GetUnit(*me, CrystalGUID);
                         if (CrystalChosen && CrystalChosen->isAlive())

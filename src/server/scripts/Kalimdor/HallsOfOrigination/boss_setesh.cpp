@@ -102,7 +102,7 @@ class boss_setesh : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                //DoScriptText(SAY_AGGRO, me);
+                //Talk(SAY_AGGRO);
 
                 if (instance)
                     instance->SetData(DATA_SETESH_EVENT, IN_PROGRESS);
@@ -162,7 +162,7 @@ class boss_setesh : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                //DoScriptText(SAY_DEATH, me);
+                //Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_SETESH_EVENT, DONE);

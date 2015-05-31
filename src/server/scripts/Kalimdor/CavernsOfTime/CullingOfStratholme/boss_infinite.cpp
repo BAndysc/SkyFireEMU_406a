@@ -28,9 +28,9 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1595045,
-    SAY_FAIL                                    = -1595046,
-    SAY_DEATH                                   = -1595047
+    SAY_AGGRO                                   = 2,
+    SAY_FAIL                                    = 1,
+    SAY_DEATH                                   = 0
 };
 
 class boss_infinite_corruptor : public CreatureScript

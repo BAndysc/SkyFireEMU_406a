@@ -304,8 +304,8 @@ public:
 
 enum Cluck
 {
-    EMOTE_HELLO         = -1070004,
-    EMOTE_CLUCK_TEXT    = -1070006,
+    EMOTE_HELLO         = 1,
+    EMOTE_CLUCK_TEXT    = 0,
 
     QUEST_CLUCK         = 3861,
     FACTION_FRIENDLY    = 35,
@@ -359,7 +359,7 @@ public:
                     {
                         me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                         me->setFaction(FACTION_FRIENDLY);
-                        DoScriptText(EMOTE_HELLO, me);
+                        Talk(EMOTE_HELLO);
                     }
                     break;
                 case TEXT_EMOTE_CHEER:
@@ -367,7 +367,7 @@ public:
                     {
                         me->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                         me->setFaction(FACTION_FRIENDLY);
-                        DoScriptText(EMOTE_CLUCK_TEXT, me);
+                        Talk(EMOTE_CLUCK_TEXT);
                     }
                     break;
             }
@@ -497,9 +497,9 @@ public:
 
 enum Triage
 {
-    SAY_DOC1            = -1000201,
-    SAY_DOC2            = -1000202,
-    SAY_DOC3            = -1000203,
+    SAY_DOC1            = 4,
+    SAY_DOC2            = 3,
+    SAY_DOC3            = 2,
 
     DOCTOR_ALLIANCE     = 12939,
     DOCTOR_HORDE        = 12920,
@@ -772,7 +772,7 @@ public:
                 //stand up
                 me->SetUInt32Value(UNIT_FIELD_BYTES_1, UNIT_STAND_STATE_STAND);
 
-                DoScriptText(RAND(SAY_DOC1, SAY_DOC2, SAY_DOC3), me);
+                Talk(RAND(SAY_DOC1, SAY_DOC2, SAY_DOC3));
 
                 uint32 mobId = me->GetEntry();
                 me->SetWalk(false);
@@ -906,7 +906,7 @@ enum Garments
     SAY_DOLF_THANKS         = -1000171,
     SAY_DOLF_GOODBYE        = -1000172,
     SAY_SHAYA_THANKS        = -1000173,
-    SAY_SHAYA_GOODBYE       = -1000174, //signed for 21469
+    SAY_SHAYA_GOODBYE       = 0, //signed for 21469
 };
 
 class npc_garments_of_quests : public CreatureScript
@@ -962,14 +962,14 @@ public:
                             {
                                 if (IsHealed && !CanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_SHAYA_THANKS, me, caster);
+                                    //Talk(SAY_SHAYA_THANKS, caster->GetGUID()); //improper data
                                     CanRun = true;
                                 }
                                 else if (!IsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     CasterGUID = caster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED, me, caster);
+                                    //Talk(SAY_COMMON_HEALED, caster->GetGUID());//improper data
                                     IsHealed = true;
                                 }
                             }
@@ -979,14 +979,14 @@ public:
                             {
                                 if (IsHealed && !CanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_ROBERTS_THANKS, me, caster);
+                                    //Talk(SAY_ROBERTS_THANKS, caster->GetGUID());//improper data
                                     CanRun = true;
                                 }
                                 else if (!IsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     CasterGUID = caster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED, me, caster);
+                                    //Talk(SAY_COMMON_HEALED, caster->GetGUID());//improper data
                                     IsHealed = true;
                                 }
                             }
@@ -996,14 +996,14 @@ public:
                             {
                                 if (IsHealed && !CanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_DOLF_THANKS, me, caster);
+                                    //Talk(SAY_DOLF_THANKS, caster->GetGUID());//improper data
                                     CanRun = true;
                                 }
                                 else if (!IsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     CasterGUID = caster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED, me, caster);
+                                    //Talk(SAY_COMMON_HEALED, caster->GetGUID());//improper data
                                     IsHealed = true;
                                 }
                             }
@@ -1013,14 +1013,14 @@ public:
                             {
                                 if (IsHealed && !CanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_KORJA_THANKS, me, caster);
+                                    //Talk(SAY_KORJA_THANKS, caster->GetGUID());//improper data
                                     CanRun = true;
                                 }
                                 else if (!IsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     CasterGUID = caster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED, me, caster);
+                                    //Talk(SAY_COMMON_HEALED, caster->GetGUID());//improper data
                                     IsHealed = true;
                                 }
                             }
@@ -1030,14 +1030,14 @@ public:
                             {
                                 if (IsHealed && !CanRun && Spell->Id == SPELL_FORTITUDE_R1)
                                 {
-                                    DoScriptText(SAY_DG_KEL_THANKS, me, caster);
+                                   // Talk(SAY_DG_KEL_THANKS, caster->GetGUID());//improper data
                                     CanRun = true;
                                 }
                                 else if (!IsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
                                 {
                                     CasterGUID = caster->GetGUID();
                                     me->SetStandState(UNIT_STAND_STATE_STAND);
-                                    DoScriptText(SAY_COMMON_HEALED, me, caster);
+                                    //Talk(SAY_COMMON_HEALED, caster->GetGUID());//improper data
                                     IsHealed = true;
                                 }
                             }
@@ -1066,19 +1066,19 @@ public:
                         switch (me->GetEntry())
                         {
                             case ENTRY_SHAYA:
-                                DoScriptText(SAY_SHAYA_GOODBYE, me, unit);
+                                Talk(SAY_SHAYA_GOODBYE, unit->GetGUID());
                                 break;
                             case ENTRY_ROBERTS:
-                                DoScriptText(SAY_ROBERTS_GOODBYE, me, unit);
+                                //Talk(SAY_ROBERTS_GOODBYE, unit->GetGUID());//improper data
                                 break;
                             case ENTRY_DOLF:
-                                DoScriptText(SAY_DOLF_GOODBYE, me, unit);
+                               // Talk(SAY_DOLF_GOODBYE, unit->GetGUID());//improper data
                                 break;
                             case ENTRY_KORJA:
-                                DoScriptText(SAY_KORJA_GOODBYE, me, unit);
+                                //Talk(SAY_KORJA_GOODBYE, unit->GetGUID());//improper data
                                 break;
                             case ENTRY_DG_KEL:
-                                DoScriptText(SAY_DG_KEL_GOODBYE, me, unit);
+                                //Talk(SAY_DG_KEL_GOODBYE, unit->GetGUID());//improper data
                                 break;
                         }
 

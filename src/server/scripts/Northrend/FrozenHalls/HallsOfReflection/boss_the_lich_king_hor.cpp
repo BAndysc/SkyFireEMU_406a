@@ -54,13 +54,13 @@ enum
     SPELL_VOMIT_SPRAY                  = 70176,
     H_SPELL_VOMIT_SPRAY                = 70181,
 
-    SAY_LICH_KING_WALL_01              = -1594486,
-    SAY_LICH_KING_WALL_02              = -1594491,
-    SAY_LICH_KING_GNOUL                = -1594482,
-    SAY_LICH_KING_ABON                 = -1594483,
-    SAY_LICH_KING_WINTER               = -1594481,
-    SAY_LICH_KING_END_DUN              = -1594504,
-    SAY_LICH_KING_WIN                  = -1594485,
+    SAY_LICH_KING_WALL_01              = 274,
+    SAY_LICH_KING_WALL_02              = 269,
+    SAY_LICH_KING_GNOUL                = 278,
+    SAY_LICH_KING_ABON                 = 277,
+    SAY_LICH_KING_WINTER               = 279,
+    SAY_LICH_KING_END_DUN              = 256,
+    SAY_LICH_KING_WIN                  = 275,
 };
 
 class boss_lich_king_hor : public CreatureScript
@@ -135,7 +135,7 @@ public:
                 case 66:
                     SetEscortPaused(true);
                     instance->SetData(DATA_LICHKING_EVENT, SPECIAL);
-                    DoScriptText(SAY_LICH_KING_END_DUN, me);
+                    //Talk(SAY_LICH_KING_END_DUN); //improper
                     if (Creature* lider = ((Creature*)Unit::GetUnit(*me, instance->GetData64(DATA_ESCAPE_LIDER))))
                         me->CastSpell(lider, SPELL_HARVEST_SOUL, false);
                     me->setActive(false);
@@ -184,19 +184,19 @@ public:
             {
                 case 0:
                     instance->SetData(DATA_SUMMONS, 3);
-                    DoScriptText(SAY_LICH_KING_WALL_01, me);
+                    //Talk(SAY_LICH_KING_WALL_01); //improper data
                     StepTimer = 2000;
                     ++Step;
                     break;
                 case 1:
                     DoCast(me, SPELL_RAISE_DEAD);
-                    DoScriptText(SAY_LICH_KING_GNOUL, me);
+                    //Talk(SAY_LICH_KING_GNOUL);//improper data
                     StepTimer = 7000;
                     ++Step;
                     break;
                 case 2:
                     DoCast(me, SPELL_WINTER);
-                    DoScriptText(SAY_LICH_KING_WINTER, me);
+                    //Talk(SAY_LICH_KING_WINTER);//improper data
                     me->SetSpeed(MOVE_WALK, walkSpeed, true);
                     StepTimer = 1000;
                     ++Step;
@@ -222,7 +222,7 @@ public:
             {
                 case 0:
                     instance->SetData(DATA_SUMMONS, 3);
-                    DoScriptText(SAY_LICH_KING_GNOUL, me);
+                    //Talk(SAY_LICH_KING_GNOUL);//improper data
                     DoCast(me, SPELL_RAISE_DEAD);
                     StepTimer = 6000;
                     ++Step;
@@ -247,12 +247,12 @@ public:
                 case 0:
                     instance->SetData(DATA_SUMMONS, 3);
                     DoCast(me, SPELL_RAISE_DEAD);
-                    DoScriptText(SAY_LICH_KING_GNOUL, me);
+                    //Talk(SAY_LICH_KING_GNOUL);//improper data
                     StepTimer = 6000;
                     ++Step;
                     break;
                 case 1:
-                    DoScriptText(SAY_LICH_KING_ABON, me);
+                    //Talk(SAY_LICH_KING_ABON);//improper data
                     CallGuard(NPC_RISEN_WITCH_DOCTOR);
                     CallGuard(NPC_RISEN_WITCH_DOCTOR);
                     CallGuard(NPC_RISEN_WITCH_DOCTOR);
@@ -274,7 +274,7 @@ public:
                 case 0:
                     instance->SetData(DATA_SUMMONS, 3);
                     DoCast(me, SPELL_RAISE_DEAD);
-                    DoScriptText(SAY_LICH_KING_GNOUL, me);
+                    //Talk(SAY_LICH_KING_GNOUL);//improper data
                     StepTimer = 6000;
                     ++Step;
                     break;
@@ -288,7 +288,7 @@ public:
                     ++Step;
                     break;
                 case 2:
-                    DoScriptText(SAY_LICH_KING_ABON, me);
+                    //Talk(SAY_LICH_KING_ABON);//improper data
                     CallGuard(NPC_RISEN_WITCH_DOCTOR);
                     CallGuard(NPC_RISEN_WITCH_DOCTOR);
                     instance->SetData(DATA_ICE_WALL_4, DONE);
@@ -340,7 +340,7 @@ public:
                     me->setActive(false);
                     SetEscortPaused(false);
                     me->StopMoving();
-                    DoScriptText(SAY_LICH_KING_WIN, me);
+                    //Talk(SAY_LICH_KING_WIN);//improper data
                     me->CastSpell(me, SPELL_FURY_OF_FROSTMOURNE, false);
                     me->DealDamage(lider, lider->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                 }

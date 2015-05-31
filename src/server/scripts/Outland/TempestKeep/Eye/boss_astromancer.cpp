@@ -29,15 +29,15 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                           = -1550007,
-    SAY_SUMMON1                         = -1550008,
-    SAY_SUMMON2                         = -1550009,
-    SAY_KILL1                           = -1550010,
-    SAY_KILL2                           = -1550011,
-    SAY_KILL3                           = -1550012,
-    SAY_DEATH                           = -1550013,
-    SAY_VOIDA                           = -1550014,
-    SAY_VOIDB                           = -1550015,
+    SAY_AGGRO                           = 8,
+    SAY_SUMMON1                         = 7,
+    SAY_SUMMON2                         = 6,
+    SAY_KILL1                           = 5,
+    SAY_KILL2                           = 4,
+    SAY_KILL3                           = 3,
+    SAY_DEATH                           = 2,
+    SAY_VOIDA                           = 1,
+    SAY_VOIDB                           = 0,
 
     SPELL_ARCANE_MISSILES               = 33031,
     SPELL_WRATH_OF_THE_ASTROMANCER      = 42783,
@@ -145,21 +145,21 @@ class boss_high_astromancer_solarian : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3), me);
+                Talk(RAND(SAY_KILL1, SAY_KILL2, SAY_KILL3));
             }
 
             void JustDied(Unit* /*victim*/)
             {
                 me->SetFloatValue(OBJECT_FIELD_SCALE_X, defaultsize);
                 me->SetDisplayId(MODEL_HUMAN);
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 if (instance)
                     instance->SetData(DATA_HIGHASTROMANCERSOLARIANEVENT, DONE);
             }
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 DoZoneInCombat();
 
                 if (instance)
@@ -329,7 +329,7 @@ class boss_high_astromancer_solarian : public CreatureScript
                                 for (int j=1; j <= 4; j++)
                                     SummonMinion(NPC_SOLARIUM_AGENT, Portals[i][0], Portals[i][1], Portals[i][2]);
 
-                            DoScriptText(SAY_SUMMON1, me);
+                            Talk(SAY_SUMMON1);
                             Phase2_Timer = 10000;
                         }
                         else
@@ -356,7 +356,7 @@ class boss_high_astromancer_solarian : public CreatureScript
                                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                                 me->SetVisible(true);
 
-                                DoScriptText(SAY_SUMMON2, me);
+                                Talk(SAY_SUMMON2);
                                 AppearDelay = true;
                                 Phase3_Timer = 15000;
                             }
@@ -390,8 +390,8 @@ class boss_high_astromancer_solarian : public CreatureScript
                                 //To make sure she wont be invisible or not selecatble
                                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                                 me->SetVisible(true);
-                                DoScriptText(SAY_VOIDA, me);
-                                DoScriptText(SAY_VOIDB, me);
+                                Talk(SAY_VOIDA);
+                                Talk(SAY_VOIDB);
                                 me->SetArmor(WV_ARMOR);
                                 me->SetDisplayId(MODEL_VOIDWALKER);
                                 me->SetFloatValue(OBJECT_FIELD_SCALE_X, defaultsize*2.5f);

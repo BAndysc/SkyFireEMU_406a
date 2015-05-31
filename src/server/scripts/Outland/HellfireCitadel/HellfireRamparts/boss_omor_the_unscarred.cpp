@@ -28,14 +28,14 @@ EndScriptData */
 
 enum eSays
 {
-    SAY_AGGRO_1                = -1543009,
-    SAY_AGGRO_2                = -1543010,
-    SAY_AGGRO_3                = -1543011,
-    SAY_SUMMON                 = -1543012,
-    SAY_CURSE                  = -1543013,
-    SAY_KILL_1                 = -1543014,
-    SAY_DIE                    = -1543015,
-    SAY_WIPE                   = -1543016,
+    SAY_AGGRO_1                = 7,
+    SAY_AGGRO_2                = 6,
+    SAY_AGGRO_3                = 5,
+    SAY_SUMMON                 = 4,
+    SAY_CURSE                  = 3,
+    SAY_KILL_1                 = 2,
+    SAY_DIE                    = 1,
+    SAY_WIPE                   = 0,
 };
 
 enum eSpells
@@ -78,7 +78,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
             void Reset()
             {
-                DoScriptText(SAY_WIPE, me);
+                Talk(SAY_WIPE);
 
                 OrbitalStrike_Timer = 25000;
                 ShadowWhip_Timer = 2000;
@@ -93,7 +93,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
             }
 
             void KilledUnit(Unit* /*victim*/)
@@ -101,12 +101,12 @@ class boss_omor_the_unscarred : public CreatureScript
                 if (rand()%2)
                     return;
 
-                DoScriptText(SAY_KILL_1, me);
+                Talk(SAY_KILL_1);
             }
 
             void JustSummoned(Creature* summoned)
             {
-                DoScriptText(SAY_SUMMON, me);
+                Talk(SAY_SUMMON);
 
                 if (Unit* random = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     summoned->AI()->AttackStart(random);
@@ -116,7 +116,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DIE, me);
+                Talk(SAY_DIE);
             }
 
             void UpdateAI(const uint32 diff)
@@ -191,7 +191,7 @@ class boss_omor_the_unscarred : public CreatureScript
 
                 if (Aura_Timer <= diff)
                 {
-                    DoScriptText(SAY_CURSE, me);
+                    Talk(SAY_CURSE);
 
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     {

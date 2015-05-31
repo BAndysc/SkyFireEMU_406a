@@ -32,9 +32,9 @@ enum eEnums
     SPELL_POLYMORPH         = 12826, 
     SPELL_MARK_OF_THE_WILD  = 26990, 
 
-    SAY_NOT_INTERESTED      = -1999922, 
-    SAY_WRONG               = -1999923, 
-    SAY_CORRECT             = -1999924
+    SAY_NOT_INTERESTED      = 41, 
+    SAY_WRONG               = 40, 
+    SAY_CORRECT             = 39
 };
 
 #define GOSSIP_ITEM_1       "A quiz: what's your name?"
@@ -64,7 +64,7 @@ class example_gossip_codebox : public CreatureScript
             player->PlayerTalkClass->ClearMenus();
             if (action == GOSSIP_ACTION_INFO_DEF+2)
             {
-                DoScriptText(SAY_NOT_INTERESTED, creature);
+                creature->AI()->Talk(SAY_NOT_INTERESTED);
                 player->CLOSE_GOSSIP_MENU();
             }
 
@@ -81,12 +81,12 @@ class example_gossip_codebox : public CreatureScript
                 case GOSSIP_ACTION_INFO_DEF+1:
                     if (std::strcmp(code, player->GetName()) != 0)
                     {
-                        DoScriptText(SAY_WRONG, creature);
+                        creature->AI()->Talk(SAY_WRONG);
                         creature->CastSpell(player, SPELL_POLYMORPH, true);
                     }
                     else
                     {
-                        DoScriptText(SAY_CORRECT, creature);
+                        creature->AI()->Talk(SAY_CORRECT);
                         creature->CastSpell(player, SPELL_MARK_OF_THE_WILD, true);
                     }
                     player->CLOSE_GOSSIP_MENU();

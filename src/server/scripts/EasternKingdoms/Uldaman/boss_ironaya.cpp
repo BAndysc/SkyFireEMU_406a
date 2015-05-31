@@ -26,7 +26,7 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_AGGRO                    -1070000
+#define SAY_AGGRO                    0
 
 #define SPELL_ARCINGSMASH            8374
 #define SPELL_KNOCKAWAY              10101
@@ -54,7 +54,7 @@ class boss_ironaya : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void UpdateAI(const uint32 Diff)

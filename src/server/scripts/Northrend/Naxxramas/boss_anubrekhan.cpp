@@ -19,9 +19,9 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define SAY_GREET           RAND(-1533000, -1533004, -1533005, -1533006, -1533007)
-#define SAY_AGGRO           RAND(-1533001, -1533002, -1533003)
-#define SAY_SLAY            -1533008
+#define SAY_GREET           RAND(8, 4, 3, 2, 1)
+#define SAY_AGGRO           RAND(7, 6, 5)
+#define SAY_SLAY            0
 
 #define MOB_CRYPT_GUARD     16573
 
@@ -97,7 +97,7 @@ public:
                 if (victim->GetTypeId() == TYPEID_PLAYER)
                     victim->CastSpell(victim, SPELL_SUMMON_CORPSE_SCARABS_PLR, true, NULL, NULL, me->GetGUID());
 
-            DoScriptText(SAY_SLAY, me);
+            Talk(SAY_SLAY);
         }
 
         void JustDied(Unit*)
@@ -111,7 +111,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             events.ScheduleEvent(EVENT_IMPALE, urand(10000, 20000));
             events.ScheduleEvent(EVENT_LOCUST, 90000);
             events.ScheduleEvent(EVENT_BERSERK, 600000);
@@ -124,7 +124,7 @@ public:
         {
             if (!hasTaunted && me->IsWithinDistInMap(who, 60.0f) && who->GetTypeId() == TYPEID_PLAYER)
             {
-                DoScriptText(SAY_GREET, me);
+                Talk(SAY_GREET);
                 hasTaunted = true;
             }
             ScriptedAI::MoveInLineOfSight(who);

@@ -28,22 +28,22 @@ EndScriptData */
 #include "karazhan.h"
 #include "GameObject.h"
 
-#define SAY_AGGRO1                  -1532073
-#define SAY_AGGRO2                  -1532074
-#define SAY_AGGRO3                  -1532075
-#define SAY_FLAMEWREATH1            -1532076
-#define SAY_FLAMEWREATH2            -1532077
-#define SAY_BLIZZARD1               -1532078
-#define SAY_BLIZZARD2               -1532079
-#define SAY_EXPLOSION1              -1532080
-#define SAY_EXPLOSION2              -1532081
-#define SAY_DRINK                   -1532082                //Low Mana / AoE Pyroblast
-#define SAY_ELEMENTALS              -1532083
-#define SAY_KILL1                   -1532084
-#define SAY_KILL2                   -1532085
-#define SAY_TIMEOVER                -1532086
-#define SAY_DEATH                   -1532087
-#define SAY_ATIESH                  -1532088                //Atiesh is equipped by a raid member
+#define SAY_AGGRO1                  15
+#define SAY_AGGRO2                  14
+#define SAY_AGGRO3                  13
+#define SAY_FLAMEWREATH1            12
+#define SAY_FLAMEWREATH2            11
+#define SAY_BLIZZARD1               10
+#define SAY_BLIZZARD2               9
+#define SAY_EXPLOSION1              8
+#define SAY_EXPLOSION2              7
+#define SAY_DRINK                   6                //Low Mana / AoE Pyroblast
+#define SAY_ELEMENTALS              5
+#define SAY_KILL1                   4
+#define SAY_KILL2                   3
+#define SAY_TIMEOVER                2
+#define SAY_DEATH                   1
+#define SAY_ATIESH                  0                //Atiesh is equipped by a raid member
 
 //Spells
 #define SPELL_FROSTBOLT     29954
@@ -159,12 +159,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL1, SAY_KILL2), me);
+            Talk(RAND(SAY_KILL1, SAY_KILL2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
             {
@@ -175,7 +175,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3));
 
             if (instance)
             {
@@ -263,7 +263,7 @@ public:
                 Drinking = true;
                 me->InterruptNonMeleeSpells(false);
 
-                DoScriptText(SAY_DRINK, me);
+                Talk(SAY_DRINK);
 
                 if (!DrinkInturrupted)
                 {
@@ -383,7 +383,7 @@ public:
                 switch (LastSuperSpell)
                 {
                     case SUPER_AE:
-                        DoScriptText(RAND(SAY_EXPLOSION1, SAY_EXPLOSION2), me);
+                        Talk(RAND(SAY_EXPLOSION1, SAY_EXPLOSION2));
 
                         DoCast(me, SPELL_BLINK_CENTER, true);
                         DoCast(me, SPELL_PLAYERPULL, true);
@@ -392,7 +392,7 @@ public:
                         break;
 
                     case SUPER_FLAME:
-                        DoScriptText(RAND(SAY_FLAMEWREATH1, SAY_FLAMEWREATH2), me);
+                        Talk(RAND(SAY_FLAMEWREATH1, SAY_FLAMEWREATH2));
 
                         FlameWreathTimer = 20000;
                         FlameWreathCheckTime = 500;
@@ -405,7 +405,7 @@ public:
                         break;
 
                     case SUPER_BLIZZARD:
-                        DoScriptText(RAND(SAY_BLIZZARD1, SAY_BLIZZARD2), me);
+                        Talk(RAND(SAY_BLIZZARD1, SAY_BLIZZARD2));
 
                         if (Creature* spawn = me->SummonCreature(CREATURE_ARAN_BLIZZARD, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 25000))
                         {
@@ -431,7 +431,7 @@ public:
                     }
                 }
 
-                DoScriptText(SAY_ELEMENTALS, me);
+                Talk(SAY_ELEMENTALS);
             }
 
             if (BerserkTimer <= diff)
@@ -445,7 +445,7 @@ public:
                     }
                 }
 
-                DoScriptText(SAY_TIMEOVER, me);
+                Talk(SAY_TIMEOVER);
 
                 BerserkTimer = 60000;
             } else BerserkTimer -= diff;

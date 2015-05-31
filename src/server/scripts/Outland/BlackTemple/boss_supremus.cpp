@@ -27,9 +27,9 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "black_temple.h"
 
-#define EMOTE_NEW_TARGET            -1564010
-#define EMOTE_PUNCH_GROUND          -1564011                //DoScriptText(EMOTE_PUNCH_GROUND, me);
-#define EMOTE_GROUND_CRACK          -1564012
+#define EMOTE_NEW_TARGET            2
+#define EMOTE_PUNCH_GROUND          1                //Talk(EMOTE_PUNCH_GROUND);
+#define EMOTE_GROUND_CRACK          0
 
 //Spells
 #define SPELL_MOLTEN_PUNCH          40126
@@ -222,7 +222,7 @@ public:
                         {
                             DoResetThreat();
                             me->AddThreat(target, 5000000.0f);
-                            DoScriptText(EMOTE_NEW_TARGET, me);
+                            Talk(EMOTE_NEW_TARGET);
                         }
                         events.ScheduleEvent(EVENT_SWITCH_TARGET, 10000, 0, PHASE_CHASE);
                         break;
@@ -234,7 +234,7 @@ public:
                         {
                             //DoCast(target, SPELL_VOLCANIC_SUMMON);//movement bugged
                             me->SummonCreature(CREATURE_VOLCANO, target->GetPositionX(), target->GetPositionY(), target->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 30000);
-                            DoScriptText(EMOTE_GROUND_CRACK, me);
+                            Talk(EMOTE_GROUND_CRACK);
                             events.DelayEvents(1500, GCD_CAST);
                         }
                         events.ScheduleEvent(EVENT_VOLCANO, 10000, GCD_CAST, PHASE_CHASE);

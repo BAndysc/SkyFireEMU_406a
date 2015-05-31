@@ -88,7 +88,7 @@ public:
                 if (Frenzy_Timer <= Diff)
                 {
                     DoCast(me, SPELL_FRENZY);
-                    DoScriptText(EMOTE_GENERIC_FRENZY_KILL, me);
+                    //Talk(EMOTE_GENERIC_FRENZY_KILL);//improper data
 
                     Frenzy_Timer = 24000;
                 }

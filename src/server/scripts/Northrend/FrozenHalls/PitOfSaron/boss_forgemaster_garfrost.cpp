@@ -21,14 +21,14 @@
 
 enum Yells
 {
-    SAY_AGGRO           = -1658001,
-    SAY_SLAY_1          = -1658002,
-    SAY_SLAY_2          = -1658003,
-    SAY_DEATH           = -1658004,
-    SAY_PHASE2          = -1658005,
-    SAY_PHASE3          = -1658006,
+    SAY_AGGRO           = 5,
+    SAY_SLAY_1          = 4,
+    SAY_SLAY_2          = 3,
+    SAY_DEATH           = 2,
+    SAY_PHASE2          = 1,
+    SAY_PHASE3          = 0,
 
-    SAY_TYRANNUS_DEATH  = -1658007,
+    SAY_TYRANNUS_DEATH  = 15,
 };
 
 enum Spells
@@ -108,7 +108,7 @@ class boss_garfrost : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 DoCast(me, SPELL_PERMAFROST);
                 events.ScheduleEvent(EVENT_THROW_SARONITE, 7000);
 
@@ -118,14 +118,14 @@ class boss_garfrost : public CreatureScript
             void KilledUnit(Unit* victim)
             {
                 if (victim->GetTypeId() == TYPEID_PLAYER)
-                    DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+                    Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
             }
 
             void JustDied(Unit* /*killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 if (Creature* tyrannus = me->GetCreature(*me, instance->GetData64(DATA_TYRANNUS)))
-                    DoScriptText(SAY_TYRANNUS_DEATH, tyrannus);
+                    tyrannus->AI()->Talk(SAY_TYRANNUS_DEATH);
 
                 instance->SetBossState(DATA_GARFROST, DONE);
             }

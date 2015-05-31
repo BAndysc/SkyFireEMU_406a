@@ -124,7 +124,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(YELL_AGGRO, me);
+            //Talk(YELL_AGGRO);//improper data
         }
 
         void JustRespawned()
@@ -187,7 +187,7 @@ public:
                 if (me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY()) > 50)
                 {
                     EnterEvadeMode();
-                    DoScriptText(YELL_EVADE, me);
+                    //Talk(YELL_EVADE);//improper data
                 }
                 resetTimer = 5 * IN_MILLISECONDS;
             } else resetTimer -= diff;

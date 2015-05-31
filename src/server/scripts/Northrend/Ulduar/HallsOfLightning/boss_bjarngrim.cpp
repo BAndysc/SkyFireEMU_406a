@@ -30,17 +30,17 @@ EndScriptData */
 enum eEnums
 {
     //Yell
-    SAY_AGGRO                               = -1602000,
-    SAY_SLAY_1                              = -1602001,
-    SAY_SLAY_2                              = -1602002,
-    SAY_SLAY_3                              = -1602003,
-    SAY_DEATH                               = -1602004,
-    SAY_BATTLE_STANCE                       = -1602005,
-    EMOTE_BATTLE_STANCE                     = -1602006,
-    SAY_BERSEKER_STANCE                     = -1602007,
-    EMOTE_BERSEKER_STANCE                   = -1602008,
-    SAY_DEFENSIVE_STANCE                    = -1602009,
-    EMOTE_DEFENSIVE_STANCE                  = -1602010,
+    SAY_AGGRO                               = 10,
+    SAY_SLAY_1                              = 9,
+    SAY_SLAY_2                              = 8,
+    SAY_SLAY_3                              = 7,
+    SAY_DEATH                               = 6,
+    SAY_BATTLE_STANCE                       = 5,
+    EMOTE_BATTLE_STANCE                     = 4,
+    SAY_BERSEKER_STANCE                     = 3,
+    EMOTE_BERSEKER_STANCE                   = 2,
+    SAY_DEFENSIVE_STANCE                    = 1,
+    EMOTE_DEFENSIVE_STANCE                  = 0,
 
     SPELL_DEFENSIVE_STANCE                  = 53790,
     //SPELL_DEFENSIVE_AURA                    = 41105,
@@ -170,7 +170,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             //must get both lieutenants here and make sure they are with him
             me->CallForHelp(30.0f);
@@ -181,12 +181,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_BJARNGRIM, DONE);
@@ -234,20 +234,20 @@ public:
                 switch (m_uiStance)
                 {
                     case STANCE_DEFENSIVE:
-                        DoScriptText(SAY_DEFENSIVE_STANCE, me);
-                        DoScriptText(EMOTE_DEFENSIVE_STANCE, me);
+                        Talk(SAY_DEFENSIVE_STANCE);
+                        Talk(EMOTE_DEFENSIVE_STANCE);
                         DoCast(me, SPELL_DEFENSIVE_STANCE);
                         SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SHIELD, EQUIP_NO_CHANGE);
                         break;
                     case STANCE_BERSERKER:
-                        DoScriptText(SAY_BERSEKER_STANCE, me);
-                        DoScriptText(EMOTE_BERSEKER_STANCE, me);
+                        Talk(SAY_BERSEKER_STANCE);
+                        Talk(EMOTE_BERSEKER_STANCE);
                         DoCast(me, SPELL_BERSEKER_STANCE);
                         SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_SWORD, EQUIP_NO_CHANGE);
                         break;
                     case STANCE_BATTLE:
-                        DoScriptText(SAY_BATTLE_STANCE, me);
-                        DoScriptText(EMOTE_BATTLE_STANCE, me);
+                        Talk(SAY_BATTLE_STANCE);
+                        Talk(EMOTE_BATTLE_STANCE);
                         DoCast(me, SPELL_BATTLE_STANCE);
                         SetEquipmentSlots(false, EQUIP_MACE, EQUIP_UNEQUIP, EQUIP_NO_CHANGE);
                         break;

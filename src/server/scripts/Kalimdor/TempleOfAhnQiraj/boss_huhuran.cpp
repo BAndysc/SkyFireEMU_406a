@@ -87,7 +87,7 @@ public:
             if (!Frenzy && Frenzy_Timer <= diff)
             {
                 DoCast(me, SPELL_FRENZY);
-                DoScriptText(EMOTE_GENERIC_FRENZY_KILL, me);
+                //Talk(EMOTE_GENERIC_FRENZY_KILL);//improper data
                 Frenzy = true;
                 PoisonBolt_Timer = 3000;
                 Frenzy_Timer = urand(25000, 35000);
@@ -136,7 +136,7 @@ public:
             if (!Berserk && HealthBelowPct(31))
             {
                 me->InterruptNonMeleeSpells(false);
-                DoScriptText(EMOTE_GENERIC_BERSERK, me);
+                //Talk(EMOTE_GENERIC_BERSERK);//improper data
                 DoCast(me, SPELL_BERSERK);
                 Berserk = true;
             }

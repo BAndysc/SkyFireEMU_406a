@@ -42,8 +42,8 @@ enum NPCs
 
 enum Says
 {
-    SAY_CONVERTED_1        = -1000188,
-    SAY_CONVERTED_2        = -1000189
+    SAY_CONVERTED_1        = 477,
+    SAY_CONVERTED_2        = 476
 };
 
 enum Spells
@@ -91,10 +91,10 @@ public:
                 if (Timer <= diff)
                 {
                     uint32 i = urand(1, 2);
-                    if (i == 1)
-                        DoScriptText(SAY_CONVERTED_1, me);
-                    else
-                        DoScriptText(SAY_CONVERTED_2, me);
+                    //if (i == 1)//improper data
+                    //    Talk(SAY_CONVERTED_1);
+                    //else
+                    //    Talk(SAY_CONVERTED_2);
 
                     DoCast(me, SPELL_CONVERT_CREDIT);
                     if (me->isPet())

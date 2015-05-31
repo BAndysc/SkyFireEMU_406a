@@ -620,7 +620,7 @@ public:
                         Phase = 3;
                         break;
                     case 3:
-                        //DoScriptText(SAY_NESINGWARY_1, me);
+                        //Talk(SAY_NESINGWARY_1);
                         uiPhaseTimer = 2000;
                         Phase = 4;
                         break;
@@ -687,10 +687,10 @@ enum eLurgglbr
     FACTION_ESCORTEE_H                  = 775,
 };
 
-/*#define SAY_WP_1_LUR_START  -1571004
-#define SAY_WP_1_LUR_END    -1571005
-#define SAY_WP_41_LUR_START -1571006
-#define SAY_WP_41_LUR_END   -1571007*/
+/*#define SAY_WP_1_LUR_START  2
+#define SAY_WP_1_LUR_END    3
+#define SAY_WP_41_LUR_START 2
+#define SAY_WP_41_LUR_END   7*/
 
 class npc_lurgglbr : public CreatureScript
 {
@@ -737,12 +737,12 @@ public:
                     switch (IntroPhase)
                     {
                         case 1:
-                            //DoScriptText(SAY_WP_1_LUR_START, me);
+                            //Talk(SAY_WP_1_LUR_START);
                             IntroPhase = 2;
                             IntroTimer = 7500;
                             break;
                         case 2:
-                            //DoScriptText(SAY_WP_1_LUR_END, me);
+                            //Talk(SAY_WP_1_LUR_END);
                             IntroPhase = 3;
                             IntroTimer = 7500;
                             break;
@@ -752,12 +752,12 @@ public:
                             IntroTimer = 0;
                             break;
                         case 4:
-                            //DoScriptText(SAY_WP_41_LUR_START, me);
+                            //Talk(SAY_WP_41_LUR_START);
                             IntroPhase = 5;
                             IntroTimer = 8000;
                             break;
                         case 5:
-                            //DoScriptText(SAY_WP_41_LUR_END, me);
+                            //Talk(SAY_WP_41_LUR_END);
                             IntroPhase = 6;
                             IntroTimer = 2500;
                             break;
@@ -942,26 +942,26 @@ enum eThassarian
     NPC_GENERAL_ARLOS       = 25250,
     NPC_LERYSSA             = 25251,
 
-    SAY_TALBOT_1            = -1571004,
-    SAY_LICH_1              = -1571005,
-    SAY_TALBOT_2            = -1571006,
-    SAY_THASSARIAN_1        = -1571007,
-    SAY_THASSARIAN_2        = -1571008,
-    SAY_LICH_2              = -1571009,
-    SAY_THASSARIAN_3        = -1571010,
-    SAY_TALBOT_3            = -1571011,
-    SAY_LICH_3              = -1571012,
-    SAY_TALBOT_4            = -1571013,
-    SAY_ARLOS_1             = -1571014,
-    SAY_ARLOS_2             = -1571015,
-    SAY_LERYSSA_1           = -1571016,
-    SAY_THASSARIAN_4        = -1571017,
-    SAY_LERYSSA_2           = -1571018,
-    SAY_THASSARIAN_5        = -1571019,
-    SAY_LERYSSA_3           = -1571020,
-    SAY_THASSARIAN_6        = -1571021,
-    SAY_LERYSSA_4           = -1571022,
-    SAY_THASSARIAN_7        = -1571023,
+    SAY_TALBOT_1            = 2,
+    SAY_LICH_1              = 3,
+    SAY_TALBOT_2            = 2,
+    SAY_THASSARIAN_1        = 7,
+    SAY_THASSARIAN_2        = 6,
+    SAY_LICH_2              = 1,
+    SAY_THASSARIAN_3        = 5,
+    SAY_TALBOT_3            = 1,
+    SAY_LICH_3              = 0,
+    SAY_TALBOT_4            = 0,
+    SAY_ARLOS_1             = 1,
+    SAY_ARLOS_2             = 0,
+    SAY_LERYSSA_1           = 2,
+    SAY_THASSARIAN_4        = 4,
+    SAY_LERYSSA_2           = 1,
+    SAY_THASSARIAN_5        = 3,
+    SAY_LERYSSA_3           = 0,
+    SAY_THASSARIAN_6        = 2,
+    SAY_LERYSSA_4           = 1,
+    SAY_THASSARIAN_7        = 0,
 };
 
 #define GOSSIP_ITEM_T   "Let's do this, Thassarian. It's now or never."
@@ -1059,7 +1059,7 @@ public:
             {
                 bArlosInPosition   = false;
                 bLeryssaInPosition = false;
-                DoScriptText(SAY_THASSARIAN_1, me);
+                Talk(SAY_THASSARIAN_1);
                 SetEscortPaused(false);
             }
 
@@ -1090,21 +1090,21 @@ public:
 
                     case 3:
                         if (pTalbot)
-                            DoScriptText(SAY_TALBOT_1, pTalbot);
+                            pTalbot->AI()->Talk(SAY_TALBOT_1);
                         uiPhaseTimer = 5000;
                         ++uiPhase;
                         break;
 
                     case 4:
                         if (pArthas)
-                            DoScriptText(SAY_LICH_1, pArthas);
+                            pArthas->AI()->Talk(SAY_LICH_1);
                         uiPhaseTimer = 5000;
                         ++uiPhase;
                         break;
 
                     case 5:
                         if (pTalbot)
-                            DoScriptText(SAY_TALBOT_2, pTalbot);
+                            pTalbot->AI()->Talk(SAY_TALBOT_2);
                         uiPhaseTimer = 5000;
                         ++uiPhase;
                         break;
@@ -1129,7 +1129,7 @@ public:
                         break;
 
                     case 7:
-                        DoScriptText(SAY_THASSARIAN_2, me);
+                        Talk(SAY_THASSARIAN_2);
                         uiPhaseTimer = 5000;
                         ++uiPhase;
                         break;
@@ -1139,35 +1139,35 @@ public:
                         {
                             pArthas->SetInFront(me); //The client doesen't update with the new orientation :l
                             pTalbot->SetStandState(UNIT_STAND_STATE_STAND);
-                            DoScriptText(SAY_LICH_2, pArthas);
+                            pArthas->AI()->Talk(SAY_LICH_2);
                         }
                         uiPhaseTimer = 5000;
                         uiPhase = 9;
                         break;
 
                    case 9:
-                        DoScriptText(SAY_THASSARIAN_3, me);
+                        Talk(SAY_THASSARIAN_3);
                         uiPhaseTimer = 5000;
                         uiPhase = 10;
                         break;
 
                    case 10:
                         if (pTalbot)
-                            DoScriptText(SAY_TALBOT_3, pTalbot);
+                            pTalbot->AI()->Talk(SAY_TALBOT_3);
                         uiPhaseTimer = 5000;
                         uiPhase = 11;
                         break;
 
                    case 11:
                         if (pArthas)
-                            DoScriptText(SAY_LICH_3, pArthas);
+                            pArthas->AI()->Talk(SAY_LICH_3);
                         uiPhaseTimer = 5000;
                         uiPhase = 12;
                         break;
 
                     case 12:
                         if (pTalbot)
-                            DoScriptText(SAY_TALBOT_4, pTalbot);
+                            pTalbot->AI()->Talk(SAY_TALBOT_4);
                         uiPhaseTimer = 2000;
                         uiPhase = 13;
                         break;
@@ -1435,9 +1435,9 @@ public:
             if (!pLeryssa || !pArlos)
                 return;
 
-            DoScriptText(SAY_ARLOS_1, pArlos);
-            DoScriptText(SAY_ARLOS_2, pArlos);
-            DoScriptText(SAY_LERYSSA_1, pLeryssa);
+            pArlos->AI()->Talk(SAY_ARLOS_1);
+            pArlos->AI()->Talk(SAY_ARLOS_2);
+            pLeryssa->AI()->Talk(SAY_LERYSSA_1);
             pArlos->Kill(pArlos, false);
             pLeryssa->RemoveAura(SPELL_STUN);
             pLeryssa->ClearUnitState(UNIT_STATE_STUNNED);
@@ -1519,38 +1519,41 @@ public:
                 {
                     case 1:
                         if (me->isSummon())
-                            if (Unit* pThassarian = me->ToTempSummon()->GetSummoner())
-                                DoScriptText(SAY_THASSARIAN_4, pThassarian);
+							if (Unit* pThassarian = me->ToTempSummon()->GetSummoner())
+								if (pThassarian->ToCreature())
+									pThassarian->ToCreature()->AI()->Talk(SAY_THASSARIAN_4);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
                     case 2:
-                        DoScriptText(SAY_LERYSSA_2, me);
+                        Talk(SAY_LERYSSA_2);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
                     case 3:
                         if (me->isSummon())
                             if (Unit* pThassarian = me->ToTempSummon()->GetSummoner())
-                                DoScriptText(SAY_THASSARIAN_5, pThassarian);
+								if (pThassarian->ToCreature())
+									pThassarian->ToCreature()->AI()->Talk(SAY_THASSARIAN_5);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
                     case 4:
-                        DoScriptText(SAY_LERYSSA_3, me);
+                        Talk(SAY_LERYSSA_3);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
                     case 5:
                         if (me->isSummon())
                             if (Unit* pThassarian = me->ToTempSummon()->GetSummoner())
-                        DoScriptText(SAY_THASSARIAN_6, pThassarian);
+								if (pThassarian->ToCreature())
+									pThassarian->ToCreature()->AI()->Talk(SAY_THASSARIAN_6);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
 
                     case 6:
-                        DoScriptText(SAY_LERYSSA_4, me);
+                        Talk(SAY_LERYSSA_4);
                         uiPhaseTimer = 5000;
                         ++Phase;
                         break;
@@ -1558,7 +1561,8 @@ public:
                         if (me->isSummon())
                             if (Unit* pThassarian = me->ToTempSummon()->GetSummoner())
                             {
-                                DoScriptText(SAY_THASSARIAN_7, pThassarian);
+								if (pThassarian->ToCreature())
+									pThassarian->ToCreature()->AI()->Talk(SAY_THASSARIAN_7);
                                 CAST_AI(npc_thassarian::npc_thassarianAI, pThassarian->GetAI())->uiPhase = 16;
                             }
                         uiPhaseTimer = 5000;
@@ -1667,13 +1671,13 @@ enum eImprisionedBerylSorcerer
 
     NPC_IMPRISONED_BERYL_SORCERER   = 25478,
 
-    SAY_IMPRISIONED_BERYL_1         = -1571024,
-    SAY_IMPRISIONED_BERYL_2         = -1571025,
-    SAY_IMPRISIONED_BERYL_3         = -1571026,
-    SAY_IMPRISIONED_BERYL_4         = -1571027,
-    SAY_IMPRISIONED_BERYL_5         = -1571028,
-    SAY_IMPRISIONED_BERYL_6         = -1571029,
-    SAY_IMPRISIONED_BERYL_7         = -1571030,
+    SAY_IMPRISIONED_BERYL_1         = 6,
+    SAY_IMPRISIONED_BERYL_2         = 5,
+    SAY_IMPRISIONED_BERYL_3         = 4,
+    SAY_IMPRISIONED_BERYL_4         = 3,
+    SAY_IMPRISIONED_BERYL_5         = 2,
+    SAY_IMPRISIONED_BERYL_6         = 1,
+    SAY_IMPRISIONED_BERYL_7         = 0,
 };
 
 class npc_imprisoned_beryl_sorcerer : public CreatureScript
@@ -1725,7 +1729,7 @@ public:
                 case 1:
                     if (uiStep == 1)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_1, me);
+                        Talk(SAY_IMPRISIONED_BERYL_1);
                         uiStep = 2;
                     }
                     break;
@@ -1733,7 +1737,7 @@ public:
                 case 2:
                     if (uiStep == 2)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_2, me);
+                        Talk(SAY_IMPRISIONED_BERYL_2);
                         uiStep = 3;
                     }
                     break;
@@ -1741,7 +1745,7 @@ public:
                 case 3:
                     if (uiStep == 3)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_3, me);
+                        Talk(SAY_IMPRISIONED_BERYL_3);
                         uiStep = 4;
                     }
                     break;
@@ -1749,7 +1753,7 @@ public:
                 case 4:
                     if (uiStep == 4)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_4, me);
+                        Talk(SAY_IMPRISIONED_BERYL_4);
                         uiStep = 5;
                     }
                     break;
@@ -1759,7 +1763,7 @@ public:
                     {
                         if (Player* pCaster = Unit::GetPlayer(*me, CasterGUID))
                         {
-                            DoScriptText(SAY_IMPRISIONED_BERYL_5, me);
+                            Talk(SAY_IMPRISIONED_BERYL_5);
                             pCaster->KilledMonsterCredit(25478, 0);
                             uiStep = 6;
                         }
@@ -1769,7 +1773,7 @@ public:
                 case 6:
                     if (uiStep == 6)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_6, me);
+                        Talk(SAY_IMPRISIONED_BERYL_6);
                         uiStep = 7;
                     }
                     break;
@@ -1777,7 +1781,7 @@ public:
                 case 7:
                     if (uiStep == 7)
                     {
-                        DoScriptText(SAY_IMPRISIONED_BERYL_7, me);
+                        Talk(SAY_IMPRISIONED_BERYL_7);
                         uiStep  = 1;
                         uiPhase = 0;
                     }
@@ -1797,11 +1801,11 @@ public:
 ######*/
 enum Script_Texts_Mootoo_the_Younger
 {
-    SAY_1                    =-1750040,
-    SAY_2                    =-1750041,
-    SAY_3                    =-1750042,
-    SAY_4                    =-1750043,
-    SAY_5                    =-1750044
+    SAY_1                    =4,
+    SAY_2                    =3,
+    SAY_3                    =2,
+    SAY_4                    =1,
+    SAY_5                    =0
 };
 enum Mootoo_the_Younger_Entries
 {
@@ -1828,7 +1832,7 @@ public:
                 break;
             }
             creature->SetStandState(UNIT_STAND_STATE_STAND);
-            DoScriptText(SAY_1, creature);
+            creature->AI()->Talk(SAY_1);
             CAST_AI(npc_escortAI, (creature->AI()))->Start(true, false, player->GetGUID());
         }
         return true;
@@ -1860,19 +1864,19 @@ public:
             {
             case 10:
                 me->HandleEmoteCommand(EMOTE_ONESHOT_EXCLAMATION);
-                DoScriptText(SAY_2, me);
+                Talk(SAY_2);
                 break;
             case 12:
-                DoScriptText(SAY_3, me);
+                Talk(SAY_3);
                 me->HandleEmoteCommand(EMOTE_ONESHOT_LOOT);
                 break;
             case 16:
-                DoScriptText(SAY_4, me);
+                Talk(SAY_4);
                 me->HandleEmoteCommand(EMOTE_ONESHOT_EXCLAMATION);
                 break;
             case 20:
                 me->SetPhaseMask(1, true);
-                DoScriptText(SAY_5, me);
+                Talk(SAY_5);
                 me->HandleEmoteCommand(EMOTE_ONESHOT_EXCLAMATION);
                 if (player)
                     player->GroupEventHappens(QUEST_ESCAPING_THE_MIST, me);
@@ -1899,8 +1903,8 @@ enum Bonker_Togglevolt_Entries
 };
 enum Script_Texts_Bonker_Togglevolt
 {
-    SAY_bonker_1 = -1700002,
-    SAY_bonker_2 = -1700003
+    SAY_bonker_1 = 1,
+    SAY_bonker_2 = 0
 };
 
 class npc_bonker_togglevolt : public CreatureScript
@@ -1913,7 +1917,7 @@ public:
         if (quest->GetQuestId() == QUEST_GET_ME_OUTA_HERE)
         {
             creature->SetStandState(UNIT_STAND_STATE_STAND);
-            DoScriptText(SAY_bonker_2, creature, player);
+            creature->AI()->Talk(SAY_bonker_2, player->GetGUID());
             CAST_AI(npc_escortAI, (creature->AI()))->Start(true, true, player->GetGUID());
         }
         return true;
@@ -1942,7 +1946,7 @@ public:
             {
                 if (Bonker_agro == 0)
                 {
-                    DoScriptText(SAY_bonker_1, me);
+                    Talk(SAY_bonker_1);
                     Bonker_agro++;
                 }
                 DoMeleeAttackIfReady();
@@ -2355,10 +2359,10 @@ enum eHiddenCultist
     NPC_SALTY_JOHN_THORPE                       = 25248,
     NPC_GUARD_MITCHELLS                         = 25828,
 
-    SAY_HIDDEN_CULTIST_1                        = -1571044,
-    SAY_HIDDEN_CULTIST_2                        = -1571045,
-    SAY_HIDDEN_CULTIST_3                        = -1571046,
-    SAY_HIDDEN_CULTIST_4                        = -1571047
+    SAY_HIDDEN_CULTIST_1                        = 1,
+    SAY_HIDDEN_CULTIST_2                        = 0,
+    SAY_HIDDEN_CULTIST_3                        = 0,
+    SAY_HIDDEN_CULTIST_4                        = 0
 };
 
 const char* GOSSIP_ITEM_TOM_HEGGER = "What do you know about the Cult of the Damned?";
@@ -2440,17 +2444,17 @@ public:
                         {
                             case NPC_SALTY_JOHN_THORPE:
                                 me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
-                                DoScriptText(SAY_HIDDEN_CULTIST_1, me);
+                                Talk(SAY_HIDDEN_CULTIST_1);
                                 uiEventTimer = 5000;
                                 uiEventPhase = 2;
                                 break;
                             case NPC_GUARD_MITCHELLS:
-                                DoScriptText(SAY_HIDDEN_CULTIST_2, me);
+                                Talk(SAY_HIDDEN_CULTIST_2);
                                 uiEventTimer = 5000;
                                 uiEventPhase = 2;
                                 break;
                             case NPC_TOM_HEGGER:
-                                DoScriptText(SAY_HIDDEN_CULTIST_3, me);
+                                Talk(SAY_HIDDEN_CULTIST_3);
                                 uiEventTimer = 5000;
                                 uiEventPhase = 2;
                                 break;
@@ -2460,7 +2464,7 @@ public:
                         switch (me->GetEntry())
                         {
                             case NPC_SALTY_JOHN_THORPE:
-                                DoScriptText(SAY_HIDDEN_CULTIST_4, me);
+                                Talk(SAY_HIDDEN_CULTIST_4);
                                 if (Player* player = me->GetPlayer(*me, uiPlayerGUID))
                                 {
                                     me->SetInFront(player);

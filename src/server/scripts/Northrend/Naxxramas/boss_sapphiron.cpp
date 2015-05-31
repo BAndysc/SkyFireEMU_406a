@@ -19,8 +19,8 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define EMOTE_BREATH            -1533082
-#define EMOTE_ENRAGE            -1533083
+#define EMOTE_BREATH            1
+#define EMOTE_ENRAGE            0
 
 #define SPELL_FROST_AURA        RAID_MODE(28531, 55799)
 #define SPELL_CLEAVE            19983
@@ -248,7 +248,7 @@ public:
                     switch (eventId)
                     {
                         case EVENT_BERSERK:
-                            DoScriptText(EMOTE_ENRAGE, me);
+                            Talk(EMOTE_ENRAGE);
                             DoCast(me, SPELL_BERSERK);
                             return;
                         case EVENT_CLEAVE:
@@ -329,7 +329,7 @@ public:
                         }
                         case EVENT_BREATH:
                         {
-                            DoScriptText(EMOTE_BREATH, me);
+                            Talk(EMOTE_BREATH);
                             DoCastAOE(SPELL_FROST_MISSILE);
                             events.ScheduleEvent(EVENT_EXPLOSION, 8000);
                             return;

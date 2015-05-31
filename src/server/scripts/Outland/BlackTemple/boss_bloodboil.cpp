@@ -28,14 +28,14 @@ EndScriptData */
 #include "black_temple.h"
 
 //Speech'n'Sound
-#define SAY_AGGRO               -1564029
-#define SAY_SLAY1               -1564030
-#define SAY_SLAY2               -1564031
-#define SAY_SPECIAL1            -1564032
-#define SAY_SPECIAL2            -1564033
-#define SAY_ENRAGE1             -1564034
-#define SAY_ENRAGE2             -1564035
-#define SAY_DEATH               -1564036
+#define SAY_AGGRO               7
+#define SAY_SLAY1               6
+#define SAY_SLAY2               5
+#define SAY_SPECIAL1            4
+#define SAY_SPECIAL2            3
+#define SAY_ENRAGE1             2
+#define SAY_ENRAGE2             1
+#define SAY_DEATH               0
 
 //Spells
 #define SPELL_ACID_GEYSER        40630
@@ -121,14 +121,14 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             DoZoneInCombat();
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             if (instance)
                 instance->SetData(DATA_GURTOGGBLOODBOILEVENT, IN_PROGRESS);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
@@ -136,7 +136,7 @@ public:
             if (instance)
                 instance->SetData(DATA_GURTOGGBLOODBOILEVENT, DONE);
 
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         // Note: This seems like a very complicated fix. The fix needs to be handled by the core, as implementation of limited-target AoE spells are still not limited.
@@ -219,7 +219,7 @@ public:
                 if (EnrageTimer <= diff)
                 {
                     DoCast(me, SPELL_BERSERK);
-                    DoScriptText(RAND(SAY_ENRAGE1, SAY_ENRAGE2), me);
+                    Talk(RAND(SAY_ENRAGE1, SAY_ENRAGE2));
                 } else EnrageTimer -= diff;
             }
 
@@ -302,7 +302,7 @@ public:
                         //Cast this without triggered so that it appears in combat logs and shows visual.
                         DoCast(me, SPELL_FEL_RAGE_SELF);
 
-                        DoScriptText(RAND(SAY_SPECIAL1, SAY_SPECIAL2), me);
+                        Talk(RAND(SAY_SPECIAL1, SAY_SPECIAL2));
 
                         AcidGeyserTimer = 1000;
                         PhaseChangeTimer = 30000;

@@ -24,64 +24,64 @@
 enum Says
 {
     //First Act - Uther and Jaina Dialog
-    SAY_PHASE101                                = -1595070,  //Arthas
-    SAY_PHASE102                                = -1595071,  //Uther
-    SAY_PHASE103                                = -1595072,  //Arthas
-    SAY_PHASE104                                = -1595073,  //Arthas
-    SAY_PHASE105                                = -1595074,  //Uther
-    SAY_PHASE106                                = -1595075,  //Arthas
-    SAY_PHASE107                                = -1595076,  //Uther
-    SAY_PHASE108                                = -1595077,  //Arthas
-    SAY_PHASE109                                = -1595078,  //Arthas
-    SAY_PHASE110                                = -1595079,  //Uther
-    SAY_PHASE111                                = -1595080,  //Arthas
-    SAY_PHASE112                                = -1595081,  //Uther
-    SAY_PHASE113                                = -1595082,  //Jaina
-    SAY_PHASE114                                = -1595083,  //Arthas
-    SAY_PHASE115                                = -1595084,  //Uther
-    SAY_PHASE116                                = -1595085,  //Arthas
-    SAY_PHASE117                                = -1595086,  //Jaina
-    SAY_PHASE118                                = -1595087,  //Arthas
+    SAY_PHASE101                                = 38,  //Arthas
+    SAY_PHASE102                                = 5,  //Uther
+    SAY_PHASE103                                = 37,  //Arthas
+    SAY_PHASE104                                = 36,  //Arthas
+    SAY_PHASE105                                = 4,  //Uther
+    SAY_PHASE106                                = 35,  //Arthas
+    SAY_PHASE107                                = 3,  //Uther
+    SAY_PHASE108                                = 34,  //Arthas
+    SAY_PHASE109                                = 2,  //Arthas
+    SAY_PHASE110                                = 33,  //Uther
+    SAY_PHASE111                                = 1,  //Arthas
+    SAY_PHASE112                                = 32,  //Uther
+    SAY_PHASE113                                = 1,  //Jaina
+    SAY_PHASE114                                = 31,  //Arthas
+    SAY_PHASE115                                = 0,  //Uther
+    SAY_PHASE116                                = 30,  //Arthas
+    SAY_PHASE117                                = 0,  //Jaina
+    SAY_PHASE118                                = 29,  //Arthas
     //Second Act - City Streets
-    SAY_PHASE201                                = -1595088,  //Arthas
-    SAY_PHASE202                                = -1595089,  //Cityman
-    SAY_PHASE203                                = -1595090,  //Arthas
-    SAY_PHASE204                                = -1595091,  //Crazyman
-    SAY_PHASE205                                = -1595092,  //Arthas
-    SAY_PHASE206                                = -1595009,  //Malganis
-    SAY_PHASE207                                = -1595010,  //Malganis
-    SAY_PHASE208                                = -1595093,  //Arthas
-    SAY_PHASE209                                = -1595094,  //Arthas
-    SAY_PHASE210                                = -1595095,  //Arthas
+    SAY_PHASE201                                = 28,  //Arthas
+    SAY_PHASE202                                = 251,  //Cityman
+    SAY_PHASE203                                = 27,  //Arthas
+    SAY_PHASE204                                = 250,  //Crazyman
+    SAY_PHASE205                                = 26,  //Arthas
+    SAY_PHASE206                                = 16,  //Malganis
+    SAY_PHASE207                                = 15,  //Malganis
+    SAY_PHASE208                                = 25,  //Arthas
+    SAY_PHASE209                                = 24,  //Arthas
+    SAY_PHASE210                                = 23,  //Arthas
     //Third Act - Town Hall
-    SAY_PHASE301                               = -1595096,  //Arthas
-    SAY_PHASE302                               = -1595097,  //Drakonian
-    SAY_PHASE303                               = -1595098,  //Arthas
-    SAY_PHASE304                               = -1595099,  //Arthas
-    SAY_PHASE305                               = -1595100,  //Drakonian
-    SAY_PHASE306                               = -1595101,  //Arthas
-    SAY_PHASE307                               = -1595102,  //Arthas
-    SAY_PHASE308                               = -1595103,  //Arthas
-    SAY_PHASE309                               = -1595104,  //Arthas
-    SAY_PHASE310                               = -1595105,  //Arthas
-    SAY_PHASE311                               = -1595106,  //Arthas
-    SAY_PHASE312                               = -1595107,  //Arthas
-    SAY_PHASE313                               = -1595108,  //Arthas
-    SAY_PHASE314                               = -1595000,  //Epoch
-    SAY_PHASE315                               = -1595109,  //Arthas
+    SAY_PHASE301                               = 22,  //Arthas
+    SAY_PHASE302                               = 249,  //Drakonian
+    SAY_PHASE303                               = 21,  //Arthas
+    SAY_PHASE304                               = 20,  //Arthas
+    SAY_PHASE305                               = 248,  //Drakonian
+    SAY_PHASE306                               = 19,  //Arthas
+    SAY_PHASE307                               = 18,  //Arthas
+    SAY_PHASE308                               = 17,  //Arthas
+    SAY_PHASE309                               = 16,  //Arthas
+    SAY_PHASE310                               = 15,  //Arthas
+    SAY_PHASE311                               = 14,  //Arthas
+    SAY_PHASE312                               = 13,  //Arthas
+    SAY_PHASE313                               = 12,  //Arthas
+    SAY_PHASE314                               = 8,  //Epoch
+    SAY_PHASE315                               = 11,  //Arthas
     //Fourth Act - Fire Corridor
-    SAY_PHASE401                               = -1595110,  //Arthas
-    SAY_PHASE402                               = -1595111,  //Arthas
-    SAY_PHASE403                               = -1595112,  //Arthas
-    SAY_PHASE404                               = -1595113,  //Arthas
-    SAY_PHASE405                               = -1595114,  //Arthas
-    SAY_PHASE406                               = -1595115,  //Arthas
-    SAY_PHASE407                               = -1595116,  //Arthas
+    SAY_PHASE401                               = 10,  //Arthas
+    SAY_PHASE402                               = 9,  //Arthas
+    SAY_PHASE403                               = 8,  //Arthas
+    SAY_PHASE404                               = 7,  //Arthas
+    SAY_PHASE405                               = 6,  //Arthas
+    SAY_PHASE406                               = 5,  //Arthas
+    SAY_PHASE407                               = 4,  //Arthas
     //Fifth Act - Mal'Ganis Fight
-    SAY_PHASE501                               = -1595117,  //Arthas
-    SAY_PHASE502                               = -1595118,  //Arthas
-    SAY_PHASE503                               = -1595119,  //Arthas
-    SAY_PHASE504                               = -1595120,  //Arthas
+    SAY_PHASE501                               = 3,  //Arthas
+    SAY_PHASE502                               = 2,  //Arthas
+    SAY_PHASE503                               = 1,  //Arthas
+    SAY_PHASE504                               = 0,  //Arthas
 };
 
 enum NPCs
@@ -481,7 +481,7 @@ public:
                     break;
                 case 12:
                     SetRun(true);
-                    DoScriptText(SAY_PHASE210, me);
+                    Talk(SAY_PHASE210);
                     if (Unit* disguised0 = me->SummonCreature(NPC_CITY_MAN3, 2398.14f, 1207.81f, 134.04f, 5.155249f, TEMPSUMMON_DEAD_DESPAWN, 180000))
                     {
                         InfiniteDraconianGUID[0] = disguised0->GetGUID();
@@ -506,18 +506,18 @@ public:
                     SetHoldState(true);
                     break;
                 case 21:
-                    DoScriptText(SAY_PHASE301, me);
+                    Talk(SAY_PHASE301);
                     break;
                 case 25:
                     SetRun(false);
                     SpawnTimeRift(0, &InfiniteDraconianGUID[0]);
-                    DoScriptText(SAY_PHASE307, me);
+                    Talk(SAY_PHASE307);
                     break;
                 case 29:
                     SetRun(false);
                     SpawnTimeRift(5, &InfiniteDraconianGUID[0]);
                     SpawnTimeRift(8, &InfiniteDraconianGUID[2]);
-                    DoScriptText(SAY_PHASE309, me);
+                    Talk(SAY_PHASE309);
                     SetHoldState(true);
                     bStepping = true;
                     break;
@@ -525,18 +525,18 @@ public:
                     SetRun(false);
                     SpawnTimeRift(11, &InfiniteDraconianGUID[0]);
                     SpawnTimeRift(14, &InfiniteDraconianGUID[2]);
-                    DoScriptText(SAY_PHASE311, me);
+                    Talk(SAY_PHASE311);
                     SetHoldState(true);
                     bStepping = true;
                     break;
                 case 32:
-                    DoScriptText(SAY_PHASE401, me);
+                    Talk(SAY_PHASE401);
                     break;
                 case 34:
-                    DoScriptText(SAY_PHASE402, me);
+                    Talk(SAY_PHASE402);
                     break;
                 case 35:
-                    DoScriptText(SAY_PHASE403, me);
+                    Talk(SAY_PHASE403);
                     break;
                 case 36:
                     if (instance)
@@ -552,14 +552,14 @@ public:
                     break;
                 case 47:
                     SetRun(false);
-                    DoScriptText(SAY_PHASE405, me);
+                    Talk(SAY_PHASE405);
                     break;
                 case 48:
                     SetRun(true);
-                    DoScriptText(SAY_PHASE406, me);
+                    Talk(SAY_PHASE406);
                     break;
                 case 53:
-                    DoScriptText(SAY_PHASE407, me);
+                    Talk(SAY_PHASE407);
                     break;
                 case 54:
                     GossipStep = 5;
@@ -607,13 +607,13 @@ public:
                             JumpToNextStep(17000);
                             break;
                         case 2:
-                            DoScriptText(SAY_PHASE101, me);
+                            Talk(SAY_PHASE101);
                             JumpToNextStep(2000);
                             break;
                         case 3:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
                             {
-                                DoScriptText(SAY_PHASE102, uther);
+                                uther->AI()->Talk(SAY_PHASE102);
                             }
                             JumpToNextStep(8000);
                             break;
@@ -621,64 +621,64 @@ public:
                             SetEscortPaused(false);
                             bStepping = false;
                             SetRun(false);
-                            DoScriptText(SAY_PHASE103, me);
+                            Talk(SAY_PHASE103);
                             JumpToNextStep(0);
                             break;
                         //After waypoint 1
                         case 5:
                             if (Creature* jaina = Unit::GetCreature(*me, JainaGUID))
                                 jaina->SetTarget(me->GetGUID());
-                            DoScriptText(SAY_PHASE104, me);
+                            Talk(SAY_PHASE104);
                             JumpToNextStep(10000);
                             break;
                         case 6:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
-                                DoScriptText(SAY_PHASE105, uther);
+                                uther->AI()->Talk(SAY_PHASE105);
                             JumpToNextStep(1000);
                             break;
                         case 7:
-                            DoScriptText(SAY_PHASE106, me);
+                            Talk(SAY_PHASE106);
                             JumpToNextStep(4000);
                             break;
                         case 8:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
-                                DoScriptText(SAY_PHASE107, uther);
+                                uther->AI()->Talk(SAY_PHASE107);
                             JumpToNextStep(6000);
                             break;
                         case 9:
-                            DoScriptText(SAY_PHASE108, me);
+                            Talk(SAY_PHASE108);
                             JumpToNextStep(4000);
                             break;
                         case 10:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
-                                DoScriptText(SAY_PHASE109, uther);
+                                uther->AI()->Talk(SAY_PHASE109);
                             JumpToNextStep(8000);
                             break;
                         case 11:
-                            DoScriptText(SAY_PHASE110, me);
+                            Talk(SAY_PHASE110);
                             JumpToNextStep(4000);
                             break;
                         case 12:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
-                                DoScriptText(SAY_PHASE111, uther);
+                                uther->AI()->Talk(SAY_PHASE111);
                             JumpToNextStep(4000);
                             break;
                         case 13:
-                            DoScriptText(SAY_PHASE112, me);
+                            Talk(SAY_PHASE112);
                             JumpToNextStep(11000);
                             break;
                         case 14:
                             if (Creature* jaina = Unit::GetCreature(*me, JainaGUID))
-                                DoScriptText(SAY_PHASE113, jaina);
+                                jaina->AI()->Talk(SAY_PHASE113);
                             JumpToNextStep(3000);
                             break;
                         case 15:
-                            DoScriptText(SAY_PHASE114, me);
+                            Talk(SAY_PHASE114);
                             JumpToNextStep(9000);
                             break;
                         case 16:
                             if (Creature* uther = Unit::GetCreature(*me, UtherGUID))
-                                DoScriptText(SAY_PHASE115, uther);
+                                uther->AI()->Talk(SAY_PHASE115);
                             JumpToNextStep(4000);
                             break;
                         case 17:
@@ -699,12 +699,12 @@ public:
                             JumpToNextStep(1000);
                             break;
                         case 19:
-                            DoScriptText(SAY_PHASE116, me);
+                            Talk(SAY_PHASE116);
                             JumpToNextStep(1000);
                             break;
                         case 20:
                             if (Creature* jaina = Unit::GetCreature(*me, JainaGUID))
-                                DoScriptText(SAY_PHASE117, jaina);
+                                jaina->AI()->Talk(SAY_PHASE117);
                             JumpToNextStep(3000);
                             break;
                         case 21:
@@ -715,7 +715,7 @@ public:
                             break;
                         //After waypoint 3
                         case 22:
-                            DoScriptText(SAY_PHASE118, me);
+                            Talk(SAY_PHASE118);
                             me->SetTarget(JainaGUID);
                             JumpToNextStep(10000);
                             break;
@@ -743,7 +743,7 @@ public:
                             JumpToNextStep(1000);
                             break;
                         case 25:
-                            DoScriptText(SAY_PHASE201, me);
+                            Talk(SAY_PHASE201);
                             JumpToNextStep(12000);
                             break;
                         case 26:
@@ -766,13 +766,13 @@ public:
                             break;
                         case 28:
                             if (Creature* cityman = Unit::GetCreature(*me, CitymenGUID[0]))
-                                DoScriptText(SAY_PHASE202, cityman);
+                                cityman->AI()->Talk(SAY_PHASE202);
                             JumpToNextStep(4000);
                             break;
                         case 29:
                             SetEscortPaused(false);
                             bStepping = false;
-                            DoScriptText(SAY_PHASE203, me);
+                            Talk(SAY_PHASE203);
                             JumpToNextStep(0);
                             break;
                         //After waypoint 10
@@ -785,7 +785,7 @@ public:
                             bStepping = false;
                             if (Creature* cityman1 = Unit::GetCreature(*me, CitymenGUID[1]))
                             {
-                                DoScriptText(SAY_PHASE204, cityman1);
+                                cityman1->AI()->Talk(SAY_PHASE204);
                                 cityman1->SetTarget(me->GetGUID());
                                 if (Creature* cityman0  = Unit::GetCreature(*me, CitymenGUID[0]))
                                     cityman0 ->Kill(cityman0 );
@@ -809,7 +809,7 @@ public:
                                 StalkerGUID = stalker->GetGUID();
                                 me->SetTarget(StalkerGUID);
                             }
-                            DoScriptText(SAY_PHASE205, me);
+                            Talk(SAY_PHASE205);
                             JumpToNextStep(3000);
                             break;
                         case 35:
@@ -827,7 +827,7 @@ public:
                                     malganis->CastSpell(stalkerM, 63793, false);
 
                                 MalganisGUID = malganis->GetGUID();
-                                DoScriptText(SAY_PHASE206, malganis);
+                                malganis->AI()->Talk(SAY_PHASE206);
                                 malganis->SetTarget(me->GetGUID());
                                 malganis->SetReactState(REACT_PASSIVE);
                             }
@@ -850,13 +850,13 @@ public:
                             break;
                         case 38:
                             if (Creature* malganis = Unit::GetCreature(*me, MalganisGUID))
-                                DoScriptText(SAY_PHASE207, malganis);
+                                malganis->AI()->Talk(SAY_PHASE207);
                             JumpToNextStep(17000);
                             break;
                         case 39:
                             if (Creature* malganis = Unit::GetCreature(*me, MalganisGUID))
                                 malganis->SetVisible(false);
-                            DoScriptText(SAY_PHASE208, me);
+                            Talk(SAY_PHASE208);
                             JumpToNextStep(7000);
                             break;
                         case 40:
@@ -865,7 +865,7 @@ public:
                                 StalkerGUID = stalker->GetGUID();
                                 me->SetTarget(StalkerGUID);
                             }
-                            DoScriptText(SAY_PHASE209, me);
+                            Talk(SAY_PHASE209);
 
                             BossEvent = DATA_MEATHOOK_EVENT;
                             if (instance)
@@ -974,11 +974,11 @@ public:
                             break;
                         case 62:
                             if (Creature* disguised0 = Unit::GetCreature(*me, InfiniteDraconianGUID[0]))
-                                DoScriptText(SAY_PHASE302, disguised0);
+                                disguised0->AI()->Talk(SAY_PHASE302);
                             JumpToNextStep(7000);
                             break;
                         case 63:
-                            DoScriptText(SAY_PHASE303, me);
+                            Talk(SAY_PHASE303);
                             SetHoldState(false);
                             bStepping = false;
                             JumpToNextStep(0);
@@ -994,12 +994,12 @@ public:
                             JumpToNextStep(1000);
                             break;
                         case 66:
-                            DoScriptText(SAY_PHASE304, me);
+                            Talk(SAY_PHASE304);
                             JumpToNextStep(2000);
                             break;
                         case 67:
                             if (Creature* disguised0 = Unit::GetCreature(*me, InfiniteDraconianGUID[0]))
-                                DoScriptText(SAY_PHASE305, disguised0);
+                                disguised0->AI()->Talk(SAY_PHASE305);
                             JumpToNextStep(1000);
                             break;
                         case 68:
@@ -1053,9 +1053,9 @@ public:
                                 phaseTimer = 1000;
                             else
                             {
-                                if (Step == 72) DoScriptText(SAY_PHASE308, me);
-                                if (Step == 74) DoScriptText(SAY_PHASE308, me);
-                                if (Step == 76) DoScriptText(SAY_PHASE310, me);
+                                if (Step == 72) Talk(SAY_PHASE308);
+                                if (Step == 74) Talk(SAY_PHASE308);
+                                if (Step == 76) Talk(SAY_PHASE310);
                                 SetHoldState(false);
                                 bStepping = false;
                                 SetRun(true);
@@ -1067,12 +1067,12 @@ public:
                                 phaseTimer = 1000;
                             else
                             {
-                                DoScriptText(SAY_PHASE312, me);
+                                Talk(SAY_PHASE312);
                                 JumpToNextStep(5000);
                             }
                             break;
                         case 79:
-                            DoScriptText(SAY_PHASE313, me);
+                            Talk(SAY_PHASE313);
                             JumpToNextStep(1000);
                             break;
                         case 80:
@@ -1081,7 +1081,7 @@ public:
                                 {
                                     SpawnTimeRift(17, &EpochGUID);
                                     if (Creature* epoch = Unit::GetCreature(*me, EpochGUID))
-                                        DoScriptText(SAY_PHASE314, epoch);
+                                        epoch->AI()->Talk(SAY_PHASE314);
                                     me->SetTarget(EpochGUID);
                                 }
                             JumpToNextStep(18000);
@@ -1089,7 +1089,7 @@ public:
                         case 81:
                             if (instance)
                                 if (instance->GetData(DATA_EPOCH_EVENT) != DONE)
-                                    DoScriptText(SAY_PHASE315, me);
+                                    Talk(SAY_PHASE315);
                             JumpToNextStep(6000);
                             break;
                         case 82:
@@ -1125,13 +1125,13 @@ public:
                             break;
                         //After Gossip 4
                         case 84:
-                            DoScriptText(SAY_PHASE404, me);
+                            Talk(SAY_PHASE404);
                             SetHoldState(false);
                             bStepping = false;
                             break;
                         //After Gossip 5
                         case 85:
-                            DoScriptText(SAY_PHASE501, me);
+                            Talk(SAY_PHASE501);
                             if (Creature* malganis = me->SummonCreature(NPC_MAL_GANIS, 2296.665f, 1502.362f, 128.362f, 4.961f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 900000))
                             {
                                 MalganisGUID = malganis->GetGUID();
@@ -1146,7 +1146,7 @@ public:
                             break;
                         //After waypoint 55
                         case 86:
-                            DoScriptText(SAY_PHASE502, me);
+                            Talk(SAY_PHASE502);
                             JumpToNextStep(6000);
                             me->SetTarget(MalganisGUID);
                             break;
@@ -1176,7 +1176,7 @@ public:
                         case 89:
                             SetRun(true);
                             me->SetTarget(MalganisGUID);
-                            DoScriptText(SAY_PHASE503, me);
+                            Talk(SAY_PHASE503);
                             JumpToNextStep(7000);
                             break;
                         case 90:
@@ -1185,7 +1185,7 @@ public:
                                 instance->SetData(DATA_ARTHAS_EVENT, DONE); //Rewards: Achiev & Chest ;D
                                 me->SetTarget(instance->GetData64(DATA_MAL_GANIS_GATE_2)); //Look behind
                             }
-                            DoScriptText(SAY_PHASE504, me);
+                            Talk(SAY_PHASE504);
                             bStepping = false;
                             break;
                     }

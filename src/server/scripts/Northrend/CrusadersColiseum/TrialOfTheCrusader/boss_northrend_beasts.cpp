@@ -36,15 +36,15 @@ EndScriptData */
 enum Yells
 {
     //Gormok
-    SAY_SNOBOLLED        = -1649000,
+    SAY_SNOBOLLED        = 237,
     //Acidmaw & Dreadscale
-    SAY_SUBMERGE         = -1649010,
-    SAY_EMERGE           = -1649011,
-    SAY_BERSERK          = -1649012,
+    SAY_SUBMERGE         = 236,
+    SAY_EMERGE           = 235,
+    SAY_BERSERK          = 234,
     //Icehowl
-    SAY_TRAMPLE_STARE    = -1649020,
-    SAY_TRAMPLE_FAIL     = -1649021,
-    SAY_TRAMPLE_START    = -1649022,
+    SAY_TRAMPLE_STARE    = 233,
+    SAY_TRAMPLE_FAIL     = 232,
+    SAY_TRAMPLE_START    = 231,
 };
 
 enum Equipment
@@ -239,7 +239,7 @@ public:
                 if (m_uiSummonCount > 0)
                 {
                     me->SummonCreature(NPC_SNOBOLD_VASSAL, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN);
-                    DoScriptText(SAY_SNOBOLLED, me);
+                    Talk(SAY_SNOBOLLED);
                 }
                 m_uiSummonTimer = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
             } else m_uiSummonTimer -= diff;
@@ -457,12 +457,12 @@ struct boss_jormungarAI : public ScriptedAI
 
         if (instanceScript && instanceScript->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL && !enraged)
         {
-            DoScriptText(SAY_EMERGE, me);
+            Talk(SAY_EMERGE);
             me->RemoveAurasDueToSpell(SPELL_SUBMERGE_0);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
             DoCast(SPELL_ENRAGE);
             enraged = true;
-            DoScriptText(SAY_BERSERK, me);
+            Talk(SAY_BERSERK);
             switch (stage)
             {
                 case 0:
@@ -509,7 +509,7 @@ struct boss_jormungarAI : public ScriptedAI
             case 1: // Submerge
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                 DoCast(me, SPELL_SUBMERGE_0);
-                DoScriptText(SAY_SUBMERGE, me);
+                Talk(SAY_SUBMERGE);
                 me->GetMotionMaster()->MovePoint(0, ToCCommonLoc[1].GetPositionX()+ frand(-40.0f, 40.0f), ToCCommonLoc[1].GetPositionY() + frand(-40.0f, 40.0f), ToCCommonLoc[1].GetPositionZ());
                 stage = 2;
             case 2: // Wait til emerge
@@ -521,7 +521,7 @@ struct boss_jormungarAI : public ScriptedAI
                 break;
             case 3: // Emerge
                 me->SetDisplayId(modelStationary);
-                DoScriptText(SAY_EMERGE, me);
+                Talk(SAY_EMERGE);
                 me->RemoveAurasDueToSpell(SPELL_SUBMERGE_0);
                 DoCast(me, SPELL_EMERGE_0);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
@@ -555,7 +555,7 @@ struct boss_jormungarAI : public ScriptedAI
             case 5: // Submerge
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                 DoCast(me, SPELL_SUBMERGE_0);
-                DoScriptText(SAY_SUBMERGE, me);
+                Talk(SAY_SUBMERGE);
                 me->GetMotionMaster()->MovePoint(0, ToCCommonLoc[1].GetPositionX() + frand(-40.0f, 40.0f), ToCCommonLoc[1].GetPositionY() + frand(-40.0f, 40.0f), ToCCommonLoc[1].GetPositionZ());
                 stage = 6;
             case 6: // Wait til emerge
@@ -567,7 +567,7 @@ struct boss_jormungarAI : public ScriptedAI
                 break;
             case 7: // Emerge
                 me->SetDisplayId(modelMobile);
-                DoScriptText(SAY_EMERGE, me);
+                Talk(SAY_EMERGE);
                 me->RemoveAurasDueToSpell(SPELL_SUBMERGE_0);
                 DoCast(me, SPELL_EMERGE_0);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
@@ -921,7 +921,7 @@ public:
                     {
                         m_uiTrampleTargetGUID = target->GetGUID();
                         me->SetTarget(m_uiTrampleTargetGUID);
-                        DoScriptText(SAY_TRAMPLE_STARE, me, target);
+                        Talk(SAY_TRAMPLE_STARE, target->GetGUID());
                         m_bTrampleCasted = false;
                         SetCombatMovement(false);
                         me->GetMotionMaster()->MoveIdle();
@@ -949,7 +949,7 @@ public:
                     } else m_uiTrampleTimer -= diff;
                     break;
                 case 4:
-                    DoScriptText(SAY_TRAMPLE_START, me);
+                    Talk(SAY_TRAMPLE_START);
                     me->GetMotionMaster()->MoveCharge(m_fTrampleTargetX, m_fTrampleTargetY, m_fTrampleTargetZ+2, 42, 1);
                     me->SetTarget(0);
                     m_uiStage = 5;
@@ -981,7 +981,7 @@ public:
                     if (!m_bTrampleCasted)
                     {
                         DoCast(me, SPELL_STAGGERED_DAZE);
-                        DoScriptText(SAY_TRAMPLE_FAIL, me);
+                        Talk(SAY_TRAMPLE_FAIL);
                     }
                     m_bMovementStarted = false;
                     me->GetMotionMaster()->MovementExpired();

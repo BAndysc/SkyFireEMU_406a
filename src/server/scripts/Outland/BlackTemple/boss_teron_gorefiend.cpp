@@ -28,16 +28,16 @@ EndScriptData */
 #include "black_temple.h"
 
  //Speech'n'sound
-#define SAY_INTRO                       -1564037
-#define SAY_AGGRO                       -1564038
-#define SAY_SLAY1                       -1564039
-#define SAY_SLAY2                       -1564040
-#define SAY_SPELL1                      -1564041
-#define SAY_SPELL2                      -1564042
-#define SAY_SPECIAL1                    -1564043
-#define SAY_SPECIAL2                    -1564044
-#define SAY_ENRAGE                      -1564045
-#define SAY_DEATH                       -1564046
+#define SAY_INTRO                       9
+#define SAY_AGGRO                       8
+#define SAY_SLAY1                       7
+#define SAY_SLAY2                       6
+#define SAY_SPELL1                      5
+#define SAY_SPELL2                      4
+#define SAY_SPECIAL1                    3
+#define SAY_SPECIAL2                    2
+#define SAY_ENRAGE                      1
+#define SAY_DEATH                       0
 
 //Spells
 #define SPELL_INCINERATE                40239
@@ -275,7 +275,7 @@ public:
 
                     me->GetMotionMaster()->Clear(false);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    DoScriptText(SAY_INTRO, me);
+                    Talk(SAY_INTRO);
                     me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_TALK);
                     AggroTargetGUID = who->GetGUID();
                     Intro = true;
@@ -287,7 +287,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
@@ -295,7 +295,7 @@ public:
             if (instance)
                 instance->SetData(DATA_TERONGOREFIENDEVENT, DONE);
 
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         float CalculateRandomLocation(float Loc, uint32 radius)
@@ -383,7 +383,7 @@ public:
                 {
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    DoScriptText(SAY_AGGRO, me);
+                    Talk(SAY_AGGRO);
                     me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_NONE);
                     Done = true;
                     if (AggroTargetGUID)
@@ -457,7 +457,7 @@ public:
 
                 if (target)
                 {
-                    DoScriptText(RAND(SAY_SPECIAL1, SAY_SPECIAL2), me);
+                    Talk(RAND(SAY_SPECIAL1, SAY_SPECIAL2));
                     DoCast(target, SPELL_INCINERATE);
                     IncinerateTimer = urand(20, 51) * 1000;
                 }
@@ -490,7 +490,7 @@ public:
 
             if (RandomYellTimer <= diff)
             {
-                DoScriptText(RAND(SAY_SPELL1, SAY_SPELL2), me);
+                Talk(RAND(SAY_SPELL1, SAY_SPELL2));
                 RandomYellTimer = urand(50, 101) * 1000;
             } else RandomYellTimer -= diff;
 
@@ -499,7 +499,7 @@ public:
                 if (EnrageTimer <= diff)
             {
                 DoCast(me, SPELL_BERSERK);
-                DoScriptText(SAY_ENRAGE, me);
+                Talk(SAY_ENRAGE);
             } else EnrageTimer -= diff;
             }
 

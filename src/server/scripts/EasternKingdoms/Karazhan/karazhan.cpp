@@ -61,26 +61,26 @@ struct Dialogue
 
 static Dialogue OzDialogue[]=
 {
-    {-1532103, 6000},
-    {-1532104, 18000},
-    {-1532105, 9000},
-    {-1532106, 15000}
+    {11, 6000},
+    {10, 18000},
+    {9, 9000},
+    {8, 15000}
 };
 
 static Dialogue HoodDialogue[]=
 {
-    {-1532107, 6000},
-    {-1532108, 10000},
-    {-1532109, 14000},
-    {-1532110, 15000}
+    {7, 6000},
+    {6, 10000},
+    {5, 14000},
+    {4, 15000}
 };
 
 static Dialogue RAJDialogue[]=
 {
-    {-1532111, 5000},
-    {-1532112, 7000},
-    {-1532113, 14000},
-    {-1532114, 14000}
+    {3, 5000},
+    {2, 7000},
+    {1, 14000},
+    {0, 14000}
 };
 
 // Entries and spawn locations for creatures in Oz event
@@ -223,7 +223,7 @@ public:
             }
 
             if (text)
-                 DoScriptText(text, me);
+                 Talk(text);
         }
 
         void PrepareEncounter()

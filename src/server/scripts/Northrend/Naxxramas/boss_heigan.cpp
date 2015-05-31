@@ -19,10 +19,10 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define SAY_AGGRO           RAND(-1533109, -1533110, -1533111)
-#define SAY_SLAY            -1533112
-#define SAY_TAUNT           RAND(-1533113, -1533114, -1533115, -1533116, -1533117)
-#define SAY_DEATH           -1533118
+#define SAY_AGGRO           RAND(9, 8, 7)
+#define SAY_SLAY            6
+#define SAY_TAUNT           RAND(5, 4, 3, 2, 1)
+#define SAY_DEATH           0
 
 #define SPELL_SPELL_DISRUPTION  29310
 #define SPELL_DECREPIT_FEVER    RAID_MODE(29998, 55011)
@@ -68,7 +68,7 @@ public:
         void KilledUnit(Unit* who)
         {
             if (!(rand()%5))
-                DoScriptText(SAY_SLAY, me);
+                Talk(SAY_SLAY);
             if (who->GetTypeId() == TYPEID_PLAYER)
                 safetyDance = false;
         }
@@ -90,13 +90,13 @@ public:
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             EnterPhase(PHASE_FIGHT);
             safetyDance = true;
         }

@@ -27,12 +27,12 @@ EndScriptData */
 #include "ScriptPCH.h"
 
 //not used
-#define SAY_AGGRO                       -1554000
-#define SAY_SAW_ATTACK1                 -1554001
-#define SAY_SAW_ATTACK2                 -1554002
-#define SAY_SLAY1                       -1554003
-#define SAY_SLAY2                       -1554004
-#define SAY_DEATH                       -1554005
+#define SAY_AGGRO                       339
+#define SAY_SAW_ATTACK1                 338
+#define SAY_SAW_ATTACK2                 337
+#define SAY_SLAY1                       336
+#define SAY_SLAY2                       335
+#define SAY_DEATH                       334
 
 #define SPELL_STREAM_OF_MACHINE_FLUID   35311
 #define SPELL_SAW_BLADE                 35318

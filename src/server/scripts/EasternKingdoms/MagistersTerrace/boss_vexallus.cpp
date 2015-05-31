@@ -29,11 +29,11 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                       = -1585007,
-    SAY_ENERGY                      = -1585008,
-    SAY_OVERLOAD                    = -1585009,
-    SAY_KILL                        = -1585010,
-    EMOTE_DISCHARGE_ENERGY          = -1585011,
+    SAY_AGGRO                       = 4,
+    SAY_ENERGY                      = 3,
+    SAY_OVERLOAD                    = 2,
+    SAY_KILL                        = 1,
+    EMOTE_DISCHARGE_ENERGY          = 0,
 
     //Pure energy spell info
     SPELL_ENERGY_BOLT               = 46156,
@@ -96,7 +96,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_KILL, me);
+            Talk(SAY_KILL);
         }
 
         void JustDied(Unit* /*victim*/)
@@ -107,7 +107,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(DATA_VEXALLUS_EVENT, IN_PROGRESS);
@@ -141,8 +141,8 @@ public:
                     else
                         ++IntervalHealthAmount;
 
-                    DoScriptText(SAY_ENERGY, me);
-                    DoScriptText(EMOTE_DISCHARGE_ENERGY, me);
+                    Talk(SAY_ENERGY);
+                    Talk(EMOTE_DISCHARGE_ENERGY);
 
                     if (IsHeroic())
                     {

@@ -115,7 +115,7 @@ public:
 
         void JustDied(Unit* /*Kill*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             Summons.DespawnAll();
             if (instance)
                 instance->SetData(DATA_HIGH_PROPHET_BARIM_EVENT, DONE);
@@ -123,12 +123,12 @@ public:
 
         void KilledUnit(Unit* /*Killed*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+            Talk(RAND(SAY_KILL_1, SAY_KILL_2));
         }
 
         void EnterCombat(Unit* /*Ent*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             DoZoneInCombat();
 
             if (instance)
@@ -151,7 +151,7 @@ public:
             DoCast(me, SPELL_HALLOWED_GROUND);
             events.ScheduleEvent(EVENT_HALLOWED_GROUND, 4000);
 
-            DoScriptText(SAY_REPENTANCE, me);
+            Talk(SAY_REPENTANCE);
             DoCast(me, SPELL_REPENTANCE_IMMUNE);
             Creature* Harbinger = me->SummonCreature(NPC_HARBINGER_OF_DARKNESS, SummonLocations[1], TEMPSUMMON_CORPSE_DESPAWN);
             Harbinger->AddThreat(me->getVictim(), 0.0f);

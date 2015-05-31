@@ -29,16 +29,16 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                   = -1568000,
-    SAY_FIRE_BOMBS              = -1568001,
-    SAY_SUMMON_HATCHER          = -1568002,
-    SAY_ALL_EGGS                = -1568003,
-    SAY_BERSERK                 = -1568004,
-    SAY_SLAY_1                  = -1568005,
-    SAY_SLAY_2                  = -1568006,
-    SAY_DEATH                   = -1568007,
-    SAY_EVENT_STRANGERS         = -1568008,
-    SAY_EVENT_FRIENDS           = -1568009,
+    SAY_AGGRO                   = 9,
+    SAY_FIRE_BOMBS              = 8,
+    SAY_SUMMON_HATCHER          = 7,
+    SAY_ALL_EGGS                = 6,
+    SAY_BERSERK                 = 5,
+    SAY_SLAY_1                  = 4,
+    SAY_SLAY_2                  = 3,
+    SAY_DEATH                   = 2,
+    SAY_EVENT_STRANGERS         = 1,
+    SAY_EVENT_FRIENDS           = 0,
 
 // Jan'alai
     SPELL_FLAME_BREATH          = 43140,
@@ -161,7 +161,7 @@ class boss_janalai : public CreatureScript
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_JANALAIEVENT, DONE);
@@ -169,7 +169,7 @@ class boss_janalai : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+                Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
             }
 
             void EnterCombat(Unit* /*who*/)
@@ -177,7 +177,7 @@ class boss_janalai : public CreatureScript
                 if (instance)
                     instance->SetData(DATA_JANALAIEVENT, IN_PROGRESS);
 
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
         //        DoZoneInCombat();
             }
 
@@ -349,7 +349,7 @@ class boss_janalai : public CreatureScript
                     }
                     else
                     {
-                        DoScriptText(SAY_BERSERK, me);
+                        Talk(SAY_BERSERK);
                         DoCast(me, SPELL_BERSERK, true);
                         EnrageTimer = 300000;
                     }
@@ -357,7 +357,7 @@ class boss_janalai : public CreatureScript
 
                 if (BombTimer <= diff)
                 {
-                    DoScriptText(SAY_FIRE_BOMBS, me);
+                    Talk(SAY_FIRE_BOMBS);
 
                     me->AttackStop();
                     me->GetMotionMaster()->Clear();
@@ -388,7 +388,7 @@ class boss_janalai : public CreatureScript
                 {
                     if (HealthBelowPct(35))
                     {
-                        DoScriptText(SAY_ALL_EGGS, me);
+                        Talk(SAY_ALL_EGGS);
 
                         me->AttackStop();
                         me->GetMotionMaster()->Clear();
@@ -402,7 +402,7 @@ class boss_janalai : public CreatureScript
                     {
                         if (HatchAllEggs(0))
                         {
-                            DoScriptText(SAY_SUMMON_HATCHER, me);
+                            Talk(SAY_SUMMON_HATCHER);
                             me->SummonCreature(MOB_AMANI_HATCHER, hatcherway[0][0][0], hatcherway[0][0][1], hatcherway[0][0][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                             me->SummonCreature(MOB_AMANI_HATCHER, hatcherway[1][0][0], hatcherway[1][0][1], hatcherway[1][0][2], 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
                             HatcherTimer = 90000;

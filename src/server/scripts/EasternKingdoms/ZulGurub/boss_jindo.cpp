@@ -27,7 +27,7 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO                       -1309014
+#define SAY_AGGRO                       0
 
 #define SPELL_BRAINWASHTOTEM            24262
 #define SPELL_POWERFULLHEALINGWARD      24309               //We will not use this spell. We will summon a totem by script cause the spell totems will not cast.
@@ -72,7 +72,7 @@ class boss_jindo : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void UpdateAI(const uint32 diff)

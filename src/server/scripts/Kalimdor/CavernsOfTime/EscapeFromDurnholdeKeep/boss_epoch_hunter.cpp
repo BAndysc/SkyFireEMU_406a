@@ -27,16 +27,16 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "old_hillsbrad.h"
 
-#define SAY_ENTER1                  -1560013
-#define SAY_ENTER2                  -1560014
-#define SAY_ENTER3                  -1560015
-#define SAY_AGGRO1                  -1560016
-#define SAY_AGGRO2                  -1560017
-#define SAY_SLAY1                   -1560018
-#define SAY_SLAY2                   -1560019
-#define SAY_BREATH1                 -1560020
-#define SAY_BREATH2                 -1560021
-#define SAY_DEATH                   -1560022
+#define SAY_ENTER1                  9
+#define SAY_ENTER2                  8
+#define SAY_ENTER3                  7
+#define SAY_AGGRO1                  6
+#define SAY_AGGRO2                  5
+#define SAY_SLAY1                   4
+#define SAY_SLAY2                   3
+#define SAY_BREATH1                 2
+#define SAY_BREATH2                 1
+#define SAY_DEATH                   0
 
 #define SPELL_SAND_BREATH           31914
 #define SPELL_IMPENDING_DEATH       31916
@@ -77,17 +77,17 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2));
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance && instance->GetData(TYPE_THRALL_EVENT) == IN_PROGRESS)
                 instance->SetData(TYPE_THRALL_PART4, DONE);
@@ -107,7 +107,7 @@ public:
 
                 DoCast(me->getVictim(), SPELL_SAND_BREATH);
 
-                DoScriptText(RAND(SAY_BREATH1, SAY_BREATH2), me);
+                Talk(RAND(SAY_BREATH1, SAY_BREATH2));
 
                 SandBreath_Timer = urand(10000, 20000);
             }

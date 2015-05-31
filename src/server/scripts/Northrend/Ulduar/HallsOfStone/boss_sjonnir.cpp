@@ -44,11 +44,11 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                                              = -1599011,
-    SAY_SLAY_1                                             = -1599012,
-    SAY_SLAY_2                                             = -1599013,
-    SAY_SLAY_3                                             = -1599014,
-    SAY_DEATH                                              = -1599015
+    SAY_AGGRO                                              = 4,
+    SAY_SLAY_1                                             = 3,
+    SAY_SLAY_2                                             = 2,
+    SAY_SLAY_3                                             = 1,
+    SAY_DEATH                                              = 0
 };
 
 #define EMOTE_GENERIC_FRENZY                               -1000002
@@ -132,7 +132,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             uiEncounterTimer = 0;
 
@@ -217,7 +217,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             lSummons.DespawnAll();
 
             if (instance)
@@ -227,7 +227,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void DoAction(int32 const action)

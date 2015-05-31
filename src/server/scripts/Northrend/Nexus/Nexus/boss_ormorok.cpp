@@ -37,11 +37,11 @@ enum Spells
 };
 enum Yells
 {
-    SAY_AGGRO                                     = -1576020,
-    SAY_DEATH                                     = -1576021,
-    SAY_REFLECT                                   = -1576022,
-    SAY_CRYSTAL_SPIKES                            = -1576023,
-    SAY_KILL                                      = -1576024
+    SAY_AGGRO                                     = 4,
+    SAY_DEATH                                     = 3,
+    SAY_REFLECT                                   = 2,
+    SAY_CRYSTAL_SPIKES                            = 1,
+    SAY_KILL                                      = 0
 };
 enum Creatures
 {
@@ -100,7 +100,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(DATA_ORMOROK_EVENT, IN_PROGRESS);
@@ -108,7 +108,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_ORMOROK_EVENT, DONE);
@@ -116,7 +116,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_KILL, me);
+            Talk(SAY_KILL);
         }
 
         void UpdateAI(const uint32 diff)
@@ -159,14 +159,14 @@ public:
 
             if (uiSpellReflectionTimer <= diff)
             {
-                DoScriptText(SAY_REFLECT, me);
+                Talk(SAY_REFLECT);
                 DoCast(me, SPELL_SPELL_REFLECTION);
                 uiSpellReflectionTimer = 30*IN_MILLISECONDS;
             } else uiSpellReflectionTimer -= diff;
 
             if (uiCrystalSpikesTimer <= diff)
             {
-                DoScriptText(SAY_CRYSTAL_SPIKES, me);
+                Talk(SAY_CRYSTAL_SPIKES);
                 bCrystalSpikes = true;
                 uiCrystalSpikesCount = 1;
                 uiCrystalSpikesTimer2 = 0;

@@ -39,10 +39,10 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                   = -1643007,
-    SAY_AGGRO_WHISP             = -1643008,
-    SAY_DEATH                   = -1643009,
-    SAY_DEATH_WHISP             = -1643010,
+    SAY_AGGRO                   = 6,
+    SAY_AGGRO_WHISP             = 5,
+    SAY_DEATH                   = 4,
+    SAY_DEATH_WHISP             = 3,
 };
 
 class boss_commander_ulthok : public CreatureScript
@@ -82,8 +82,8 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
-            DoScriptText(SAY_AGGRO_WHISP, me);
+            Talk(SAY_AGGRO);
+            Talk(SAY_AGGRO_WHISP);
 
             if (instance)
                 instance->SetData(DATA_COMMANDER_ULTHOK_EVENT, IN_PROGRESS);
@@ -130,8 +130,8 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
-            DoScriptText(SAY_DEATH_WHISP, me);
+            Talk(SAY_DEATH);
+            Talk(SAY_DEATH_WHISP);
 
             if (instance)
                 instance->SetData(DATA_COMMANDER_ULTHOK_EVENT, DONE);

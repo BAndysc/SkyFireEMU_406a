@@ -647,7 +647,7 @@ void hyjalAI::Talk(uint32 id)
     }
 
     if (YellId)
-        DoScriptText(YellId, me);
+        Talk(YellId);
 }
 
 void hyjalAI::Retreat()

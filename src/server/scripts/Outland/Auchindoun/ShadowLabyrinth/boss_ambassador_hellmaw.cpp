@@ -30,14 +30,14 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_INTRO       = -1555000,
-    SAY_AGGRO1      = -1555001,
-    SAY_AGGRO2      = -1555002,
-    SAY_AGGRO3      = -1555003,
-    SAY_HELP        = -1555004,
-    SAY_SLAY1       = -1555005,
-    SAY_SLAY2       = -1555006,
-    SAY_DEATH       = -1555007,
+    SAY_INTRO       = 7,
+    SAY_AGGRO1      = 6,
+    SAY_AGGRO2      = 5,
+    SAY_AGGRO3      = 4,
+    SAY_HELP        = 3,
+    SAY_SLAY1       = 2,
+    SAY_SLAY2       = 1,
+    SAY_DEATH       = 0,
 
     SPELL_BANISH            = 30231,
     SPELL_CORROSIVE_ACID    = 33551,
@@ -119,7 +119,7 @@ public:
             {
                 if (m_pInstance->GetData(TYPE_HELLMAW) != FAIL)
                 {
-                    DoScriptText(SAY_INTRO, me);
+                    Talk(SAY_INTRO);
                     Start(true, false, 0, NULL, false, true);
                 }
 
@@ -129,17 +129,17 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3));
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_HELLMAW, DONE);

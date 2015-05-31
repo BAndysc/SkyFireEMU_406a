@@ -39,19 +39,19 @@ EndContentData */
 
 enum eMillhouseSays
 {
-    SAY_INTRO_1                = -1552010,
-    SAY_INTRO_2                = -1552011,
-    SAY_WATER                  = -1552012,
-    SAY_BUFFS                  = -1552013,
-    SAY_DRINK                  = -1552014,
-    SAY_READY                  = -1552015,
-    SAY_KILL_1                 = -1552016,
-    SAY_KILL_2                 = -1552017,
-    SAY_PYRO                   = -1552018,
-    SAY_ICEBLOCK               = -1552019,
-    SAY_LOWHP                  = -1552020,
-    SAY_DEATH                  = -1552021,
-    SAY_COMPLETE               = -1552022,
+    SAY_INTRO_1                = 12,
+    SAY_INTRO_2                = 11,
+    SAY_WATER                  = 10,
+    SAY_BUFFS                  = 9,
+    SAY_DRINK                  = 8,
+    SAY_READY                  = 7,
+    SAY_KILL_1                 = 6,
+    SAY_KILL_2                 = 5,
+    SAY_PYRO                   = 4,
+    SAY_ICEBLOCK               = 3,
+    SAY_LOWHP                  = 2,
+    SAY_DEATH                  = 1,
+    SAY_COMPLETE               = 0,
 };
 
 enum eMillhouseSpells
@@ -108,7 +108,7 @@ class npc_millhouse_manastorm : public CreatureScript
                         Init = true;
 
                     if (instance->GetData(TYPE_HARBINGERSKYRISS) == DONE)
-                        DoScriptText(SAY_COMPLETE, me);
+                        Talk(SAY_COMPLETE);
                 }
             }
 
@@ -127,12 +127,12 @@ class npc_millhouse_manastorm : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                Talk(RAND(SAY_KILL_1, SAY_KILL_2));
             }
 
             void JustDied(Unit* /*victim*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
 
                 /*for questId 10886 (heroic mode only)
                 if (instance && instance->GetData(TYPE_HARBINGERSKYRISS) != DONE)
@@ -150,30 +150,30 @@ class npc_millhouse_manastorm : public CreatureScript
                             switch (Phase)
                             {
                             case 1:
-                                DoScriptText(SAY_INTRO_1, me);
+                                Talk(SAY_INTRO_1);
                                 EventProgress_Timer = 18000;
                                 break;
                             case 2:
-                                DoScriptText(SAY_INTRO_2, me);
+                                Talk(SAY_INTRO_2);
                                 EventProgress_Timer = 18000;
                                 break;
                             case 3:
-                                DoScriptText(SAY_WATER, me);
+                                Talk(SAY_WATER);
                                 DoCast(me, SPELL_CONJURE_WATER);
                                 EventProgress_Timer = 7000;
                                 break;
                             case 4:
-                                DoScriptText(SAY_BUFFS, me);
+                                Talk(SAY_BUFFS);
                                 DoCast(me, SPELL_ICE_ARMOR);
                                 EventProgress_Timer = 7000;
                                 break;
                             case 5:
-                                DoScriptText(SAY_DRINK, me);
+                                Talk(SAY_DRINK);
                                 DoCast(me, SPELL_ARCANE_INTELLECT);
                                 EventProgress_Timer = 7000;
                                 break;
                             case 6:
-                                DoScriptText(SAY_READY, me);
+                                Talk(SAY_READY);
                                 EventProgress_Timer = 6000;
                                 break;
                             case 7:
@@ -193,7 +193,7 @@ class npc_millhouse_manastorm : public CreatureScript
                     return;
                 if (!LowHp && HealthBelowPct(20))
                 {
-                    DoScriptText(SAY_LOWHP, me);
+                    Talk(SAY_LOWHP);
                     LowHp = true;
                 }
 
@@ -202,7 +202,7 @@ class npc_millhouse_manastorm : public CreatureScript
                     if (me->IsNonMeleeSpellCasted(false))
                         return;
 
-                    DoScriptText(SAY_PYRO, me);
+                    Talk(SAY_PYRO);
 
                     DoCast(me->getVictim(), SPELL_PYROBLAST);
                     Pyroblast_Timer = 40000;
@@ -233,14 +233,14 @@ class npc_millhouse_manastorm : public CreatureScript
 
 enum eWardenSays
 {
-    YELL_INTRO1         = -1552023,
-    YELL_INTRO2         = -1552024,
-    YELL_RELEASE1       = -1552025,
-    YELL_RELEASE2A      = -1552026,
-    YELL_RELEASE2B      = -1552027,
-    YELL_RELEASE3       = -1552028,
-    YELL_RELEASE4       = -1552029,
-    YELL_WELCOME        = -1552030,
+    YELL_INTRO1         = 7,
+    YELL_INTRO2         = 6,
+    YELL_RELEASE1       = 5,
+    YELL_RELEASE2A      = 4,
+    YELL_RELEASE2B      = 3,
+    YELL_RELEASE3       = 2,
+    YELL_RELEASE4       = 1,
+    YELL_WELCOME        = 0,
 };
 
 enum eWardenUnits
@@ -331,7 +331,7 @@ class npc_warden_mellichar : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(YELL_INTRO1, me);
+                Talk(YELL_INTRO1);
                 DoCast(me, SPELL_BUBBLE_VISUAL);
 
                 if (instance)
@@ -438,7 +438,7 @@ class npc_warden_mellichar : public CreatureScript
                             me->SummonCreature(ENTRY_MILLHOUSE, 413.292f, -148.378f, 42.56f, 6.27f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000);
                             break;
                         case 4:
-                            DoScriptText(YELL_RELEASE2B, me);
+                            Talk(YELL_RELEASE2B);
                             break;
                         case 5:
                             switch (urand(0, 1))
@@ -464,7 +464,7 @@ class npc_warden_mellichar : public CreatureScript
                             break;
                         case 7:
                             me->SummonCreature(ENTRY_SKYRISS, 445.763f, -191.639f, 44.64f, 1.60f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000);
-                            DoScriptText(YELL_WELCOME, me);
+                            Talk(YELL_WELCOME);
                             break;
                         }
                         CanSpawn = false;
@@ -475,17 +475,17 @@ class npc_warden_mellichar : public CreatureScript
                         switch (Phase)
                         {
                         case 1:
-                            DoScriptText(YELL_INTRO2, me);
+                            Talk(YELL_INTRO2);
                             EventProgress_Timer = 10000;
                             ++Phase;
                             break;
                         case 2:
-                            DoScriptText(YELL_RELEASE1, me);
+                            Talk(YELL_RELEASE1);
                             DoPrepareForPhase();
                             EventProgress_Timer = 7000;
                             break;
                         case 3:
-                            DoScriptText(YELL_RELEASE2A, me);
+                            Talk(YELL_RELEASE2A);
                             DoPrepareForPhase();
                             EventProgress_Timer = 10000;
                             break;
@@ -494,12 +494,12 @@ class npc_warden_mellichar : public CreatureScript
                             EventProgress_Timer = 15000;
                             break;
                         case 5:
-                            DoScriptText(YELL_RELEASE3, me);
+                            Talk(YELL_RELEASE3);
                             DoPrepareForPhase();
                             EventProgress_Timer = 15000;
                             break;
                         case 6:
-                            DoScriptText(YELL_RELEASE4, me);
+                            Talk(YELL_RELEASE4);
                             DoPrepareForPhase();
                             EventProgress_Timer = 15000;
                             break;

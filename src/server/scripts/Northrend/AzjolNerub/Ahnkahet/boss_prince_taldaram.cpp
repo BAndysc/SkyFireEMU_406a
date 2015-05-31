@@ -50,14 +50,14 @@ enum Misc
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1619021,
-    SAY_SLAY_1                                    = -1619022,
-    SAY_SLAY_2                                    = -1619023,
-    SAY_DEATH                                     = -1619024,
-    SAY_FEED_1                                    = -1619025,
-    SAY_FEED_2                                    = -1619026,
-    SAY_VANISH_1                                  = -1619027,
-    SAY_VANISH_2                                  = -1619028
+    SAY_AGGRO                                     = 7,
+    SAY_SLAY_1                                    = 6,
+    SAY_SLAY_2                                    = 5,
+    SAY_DEATH                                     = 4,
+    SAY_FEED_1                                    = 3,
+    SAY_FEED_2                                    = 2,
+    SAY_VANISH_1                                  = 1,
+    SAY_VANISH_2                                  = 0
 };
 enum CombatPhase
 {
@@ -119,7 +119,7 @@ public:
         {
             if (instance)
                 instance->SetData(DATA_PRINCE_TALDARAM_EVENT, IN_PROGRESS);
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void UpdateAI(const uint32 diff)
@@ -225,7 +225,7 @@ public:
                             //He only vanishes if there are 3 or more alive players
                             if (target_list.size() > 2)
                             {
-                                DoScriptText(RAND(SAY_VANISH_1, SAY_VANISH_2), me);
+                                Talk(RAND(SAY_VANISH_1, SAY_VANISH_2));
                                 DoCast(me, SPELL_VANISH);
                                 Phase = JUST_VANISHED;
                                 uiPhaseTimer = 500;
@@ -260,7 +260,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_PRINCE_TALDARAM_EVENT, DONE);
@@ -278,7 +278,7 @@ public:
                 uiPhaseTimer = 0;
                 uiEmbraceTarget = 0;
             }
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         bool CheckSpheres()

@@ -37,15 +37,15 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_INTRO               = -1649055,
-    SAY_AGGRO               = -1649056,
-    SAY_KILL1               = -1649057,
-    SAY_KILL2               = -1649058,
-    SAY_DEATH               = -1649059,
-    EMOTE_SPIKE             = -1649060,
-    SAY_BURROWER            = -1649061,
-    EMOTE_LEECHING_SWARM    = -1649062,
-    SAY_LEECHING_SWARM      = -1649063,
+    SAY_INTRO               = 209,
+    SAY_AGGRO               = 208,
+    SAY_KILL1               = 207,
+    SAY_KILL2               = 206,
+    SAY_DEATH               = 205,
+    EMOTE_SPIKE             = 204,
+    SAY_BURROWER            = 203,
+    EMOTE_LEECHING_SWARM    = 202,
+    SAY_LEECHING_SWARM      = 201,
 };
 
 enum Summons
@@ -195,7 +195,7 @@ public:
         {
             if (who->GetTypeId() == TYPEID_PLAYER)
             {
-                DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, me);
+                Talk(urand(0, 1) ? SAY_KILL1 : SAY_KILL2);
                 if (m_instance)
                     m_instance->SetData(DATA_TRIBUTE_TO_IMMORTALITY_ELEGIBLE, 0);
             }
@@ -205,7 +205,7 @@ public:
         {
             if (!m_bIntro)
             {
-                DoScriptText(SAY_INTRO, me);
+                Talk(SAY_INTRO);
                 m_bIntro = false;
             }
         }
@@ -223,7 +223,7 @@ public:
         void JustDied(Unit* /*killer*/)
         {
             Summons.DespawnAll();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             if (m_instance)
                 m_instance->SetData(TYPE_ANUBARAK, DONE);
         }
@@ -240,7 +240,7 @@ public:
                     break;
                 case NPC_SPIKE:
                     summoned->CombatStart(target);
-                    DoScriptText(EMOTE_SPIKE, me, target);
+                    Talk(EMOTE_SPIKE, target->GetGUID());
                     break;
             }
             Summons.Summon(summoned);
@@ -258,7 +258,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
             me->SetInCombatWithZone();
             if (m_instance)
@@ -318,7 +318,7 @@ public:
                     DoCast(me, SPELL_SUBMERGE_ANUBARAK);
                     DoCast(me, SPELL_CLEAR_ALL_DEBUFFS);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
-                    DoScriptText(SAY_BURROWER, me);
+                    Talk(SAY_BURROWER);
                     m_uiScarabSummoned = 0;
                     m_uiSummonScarabTimer = 4*IN_MILLISECONDS;
                     m_uiStage = 2;
@@ -400,8 +400,8 @@ public:
             {
                 m_bReachedPhase3 = true;
                 DoCastAOE(SPELL_LEECHING_SWARM);
-                DoScriptText(EMOTE_LEECHING_SWARM, me);
-                DoScriptText(SAY_LEECHING_SWARM, me);
+                Talk(EMOTE_LEECHING_SWARM);
+                Talk(SAY_LEECHING_SWARM);
             }
 
             if (m_uiBerserkTimer <= uiDiff && !me->HasAura(SPELL_BERSERK))

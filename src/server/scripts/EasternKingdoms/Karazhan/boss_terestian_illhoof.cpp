@@ -27,14 +27,14 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "karazhan.h"
 
-#define SAY_SLAY1                   -1532065
-#define SAY_SLAY2                   -1532066
-#define SAY_DEATH                   -1532067
-#define SAY_AGGRO                   -1532068
-#define SAY_SACRIFICE1              -1532069
-#define SAY_SACRIFICE2              -1532070
-#define SAY_SUMMON1                 -1532071
-#define SAY_SUMMON2                 -1532072
+#define SAY_SLAY1                   7
+#define SAY_SLAY2                   6
+#define SAY_DEATH                   5
+#define SAY_AGGRO                   4
+#define SAY_SACRIFICE1              3
+#define SAY_SACRIFICE2              2
+#define SAY_SUMMON1                 1
+#define SAY_SUMMON2                 0
 
 #define SPELL_SUMMON_DEMONCHAINS    30120                   // Summons demonic chains that maintain the ritual of sacrifice.
 #define SPELL_DEMON_CHAINS          30206                   // Instant - Visual Effect
@@ -318,7 +318,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void JustSummoned(Creature* summoned)
@@ -330,7 +330,7 @@ public:
 
                 if (summoned->GetUInt32Value(UNIT_CREATED_BY_SPELL) == SPELL_FIENDISH_PORTAL_1)
                 {
-                    DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
+                    Talk(RAND(SAY_SUMMON1, SAY_SUMMON2));
                     SummonedPortals = true;
                 }
             }
@@ -338,7 +338,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*killer*/)
@@ -354,7 +354,7 @@ public:
                 }
             }
 
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(TYPE_TERESTIAN, DONE);
@@ -377,7 +377,7 @@ public:
                     {
                         CAST_AI(mob_demon_chain::mob_demon_chainAI, Chains->AI())->SacrificeGUID = target->GetGUID();
                         Chains->CastSpell(Chains, SPELL_DEMON_CHAINS, true);
-                        DoScriptText(RAND(SAY_SACRIFICE1, SAY_SACRIFICE2), me);
+                        Talk(RAND(SAY_SACRIFICE1, SAY_SACRIFICE2));
                         SacrificeTimer = 30000;
                     }
                 }

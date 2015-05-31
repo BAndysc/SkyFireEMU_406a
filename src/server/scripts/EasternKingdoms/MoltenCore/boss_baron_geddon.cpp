@@ -29,7 +29,7 @@ EndScriptData */
 #include "ScriptedCreature.h"
 #include "molten_core.h"
 
-#define EMOTE_SERVICE   -1409000
+#define EMOTE_SERVICE   0
 
 enum Spells
 {
@@ -75,7 +75,7 @@ class boss_baron_geddon : public CreatureScript
                 {
                     me->InterruptNonMeleeSpells(true);
                     DoCast(me, SPELL_ARMAGEDDON);
-                    DoScriptText(EMOTE_SERVICE, me);
+                    Talk(EMOTE_SERVICE);
                     return;
                 }
 

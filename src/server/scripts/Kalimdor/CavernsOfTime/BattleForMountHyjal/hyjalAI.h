@@ -146,28 +146,28 @@ enum YellId
 
 const Yells JainaQuotes[]=
 {
-    {ATTACKED, -1534000},
-    {ATTACKED, -1534001},
-    {INCOMING, -1534002},
-    {BEGIN, -1534003},
-    {RALLY, -1534004},
-    {RALLY, -1534005},
-    {FAILURE, -1534006},
-    {SUCCESS, -1534007},
-    {DEATH, -1534008},
+    {ATTACKED, 8},
+    {ATTACKED, 7},
+    {INCOMING, 6},
+    {BEGIN, 5},
+    {RALLY, 4},
+    {RALLY, 3},
+    {FAILURE, 2},
+    {SUCCESS, 1},
+    {DEATH, 0},
 };
 
 const Yells ThrallQuotes[]=
 {
-    {ATTACKED, -1534009},
-    {ATTACKED, -1534010},
-    {INCOMING, -1534011},
-    {BEGIN, -1534012},
-    {RALLY, -1534013},
-    {RALLY, -1534014},
-    {FAILURE, -1534015},
-    {SUCCESS, -1534016},
-    {DEATH, -1534017},
+    {ATTACKED, 8},
+    {ATTACKED, 7},
+    {INCOMING, 6},
+    {BEGIN, 5},
+    {RALLY, 4},
+    {RALLY, 3},
+    {FAILURE, 2},
+    {SUCCESS, 1},
+    {DEATH, 0},
 };
 
 struct hyjalAI : public npc_escortAI

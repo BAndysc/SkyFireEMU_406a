@@ -28,14 +28,14 @@ EndScriptData */
 #include "temple_of_ahnqiraj.h"
 #include "Group.h"
 
-#define SAY_AGGRO1                  -1531000
-#define SAY_AGGRO2                  -1531001
-#define SAY_AGGRO3                  -1531002
-#define SAY_SLAY1                   -1531003
-#define SAY_SLAY2                   -1531004
-#define SAY_SLAY3                   -1531005
-#define SAY_SPLIT                   -1531006
-#define SAY_DEATH                   -1531007
+#define SAY_AGGRO1                  7
+#define SAY_AGGRO2                  6
+#define SAY_AGGRO3                  5
+#define SAY_SLAY1                   4
+#define SAY_SLAY2                   3
+#define SAY_SLAY3                   2
+#define SAY_SPLIT                   1
+#define SAY_DEATH                   0
 
 #define SPELL_ARCANE_EXPLOSION      25679
 #define SPELL_EARTH_SHOCK           26194
@@ -103,20 +103,20 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
             if (!IsImage)
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             if (IsImage || Images75)
                 return;
-            DoScriptText(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3), me);
+            Talk(RAND(SAY_AGGRO1, SAY_AGGRO2, SAY_AGGRO3));
         }
 
         void UpdateAI(const uint32 diff)
@@ -208,7 +208,7 @@ public:
 
         void DoSplit(int atPercent /* 75 50 25 */)
         {
-            DoScriptText(SAY_SPLIT, me);
+            Talk(SAY_SPLIT);
 
             ov_mycoordinates *place1 = new ov_mycoordinates(-8340.782227f, 2083.814453f, 125.648788f, 0);
             ov_mycoordinates *place2 = new ov_mycoordinates(-8341.546875f, 2118.504639f, 133.058151f, 0);

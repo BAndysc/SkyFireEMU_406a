@@ -27,16 +27,16 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "sethekk_halls.h"
 
-#define SAY_INTRO                   -1556007
+#define SAY_INTRO                   7
 
-#define SAY_AGGRO_1                 -1556008
-#define SAY_AGGRO_2                 -1556009
-#define SAY_AGGRO_3                 -1556010
+#define SAY_AGGRO_1                 6
+#define SAY_AGGRO_2                 5
+#define SAY_AGGRO_3                 4
 
-#define SAY_SLAY_1                  -1556011
-#define SAY_SLAY_2                  -1556012
-#define SAY_DEATH                   -1556013
-#define EMOTE_ARCANE_EXP            -1556015
+#define SAY_SLAY_1                  3
+#define SAY_SLAY_2                  2
+#define SAY_DEATH                   1
+#define EMOTE_ARCANE_EXP            0
 
 #define SPELL_BLINK                 38194
 #define SPELL_BLINK_TELEPORT        38203
@@ -99,7 +99,7 @@ public:
                 if (!Intro && me->IsWithinDistInMap(who, 100))
                 {
                     Intro = true;
-                    DoScriptText(SAY_INTRO, me);
+                    Talk(SAY_INTRO);
                 }
 
                 if (!me->canFly() && me->GetDistanceZ(who) > CREATURE_Z_ATTACK_RANGE)
@@ -116,12 +116,12 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_IKISSDOOREVENT, DONE);
@@ -129,7 +129,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -183,7 +183,7 @@ public:
 
             if (Blink_Timer <= diff)
             {
-                DoScriptText(EMOTE_ARCANE_EXP, me);
+                Talk(EMOTE_ARCANE_EXP);
 
                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                 {

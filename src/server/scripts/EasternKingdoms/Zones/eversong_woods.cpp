@@ -70,10 +70,10 @@ enum eFaction
 
 enum eSays
 {
-    TEXT_SECOND_TRIAL_1               = -1000637,
-    TEXT_SECOND_TRIAL_2               = -1000638,
-    TEXT_SECOND_TRIAL_3               = -1000639,
-    TEXT_SECOND_TRIAL_4               = -1000640,
+    TEXT_SECOND_TRIAL_1               = 3,
+    TEXT_SECOND_TRIAL_2               = 2,
+    TEXT_SECOND_TRIAL_3               = 1,
+    TEXT_SECOND_TRIAL_4               = 0,
 };
 
 struct Locations
@@ -335,16 +335,16 @@ public:
                         switch (paladinPhase)
                         {
                         case 0:
-                            DoScriptText(TEXT_SECOND_TRIAL_1, me);
+                            Talk(TEXT_SECOND_TRIAL_1);
                             break;
                         case 1:
-                            DoScriptText(TEXT_SECOND_TRIAL_2, me);
+                            Talk(TEXT_SECOND_TRIAL_2);
                             break;
                         case 2:
-                            DoScriptText(TEXT_SECOND_TRIAL_3, me);
+                            Talk(TEXT_SECOND_TRIAL_3);
                             break;
                         case 3:
-                            DoScriptText(TEXT_SECOND_TRIAL_4, me);
+                            Talk(TEXT_SECOND_TRIAL_4);
                             break;
                         }
                     }
@@ -516,7 +516,7 @@ public:
 ######*/
 
 #define MOB_ENRAGED_WRAITH  17086
-#define EMOTE   -1000283
+#define EMOTE   451
 #define QUEST_POWERING_OUR_DEFENSES 8490
 
 struct Location
@@ -595,7 +595,7 @@ public:
         {
             if (EndTimer < diff && Progress)
             {
-                DoScriptText(EMOTE, me);
+                //Talk(EMOTE);//improper data
                 Completed = true;
                 if (PlayerGUID)
                     if (Player* player = Unit::GetPlayer(*me, PlayerGUID))

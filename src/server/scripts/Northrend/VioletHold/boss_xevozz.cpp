@@ -46,16 +46,16 @@ enum CreatureSpells
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608027,
-    SAY_SLAY_1                                  = -1608028,
-    SAY_SLAY_2                                  = -1608029,
-    SAY_SLAY_3                                  = -1608030,
-    SAY_DEATH                                   = -1608031,
-    SAY_SPAWN                                   = -1608032,
-    SAY_CHARGED                                 = -1608033,
-    SAY_REPEAT_SUMMON_1                         = -1608034,
-    SAY_REPEAT_SUMMON_2                         = -1608035,
-    SAY_SUMMON_ENERGY                           = -1608036
+    SAY_AGGRO                                   = 9,
+    SAY_SLAY_1                                  = 8,
+    SAY_SLAY_2                                  = 7,
+    SAY_SLAY_3                                  = 6,
+    SAY_DEATH                                   = 5,
+    SAY_SPAWN                                   = 4,
+    SAY_CHARGED                                 = 3,
+    SAY_REPEAT_SUMMON_1                         = 2,
+    SAY_REPEAT_SUMMON_2                         = 1,
+    SAY_SUMMON_ENERGY                           = 0
 };
 
 class boss_xevozz : public CreatureScript
@@ -138,7 +138,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             if (instance)
             {
                 if (GameObject* pDoor = instance->instance->GetGameObject(instance->GetData64(DATA_XEVOZZ_CELL)))
@@ -181,7 +181,7 @@ public:
 
             if (uiSummonEtherealSphere_Timer < uiDiff)
             {
-                DoScriptText(SAY_SPAWN, me);
+                Talk(SAY_SPAWN);
                 DoCast(me, SPELL_SUMMON_ETHEREAL_SPHERE_1);
                 if (IsHeroic()) // extra one for heroic
                     me->SummonCreature(NPC_ETHEREAL_SPHERE, me->GetPositionX()-5+rand()%10, me->GetPositionY()-5+rand()%10, me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 40000);
@@ -196,7 +196,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             DespawnSphere();
 
@@ -219,7 +219,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
     };
 };

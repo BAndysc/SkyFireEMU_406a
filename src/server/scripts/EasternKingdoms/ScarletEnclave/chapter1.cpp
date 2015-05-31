@@ -47,14 +47,14 @@ enum eDeathKnightSpells
 //used by 29519, 29520, 29565, 29566, 29567 but signed for 29519
 int32 say_event_start[8] =
 {
-    -1609000, -1609001, -1609002, -1609003,
-    -1609004, -1609005, -1609006, -1609007
+    16, 15, 14, 13,
+    12, 11, 10, 9
 };
 
 int32 say_event_attack[9] =
 {
-    -1609008, -1609009, -1609010, -1609011, -1609012,
-    -1609013, -1609014, -1609015, -1609016
+    8, 7, 6, 5, 4,
+    3, 2, 1, 0
 };
 
 uint32 acherus_soul_prison[12] =
@@ -150,7 +150,7 @@ public:
                 me->CastSpell(me, SPELL_DK_INITIATE_VISUAL, true);
 
                 if (Player* starter = Unit::GetPlayer(*me, playerGUID))
-                    DoScriptText(say_event_attack[rand()%9], me, starter);
+                    Talk(say_event_attack[rand()%9], starter->GetGUID());
 
                 phase = PHASE_TO_ATTACK;
             }
@@ -169,7 +169,7 @@ public:
             anchor->GetContactPoint(me, anchorX, anchorY, z, 1.0f);
 
             playerGUID = target->GetGUID();
-            DoScriptText(say_event_start[rand()%8], me, target);
+            Talk(say_event_start[rand()%8], target->GetGUID());
         }
 
         void UpdateAI(const uint32 diff)
@@ -379,8 +379,8 @@ public:
                 me->SetDisplayId(DISPLAYID_EYE_HUGE);
                 me->SetHomePosition(2361.21f, -5660.45f, 496.7444f, 0);
                 me->GetMotionMaster()->MoveCharge(1758.007f, -5876.785f, 166.8667f, 0); // Position center                
-                if (Player* player = me->GetCharmerOrOwnerPlayerOrPlayerItself())
-                DoScriptText(EMOTE_DESTINATION, me, player);
+                //if (Player* player = me->GetCharmerOrOwnerPlayerOrPlayerItself())
+                //Talk(EMOTE_DESTINATION, player->GetGUID());//improper data
                 
                 me->SetReactState(REACT_AGGRESSIVE);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_STUNNED);
@@ -432,7 +432,7 @@ public:
             me->CastSpell(me, SPELL_EYE_VISUAL, true);
             me->CastSpell(me, SPELL_EYE_FL_BOOST_FLY, true);
             ((Player*)(me->GetCharmer()))->SetClientControl(me, 1);
-            DoScriptText(EMOTE_CONTROL, me, player); 
+            //Talk(EMOTE_CONTROL, player->GetGUID()); //improper data
         }
     };
 };
@@ -445,15 +445,15 @@ public:
 
 enum DuelEnums
 {
-    SAY_DUEL_A                  = -1609080,
-    SAY_DUEL_B                  = -1609081,
-    SAY_DUEL_C                  = -1609082,
-    SAY_DUEL_D                  = -1609083,
-    SAY_DUEL_E                  = -1609084,
-    SAY_DUEL_F                  = -1609085,
-    SAY_DUEL_G                  = -1609086,
-    SAY_DUEL_H                  = -1609087,
-    SAY_DUEL_I                  = -1609088,
+    SAY_DUEL_A                  = 7,
+    SAY_DUEL_B                  = 6,
+    SAY_DUEL_C                  = 5,
+    SAY_DUEL_D                  = 4,
+    SAY_DUEL_E                  = 3,
+    SAY_DUEL_F                  = 2,
+    SAY_DUEL_G                  = 1,
+    SAY_DUEL_H                  = 0,
+    SAY_DUEL_I                  = 0,
 
     SPELL_DUEL                  = 52996,
     //SPELL_DUEL_TRIGGERED        = 52990,
@@ -495,7 +495,7 @@ public:
             creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
 
             int32 uiSayId = rand()% (sizeof(_auiRandomSay)/sizeof(int32));
-            DoScriptText(_auiRandomSay[uiSayId], creature, player);
+            creature->AI()->Talk(_auiRandomSay[uiSayId], player->GetGUID());
 
             player->CastSpell(creature, SPELL_DUEL, false);
             player->CastSpell(player, SPELL_DUEL_FLAG, true);

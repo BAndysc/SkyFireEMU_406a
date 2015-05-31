@@ -30,12 +30,12 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO_1                                 = -1533017,
-    SAY_AGGRO_2                                 = -1533018,
-    SAY_SLAY                                    = -1533019,
-    SAY_DEATH                                   = -1533020,
-    EMOTE_BERSERK                               = -1533021,
-    EMOTE_ENRAGE                                = -1533022,
+    SAY_AGGRO_1                                 = 5,
+    SAY_AGGRO_2                                 = 4,
+    SAY_SLAY                                    = 3,
+    SAY_DEATH                                   = 2,
+    EMOTE_BERSERK                               = 1,
+    EMOTE_ENRAGE                                = 0,
 };
 
 enum Events
@@ -78,20 +78,20 @@ public:
         void KilledUnit(Unit* /*Victim*/)
         {
             if (!(rand()%5))
-                DoScriptText(SAY_SLAY, me);
+                Talk(SAY_SLAY);
         }
 
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
             Enraged = false;
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2));
             events.ScheduleEvent(EVENT_HATEFUL, 1000);
             events.ScheduleEvent(EVENT_BERSERK, 360000);
 
@@ -137,7 +137,7 @@ public:
                     }
                     case EVENT_BERSERK:
                         DoCast(me, SPELL_BERSERK, true);
-                        DoScriptText(EMOTE_BERSERK, me);
+                        Talk(EMOTE_BERSERK);
                         events.ScheduleEvent(EVENT_SLIME, 2000);
                         break;
                     case EVENT_SLIME:
@@ -150,7 +150,7 @@ public:
             if (!Enraged && HealthBelowPct(5))
             {
                 DoCast(me, SPELL_FRENZY, true);
-                DoScriptText(EMOTE_ENRAGE, me);
+                Talk(EMOTE_ENRAGE);
                 Enraged = true;
             }
 

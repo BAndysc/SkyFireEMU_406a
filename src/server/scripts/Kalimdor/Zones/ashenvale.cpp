@@ -36,11 +36,11 @@ EndContentData */
 # npc_torek
 ####*/
 
-#define SAY_READY                   -1000106
-#define SAY_MOVE                    -1000107
-#define SAY_PREPARE                 -1000108
-#define SAY_WIN                     -1000109
-#define SAY_END                     -1000110
+#define SAY_READY                   4
+#define SAY_MOVE                    3
+#define SAY_PREPARE                 2
+#define SAY_WIN                     1
+#define SAY_END                     0
 
 #define SPELL_REND                  11977
 #define SPELL_THUNDERCLAP           8078
@@ -79,10 +79,10 @@ class npc_torek : public CreatureScript
                 switch (i)
                 {
                 case 1:
-                    DoScriptText(SAY_MOVE, me, player);
+                    Talk(SAY_MOVE, player->GetGUID());
                     break;
                 case 8:
-                    DoScriptText(SAY_PREPARE, me, player);
+                    Talk(SAY_PREPARE, player->GetGUID());
                     break;
                 case 19:
                     //TODO: verify location and creatures amount.
@@ -91,13 +91,13 @@ class npc_torek : public CreatureScript
                     me->SummonCreature(ENTRY_SILVERWING_WARRIOR, 1778.73f, -2049.50f, 109.83f, 1.67f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
                     break;
                 case 20:
-                    DoScriptText(SAY_WIN, me, player);
+                    Talk(SAY_WIN, player->GetGUID());
                     Completed = true;
                     if (player)
                         player->GroupEventHappens(QUEST_TOREK_ASSULT, me);
                     break;
                 case 21:
-                    DoScriptText(SAY_END, me, player);
+                    Talk(SAY_END, player->GetGUID());
                     break;
                 }
             }
@@ -149,7 +149,7 @@ class npc_torek : public CreatureScript
             if (quest->GetQuestId() == QUEST_TOREK_ASSULT)
             {
                 //TODO: find companions, make them follow Torek, at any time (possibly done by core/database in future?)
-                DoScriptText(SAY_READY, creature, player);
+                creature->AI()->Talk(SAY_READY, player->GetGUID());
                 creature->setFaction(113);
 
                 if (npc_escortAI* pEscortAI = CAST_AI(npc_torekAI, creature->AI()))
@@ -255,16 +255,16 @@ class npc_ruul_snowhoof : public CreatureScript
 
 enum eEnums
 {
-    SAY_MUG_START1          = -1800054,
-    SAY_MUG_START2          = -1800055,
-    SAY_MUG_BRAZIER         = -1800056,
-    SAY_MUG_BRAZIER_WAIT    = -1800057,
-    SAY_MUG_ON_GUARD        = -1800058,
-    SAY_MUG_REST            = -1800059,
-    SAY_MUG_DONE            = -1800060,
-    SAY_MUG_GRATITUDE       = -1800061,
-    SAY_MUG_PATROL          = -1800062,
-    SAY_MUG_RETURN          = -1800063,
+    SAY_MUG_START1          = 9,
+    SAY_MUG_START2          = 8,
+    SAY_MUG_BRAZIER         = 7,
+    SAY_MUG_BRAZIER_WAIT    = 6,
+    SAY_MUG_ON_GUARD        = 5,
+    SAY_MUG_REST            = 4,
+    SAY_MUG_DONE            = 3,
+    SAY_MUG_GRATITUDE       = 2,
+    SAY_MUG_PATROL          = 1,
+    SAY_MUG_RETURN          = 0,
 
     QUEST_VORSHA            = 6641,
 
@@ -324,11 +324,11 @@ class npc_muglash : public CreatureScript
                 {
                     case 0:
                         if (player)
-                            DoScriptText(SAY_MUG_START2, me, player);
+                            Talk(SAY_MUG_START2, player->GetGUID());
                         break;
                     case 24:
                         if (player)
-                            DoScriptText(SAY_MUG_BRAZIER, me, player);
+                            Talk(SAY_MUG_BRAZIER, player->GetGUID());
 
                         if (GameObject* go = GetClosestGameObjectWithEntry(me, GO_NAGA_BRAZIER, INTERACTION_DISTANCE*2))
                         {
@@ -337,16 +337,16 @@ class npc_muglash : public CreatureScript
                         }
                         break;
                     case 25:
-                        DoScriptText(SAY_MUG_GRATITUDE, me);
+                        Talk(SAY_MUG_GRATITUDE);
 
                         if (player)
                             player->GroupEventHappens(QUEST_VORSHA, me);
                         break;
                     case 26:
-                        DoScriptText(SAY_MUG_PATROL, me);
+                        Talk(SAY_MUG_PATROL);
                         break;
                     case 27:
-                        DoScriptText(SAY_MUG_RETURN, me);
+                        Talk(SAY_MUG_RETURN);
                         break;
                 }
             }
@@ -357,7 +357,7 @@ class npc_muglash : public CreatureScript
                     if (HasEscortState(STATE_ESCORT_PAUSED))
                     {
                         if (urand(0, 1))
-                            DoScriptText(SAY_MUG_ON_GUARD, me, player);
+                            Talk(SAY_MUG_ON_GUARD, player->GetGUID());
                         return;
                     }
             }
@@ -400,7 +400,7 @@ class npc_muglash : public CreatureScript
                         break;
                     case 4:
                         SetEscortPaused(false);
-                        DoScriptText(SAY_MUG_DONE, me);
+                        Talk(SAY_MUG_DONE);
                         break;
                 }
             }
@@ -439,7 +439,7 @@ class npc_muglash : public CreatureScript
             {
                 if (npc_muglashAI* pEscortAI = CAST_AI(npc_muglashAI, creature->AI()))
                 {
-                    DoScriptText(SAY_MUG_START1, creature);
+                    creature->AI()->Talk(SAY_MUG_START1);
                     creature->setFaction(113);
 
                     pEscortAI->Start(true, true, player->GetGUID());
@@ -464,7 +464,7 @@ class go_naga_brazier : public GameObjectScript
             {
                 if (npc_muglash::npc_muglashAI* pEscortAI = CAST_AI(npc_muglash::npc_muglashAI, creature->AI()))
                 {
-                    DoScriptText(SAY_MUG_BRAZIER_WAIT, creature);
+                    creature->AI()->Talk(SAY_MUG_BRAZIER_WAIT);
 
                     pEscortAI->m_bIsBrazierExtinguished = true;
                     return false;

@@ -26,17 +26,17 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_MIDNIGHT_KILL           -1532000
-#define SAY_APPEAR1                 -1532001
-#define SAY_APPEAR2                 -1532002
-#define SAY_APPEAR3                 -1532003
-#define SAY_MOUNT                   -1532004
-#define SAY_KILL1                   -1532005
-#define SAY_KILL2                   -1532006
-#define SAY_DISARMED                -1532007
-#define SAY_DEATH                   -1532008
-#define SAY_RANDOM1                 -1532009
-#define SAY_RANDOM2                 -1532010
+#define SAY_MIDNIGHT_KILL           4
+#define SAY_APPEAR1                 3
+#define SAY_APPEAR2                 2
+#define SAY_APPEAR3                 1
+#define SAY_MOUNT                   0
+#define SAY_KILL1                   5
+#define SAY_KILL2                   4
+#define SAY_DISARMED                3
+#define SAY_DEATH                   2
+#define SAY_RANDOM1                 1
+#define SAY_RANDOM2                 0
 
 #define SPELL_SHADOWCLEAVE          29832
 #define SPELL_INTANGIBLE_PRESENCE   29833
@@ -87,12 +87,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL1, SAY_KILL2), me);
+            Talk(RAND(SAY_KILL1, SAY_KILL2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             if (Unit* midnight = Unit::GetUnit(*me, Midnight))
                 midnight->Kill(midnight);
         }
@@ -102,7 +102,7 @@ public:
         void SpellHit(Unit* /*source*/, const SpellInfo* spell)
         {
             if (spell->Mechanic == MECHANIC_DISARM)
-                DoScriptText(SAY_DISARMED, me);
+                Talk(SAY_DISARMED);
         }
     };
 };
@@ -142,7 +142,8 @@ public:
             if (Phase == 2)
             {
                 if (Unit* unit = Unit::GetUnit(*me, Attumen))
-                DoScriptText(SAY_MIDNIGHT_KILL, unit);
+					if (unit->ToCreature())
+						unit->ToCreature()->AI()->Talk(SAY_MIDNIGHT_KILL);
             }
         }
 
@@ -159,7 +160,7 @@ public:
                     Attumen = attumen->GetGUID();
                     attumen->AI()->AttackStart(me->getVictim());
                     SetMidnight(attumen, me->GetGUID());
-                    DoScriptText(RAND(SAY_APPEAR1, SAY_APPEAR2, SAY_APPEAR3), attumen);
+                    attumen->AI()->Talk(RAND(SAY_APPEAR1, SAY_APPEAR2, SAY_APPEAR3));
                 }
             }
             else if (Phase == 2 && HealthBelowPct(25))
@@ -197,7 +198,8 @@ public:
 
         void Mount(Unit* attumen)
         {
-            DoScriptText(SAY_MOUNT, attumen);
+			if (attumen->ToCreature())
+				attumen->ToCreature()->AI()->Talk(SAY_MOUNT);
             Phase = 3;
             me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             attumen->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -267,7 +269,7 @@ void boss_attumen::boss_attumenAI::UpdateAI(const uint32 diff)
 
     if (RandomYellTimer <= diff)
     {
-        DoScriptText(RAND(SAY_RANDOM1, SAY_RANDOM2), me);
+        Talk(RAND(SAY_RANDOM1, SAY_RANDOM2));
         RandomYellTimer = urand(30000, 60000);
     } else RandomYellTimer -= diff;
 

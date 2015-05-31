@@ -98,9 +98,9 @@ enum eKaya
     NPC_GRIMTOTEM_BRUTE         = 11912,
     NPC_GRIMTOTEM_SORCERER      = 11913,
 
-    SAY_START                   = -1000357,
-    SAY_AMBUSH                  = -1000358,
-    SAY_END                     = -1000359,
+    SAY_START                   = 1,
+    SAY_AMBUSH                  = 0,
+    SAY_END                     = 0,
 
     QUEST_PROTECT_KAYA          = 6523
 };
@@ -124,13 +124,13 @@ public:
             switch (i)
             {
             case 16:
-                DoScriptText(SAY_AMBUSH, me);
+                Talk(SAY_AMBUSH);
                 me->SummonCreature(NPC_GRIMTOTEM_BRUTE, -48.53f, -503.34f, -46.31f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                 me->SummonCreature(NPC_GRIMTOTEM_RUFFIAN, -38.85f, -503.77f, -45.90f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                 me->SummonCreature(NPC_GRIMTOTEM_SORCERER, -36.37f, -496.23f, -45.71f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                 break;
             case 18: me->SetInFront(player);
-                DoScriptText(SAY_END, me, player);
+                Talk(SAY_END, player->GetGUID());
                 if (player)
                     player->GroupEventHappens(QUEST_PROTECT_KAYA, me);
                 break;
@@ -152,7 +152,7 @@ public:
             if (npc_escortAI* pEscortAI = CAST_AI(npc_kaya_flathoof::npc_kaya_flathoofAI, creature->AI()))
                 pEscortAI->Start(true, false, player->GetGUID());
 
-            DoScriptText(SAY_START, creature);
+            creature->AI()->Talk(SAY_START);
             creature->setFaction(113);
             creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
         }

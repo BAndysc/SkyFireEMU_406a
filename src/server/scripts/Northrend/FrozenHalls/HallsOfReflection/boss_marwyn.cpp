@@ -21,12 +21,12 @@
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1668060,
-    SAY_SLAY_1                                    = -1668061,
-    SAY_SLAY_2                                    = -1668062,
-    SAY_DEATH                                     = -1668063,
-    SAY_CORRUPTED_FLESH_1                         = -1668064,
-    SAY_CORRUPTED_FLESH_2                         = -1668065,
+    SAY_AGGRO                                     = 5,
+    SAY_SLAY_1                                    = 4,
+    SAY_SLAY_2                                    = 3,
+    SAY_DEATH                                     = 2,
+    SAY_CORRUPTED_FLESH_1                         = 1,
+    SAY_CORRUPTED_FLESH_2                         = 0,
 };
 
 enum Spells
@@ -70,7 +70,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             if (instance)
                 instance->SetData(DATA_MARWYN_EVENT, IN_PROGRESS);
 
@@ -82,7 +82,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_MARWYN_EVENT, DONE);
@@ -90,7 +90,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -115,7 +115,7 @@ public:
                     events.ScheduleEvent(EVENT_WELL_OF_CORRUPTION, 13000);
                     break;
                 case EVENT_CORRUPTED_FLESH:
-                    DoScriptText(RAND(SAY_CORRUPTED_FLESH_1, SAY_CORRUPTED_FLESH_2), me);
+                    Talk(RAND(SAY_CORRUPTED_FLESH_1, SAY_CORRUPTED_FLESH_2));
                     DoCast(SPELL_CORRUPTED_FLESH);
                     events.ScheduleEvent(EVENT_CORRUPTED_FLESH, 20000);
                     break;

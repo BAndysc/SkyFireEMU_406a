@@ -283,28 +283,28 @@ public:
 # npc_kservant
 ######*/
 
-#define SAY1       -1000234
-#define WHISP1     -1000235
-#define WHISP2     -1000236
-#define WHISP3     -1000237
-#define WHISP4     -1000238
-#define WHISP5     -1000239
-#define WHISP6     -1000240
-#define WHISP7     -1000241
-#define WHISP8     -1000242
-#define WHISP9     -1000243
-#define WHISP10    -1000244
-#define WHISP11    -1000245
-#define WHISP12    -1000246
-#define WHISP13    -1000247
-#define WHISP14    -1000248
-#define WHISP15    -1000249
-#define WHISP16    -1000250
-#define WHISP17    -1000251
-#define WHISP18    -1000252
-#define WHISP19    -1000253
-#define WHISP20    -1000254
-#define WHISP21    -1000255
+#define SAY1       452
+#define WHISP1     9
+#define WHISP2     8
+#define WHISP3     7
+#define WHISP4     6
+#define WHISP5     5
+#define WHISP6     4
+#define WHISP7     3
+#define WHISP8     2
+#define WHISP9     1
+#define WHISP10    0
+#define WHISP11    2
+#define WHISP12    1
+#define WHISP13    0
+#define WHISP14    7
+#define WHISP15    6
+#define WHISP16    5
+#define WHISP17    4
+#define WHISP18    3
+#define WHISP19    2
+#define WHISP20    1
+#define WHISP21    0
 class npc_kservant : public CreatureScript
 {
 public:
@@ -329,28 +329,28 @@ public:
 
             switch (i)
             {
-                case 0: DoScriptText(SAY1, me, player); break;
-                case 4: DoScriptText(WHISP1, me, player); break;
-                case 6: DoScriptText(WHISP2, me, player); break;
-                case 7: DoScriptText(WHISP3, me, player); break;
-                case 8: DoScriptText(WHISP4, me, player); break;
-                case 17: DoScriptText(WHISP5, me, player); break;
-                case 18: DoScriptText(WHISP6, me, player); break;
-                case 19: DoScriptText(WHISP7, me, player); break;
-                case 33: DoScriptText(WHISP8, me, player); break;
-                case 34: DoScriptText(WHISP9, me, player); break;
-                case 35: DoScriptText(WHISP10, me, player); break;
-                case 36: DoScriptText(WHISP11, me, player); break;
-                case 43: DoScriptText(WHISP12, me, player); break;
-                case 44: DoScriptText(WHISP13, me, player); break;
-                case 49: DoScriptText(WHISP14, me, player); break;
-                case 50: DoScriptText(WHISP15, me, player); break;
-                case 51: DoScriptText(WHISP16, me, player); break;
-                case 52: DoScriptText(WHISP17, me, player); break;
-                case 53: DoScriptText(WHISP18, me, player); break;
-                case 54: DoScriptText(WHISP19, me, player); break;
-                case 55: DoScriptText(WHISP20, me, player); break;
-                case 56: DoScriptText(WHISP21, me, player);
+                /*case 0: Talk(SAY1, player->GetGUID()); break; //improper data
+                case 4: Talk(WHISP1, player->GetGUID()); break;
+                case 6: Talk(WHISP2, player->GetGUID()); break;
+                case 7: Talk(WHISP3, player->GetGUID()); break;
+                case 8: Talk(WHISP4, player->GetGUID()); break;
+                case 17: Talk(WHISP5, player->GetGUID()); break;
+                case 18: Talk(WHISP6, player->GetGUID()); break;
+                case 19: Talk(WHISP7, player->GetGUID()); break;
+                case 33: Talk(WHISP8, player->GetGUID()); break;
+                case 34: Talk(WHISP9, player->GetGUID()); break;
+                case 35: Talk(WHISP10, player->GetGUID()); break;
+                case 36: Talk(WHISP11, player->GetGUID()); break;
+                case 43: Talk(WHISP12, player->GetGUID()); break;
+                case 44: Talk(WHISP13, player->GetGUID()); break;
+                case 49: Talk(WHISP14, player->GetGUID()); break;
+                case 50: Talk(WHISP15, player->GetGUID()); break;
+                case 51: Talk(WHISP16, player->GetGUID()); break;
+                case 52: Talk(WHISP17, player->GetGUID()); break;
+                case 53: Talk(WHISP18, player->GetGUID()); break;
+                case 54: Talk(WHISP19, player->GetGUID()); break;
+                case 55: Talk(WHISP20, player->GetGUID()); break;*/
+                case 56: Talk(WHISP21, player->GetGUID());
                     if (player)
                         player->GroupEventHappens(10211, me);
                     break;
@@ -385,12 +385,12 @@ public:
 
 #define GOSSIP_BOOK "Ezekiel said that you might have a certain book..."
 
-#define SAY_1       -1000274
-#define SAY_2       -1000275
-#define SAY_3       -1000276
-#define SAY_4       -1000277
-#define SAY_5       -1000278
-#define SAY_GIVEUP  -1000279
+#define SAY_1       5
+#define SAY_2       4
+#define SAY_3       3
+#define SAY_4       2
+#define SAY_5       1
+#define SAY_GIVEUP  0
 
 #define QUEST_WBI       10231
 #define NPC_CREEPJACK   19726
@@ -456,11 +456,11 @@ public:
                 if (Malone)
                     Malone->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
                 me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP); }return 2000;
-            case 1: DoScriptText(SAY_1, me, player); return 3000;
-            case 2: DoScriptText(SAY_2, me, player); return 5000;
-            case 3: DoScriptText(SAY_3, me, player); return 2000;
-            case 4: DoScriptText(SAY_4, me, player); return 2000;
-            case 5: DoScriptText(SAY_5, me, player); return 2000;
+            case 1: Talk(SAY_1, player->GetGUID()); return 3000;
+            case 2: Talk(SAY_2, player->GetGUID()); return 5000;
+            case 3: Talk(SAY_3, player->GetGUID()); return 2000;
+            case 4: Talk(SAY_4, player->GetGUID()); return 2000;
+            case 5: Talk(SAY_5, player->GetGUID()); return 2000;
             case 6: Attack = true; return 2000;
             default: return 0;
             }
@@ -528,7 +528,7 @@ public:
                 }
                 me->setFaction(1194);
                 Done = true;
-                DoScriptText(SAY_GIVEUP, me, NULL);
+                Talk(SAY_GIVEUP);
                 me->DeleteThreatList();
                 me->CombatStop();
                 me->GetMotionMaster()->MoveTargetedHome();

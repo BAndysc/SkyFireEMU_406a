@@ -27,13 +27,13 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "karazhan.h"
 
-#define SAY_AGGRO           -1532011
-#define SAY_SPECIAL_1       -1532012
-#define SAY_SPECIAL_2       -1532013
-#define SAY_KILL_1          -1532014
-#define SAY_KILL_2          -1532015
-#define SAY_KILL_3          -1532016
-#define SAY_DEATH           -1532017
+#define SAY_AGGRO           6
+#define SAY_SPECIAL_1       5
+#define SAY_SPECIAL_2       4
+#define SAY_KILL_1          3
+#define SAY_KILL_2          2
+#define SAY_KILL_3          1
+#define SAY_DEATH           0
 
 #define SPELL_VANISH        29448
 #define SPELL_GARROTE       37066
@@ -127,19 +127,19 @@ public:
         {
             StartEvent();
 
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             AddsAttack();
             DoZoneInCombat();
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2, SAY_KILL_3), me);
+            Talk(RAND(SAY_KILL_1, SAY_KILL_2, SAY_KILL_3));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(TYPE_MOROES, DONE);
@@ -301,7 +301,7 @@ public:
             {
                 if (Wait_Timer <= diff)
                 {
-                    DoScriptText(RAND(SAY_SPECIAL_1, SAY_SPECIAL_2), me);
+                    Talk(RAND(SAY_SPECIAL_1, SAY_SPECIAL_2));
 
                     if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100, true))
                         target->CastSpell(target, SPELL_GARROTE, true);

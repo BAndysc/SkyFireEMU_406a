@@ -27,15 +27,15 @@
 
 enum Says
 {
-    SAY_GREET                                    = -1603260,
-    SAY_GROUND_PHASE                             = -1603261,
-    SAY_AGGRO_1                                  = -1603262,
-    SAY_AGGRO_2                                  = -1603263,
-    SAY_AGGRO_3                                  = -1603264,
-    SAY_TURRETS                                  = -1603265,
-    EMOTE_HARPOON                                = -1603266,
-    EMOTE_BREATH                                 = -1603267,
-    EMOTE_PERMA                                  = -1603268,
+    SAY_GREET                                    = 1,
+    SAY_GROUND_PHASE                             = 0,
+    SAY_AGGRO_1                                  = 4,
+    SAY_AGGRO_2                                  = 3,
+    SAY_AGGRO_3                                  = 2,
+    SAY_TURRETS                                  = 1,
+    EMOTE_HARPOON                                = 0,
+    EMOTE_BREATH                                 = 1,
+    EMOTE_PERMA                                  = 0,
 };
 
 enum Spells
@@ -245,7 +245,7 @@ class boss_razorscale_controller : public CreatureScript
                     switch (eventId)
                     {
                         case EVENT_BUILD_HARPOON_1:
-                            DoScriptText(EMOTE_HARPOON, me);
+                            Talk(EMOTE_HARPOON);
                             if (GameObject* Harpoon = me->SummonGameObject(GO_RAZOR_HARPOON_1, PosHarpoon[0].GetPositionX(), PosHarpoon[0].GetPositionY(), PosHarpoon[0].GetPositionZ(), 4.790f, 0.0f, 0.0f, 0.0f, 0.0f, uint32(me->GetRespawnTime())))
                             {
                                 if (GameObject* BrokenHarpoon = Harpoon->FindNearestGameObject(GO_RAZOR_BROKEN_HARPOON, 5.0f)) //only nearest broken harpoon
@@ -255,7 +255,7 @@ class boss_razorscale_controller : public CreatureScript
                             }
                             return;
                         case EVENT_BUILD_HARPOON_2:
-                            DoScriptText(EMOTE_HARPOON, me);
+                            Talk(EMOTE_HARPOON);
                             if (GameObject* Harpoon = me->SummonGameObject(GO_RAZOR_HARPOON_2, PosHarpoon[1].GetPositionX(), PosHarpoon[1].GetPositionY(), PosHarpoon[1].GetPositionZ(), 4.659f, 0, 0, 0, 0, uint32(me->GetRespawnTime())))
                             {
                                 if (GameObject* BrokenHarpoon = Harpoon->FindNearestGameObject(GO_RAZOR_BROKEN_HARPOON, 5.0f))
@@ -264,7 +264,7 @@ class boss_razorscale_controller : public CreatureScript
                             }
                             return;
                         case EVENT_BUILD_HARPOON_3:
-                            DoScriptText(EMOTE_HARPOON, me);
+                            Talk(EMOTE_HARPOON);
                             if (GameObject* Harpoon = me->SummonGameObject(GO_RAZOR_HARPOON_3, PosHarpoon[2].GetPositionX(), PosHarpoon[2].GetPositionY(), PosHarpoon[2].GetPositionZ(), 5.382f, 0, 0, 0, 0, uint32(me->GetRespawnTime())))
                             {
                                 if (GameObject* BrokenHarpoon = Harpoon->FindNearestGameObject(GO_RAZOR_BROKEN_HARPOON, 5.0f))
@@ -274,7 +274,7 @@ class boss_razorscale_controller : public CreatureScript
                             }
                             return;
                         case EVENT_BUILD_HARPOON_4:
-                            DoScriptText(EMOTE_HARPOON, me);
+                            Talk(EMOTE_HARPOON);
                             if (GameObject* Harpoon = me->SummonGameObject(GO_RAZOR_HARPOON_4, PosHarpoon[3].GetPositionX(), PosHarpoon[3].GetPositionY(), PosHarpoon[3].GetPositionZ(), 4.266f, 0, 0, 0, 0, uint32(me->GetRespawnTime())))
                             {
                                 if (GameObject* BrokenHarpoon = Harpoon->FindNearestGameObject(GO_RAZOR_BROKEN_HARPOON, 5.0f))
@@ -444,7 +444,7 @@ class boss_razorscale : public CreatureScript
                                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_STUNNED | UNIT_FLAG_PACIFIED);
                                 me->RemoveAllAuras();
                                 me->SetReactState(REACT_AGGRESSIVE);
-                                DoScriptText(EMOTE_BREATH, me, 0);
+                                Talk(EMOTE_BREATH);
                                 DoCastAOE(SPELL_FLAMEBREATH);
                                 events.CancelEvent(EVENT_BREATH);
                                 return;
@@ -608,7 +608,7 @@ class npc_expedition_commander : public CreatureScript
             {
                 if (!Greet && me->IsWithinDistInMap(who, 10.0f) && who->GetTypeId() == TYPEID_PLAYER)
                 {
-                    DoScriptText(SAY_GREET, me);
+                    Talk(SAY_GREET);
                     Greet = true;
                 }
             }
@@ -623,7 +623,7 @@ class npc_expedition_commander : public CreatureScript
                 switch (action)
                 {
                     case ACTION_GROUND_PHASE:
-                        DoScriptText(SAY_GROUND_PHASE, me);
+                        Talk(SAY_GROUND_PHASE);
                         break;
                     case ACTION_COMMANDER_RESET:
                         summons.clear();

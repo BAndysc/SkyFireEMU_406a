@@ -29,17 +29,17 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO                               = -1602032,
-    SAY_SLAY_1                              = -1602033,
-    SAY_SLAY_2                              = -1602034,
-    SAY_SLAY_3                              = -1602035,
-    SAY_DEATH                               = -1602036,
-    SAY_STOMP_1                             = -1602037,
-    SAY_STOMP_2                             = -1602038,
-    SAY_FORGE_1                             = -1602039,
-    SAY_FORGE_2                             = -1602040,
-    EMOTE_TO_ANVIL                          = -1602041,
-    EMOTE_SHATTER                           = -1602042,
+    SAY_AGGRO                               = 10,
+    SAY_SLAY_1                              = 9,
+    SAY_SLAY_2                              = 8,
+    SAY_SLAY_3                              = 7,
+    SAY_DEATH                               = 6,
+    SAY_STOMP_1                             = 5,
+    SAY_STOMP_2                             = 4,
+    SAY_FORGE_1                             = 3,
+    SAY_FORGE_2                             = 2,
+    EMOTE_TO_ANVIL                          = 1,
+    EMOTE_SHATTER                           = 0,
 
     SPELL_HEAT_N                            = 52387,
     SPELL_HEAT_H                            = 59528,
@@ -128,7 +128,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (m_pInstance)
                 m_pInstance->SetData(TYPE_VOLKHAN, IN_PROGRESS);
@@ -149,7 +149,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             DespawnGolem();
 
             if (m_pInstance)
@@ -173,7 +173,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void DespawnGolem()
@@ -264,11 +264,11 @@ public:
                 if (m_uiShatteringStomp_Timer <= uiDiff)
                 {
                     // Should he stomp even if he has no brittle golem to shatter?
-                    DoScriptText(RAND(SAY_STOMP_1, SAY_STOMP_2), me);
+                    Talk(RAND(SAY_STOMP_1, SAY_STOMP_2));
 
                     DoCast(me, SPELL_SHATTERING_STOMP_N);
 
-                    DoScriptText(EMOTE_SHATTER, me);
+                    Talk(EMOTE_SHATTER);
 
                     m_uiShatteringStomp_Timer = 30000;
                     m_bCanShatterGolem = true;
@@ -298,7 +298,7 @@ public:
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);
 
-                DoScriptText(RAND(SAY_FORGE_1, SAY_FORGE_2), me);
+                Talk(RAND(SAY_FORGE_1, SAY_FORGE_2));
 
                 m_bHasTemper = true;
 
@@ -309,7 +309,7 @@ public:
             {
                 case 1:
                     // 1 - Start run to Anvil
-                    DoScriptText(EMOTE_TO_ANVIL, me);
+                    Talk(EMOTE_TO_ANVIL);
                     me->GetMotionMaster()->MoveTargetedHome();
                     m_uiSummonPhase = 2;        // Set Next Phase
                     break;

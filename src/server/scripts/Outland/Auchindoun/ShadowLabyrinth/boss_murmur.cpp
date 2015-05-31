@@ -27,7 +27,7 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "shadow_labyrinth.h"
 
-#define EMOTE_SONIC_BOOM            -1555036
+#define EMOTE_SONIC_BOOM            0
 
 #define SPELL_SONIC_BOOM_CAST       DUNGEON_MODE(33923, 38796)
 #define SPELL_SONIC_BOOM_EFFECT     DUNGEON_MODE(33666, 38795)
@@ -122,7 +122,7 @@ public:
             }
             if (SonicBoom_Timer <= diff)
             {
-                DoScriptText(EMOTE_SONIC_BOOM, me);
+                Talk(EMOTE_SONIC_BOOM);
                 DoCast(me, SPELL_SONIC_BOOM_CAST);
                 SonicBoom_Timer = 30000;
                 SonicBoom = true;

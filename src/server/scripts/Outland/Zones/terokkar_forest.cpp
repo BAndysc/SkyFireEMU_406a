@@ -42,7 +42,7 @@ EndContentData */
 ## mob_unkor_the_ruthless
 ######*/
 
-#define SAY_SUBMIT                      -1000194
+#define SAY_SUBMIT                      471
 
 #define FACTION_HOSTILE                 45
 #define FACTION_FRIENDLY                35
@@ -82,7 +82,7 @@ public:
 
         void DoNice()
         {
-            DoScriptText(SAY_SUBMIT, me);
+            //Talk(SAY_SUBMIT);//improper data
             me->setFaction(FACTION_FRIENDLY);
             me->SetStandState(UNIT_STAND_STATE_SIT);
             me->RemoveAllAuras();
@@ -339,7 +339,7 @@ public:
 
 enum eFloon
 {
-    SAY_FLOON_ATTACK        = -1000195,
+    SAY_FLOON_ATTACK        = 470,
 
     SPELL_SILENCE           = 6726,
     SPELL_FROSTBOLT         = 9672,
@@ -366,7 +366,7 @@ public:
         {
             player->CLOSE_GOSSIP_MENU();
             creature->setFaction(FACTION_HOSTILE_FL);
-            DoScriptText(SAY_FLOON_ATTACK, creature, player);
+            //creature->AI()->Talk(SAY_FLOON_ATTACK, player->GetGUID());//improper data
             creature->AI()->AttackStart(player);
         }
         return true;
@@ -442,10 +442,10 @@ public:
 ######*/
 enum eIslaStarmaneData
 {
-    SAY_PROGRESS_1  = -1000571,
-    SAY_PROGRESS_2  = -1000572,
-    SAY_PROGRESS_3  = -1000573,
-    SAY_PROGRESS_4  = -1000574,
+    SAY_PROGRESS_1  = 439,
+    SAY_PROGRESS_2  = 438,
+    SAY_PROGRESS_3  = 437,
+    SAY_PROGRESS_4  = 436,
 
     QUEST_EFTW_H    = 10052,
     QUEST_EFTW_A    = 10051,
@@ -478,10 +478,11 @@ public:
                     Cage->SetGoState(GO_STATE_ACTIVE);
                 }
                 break;
-            case 2: DoScriptText(SAY_PROGRESS_1, me, player); break;
-            case 5: DoScriptText(SAY_PROGRESS_2, me, player); break;
-            case 6: DoScriptText(SAY_PROGRESS_3, me, player); break;
-            case 29:DoScriptText(SAY_PROGRESS_4, me, player);
+            //case 2: Talk(SAY_PROGRESS_1, player->GetGUID()); break;//improper data
+            //case 5: Talk(SAY_PROGRESS_2, player->GetGUID()); break;//improper data
+            //case 6: Talk(SAY_PROGRESS_3, player->GetGUID()); break;//improper data
+            case 29:
+				//Talk(SAY_PROGRESS_4, player->GetGUID());//improper data
                 if (player)
                 {
                     if (player->GetTeam() == ALLIANCE)

@@ -27,10 +27,10 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO                   -1309020
-#define SAY_FLEEING                 -1309021
-#define SAY_MINION_DESTROY          -1309022                //where does it belong?
-#define SAY_PROTECT_ALTAR           -1309023                //where does it belong?
+#define SAY_AGGRO                   3
+#define SAY_FLEEING                 2
+#define SAY_MINION_DESTROY          1                //where does it belong?
+#define SAY_PROTECT_ALTAR           0                //where does it belong?
 
 #define SPELL_BLOODSIPHON            24322
 #define SPELL_CORRUPTEDBLOOD         24328
@@ -104,7 +104,7 @@ class boss_hakkar : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void UpdateAI(const uint32 diff)

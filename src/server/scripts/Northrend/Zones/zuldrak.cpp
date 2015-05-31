@@ -265,15 +265,15 @@ enum eGurgthock
     NPC_FIEND_EARTH                               = 30043,
     NPC_VLADOF_BUTCHER                            = 30022,
 
-    SAY_QUEST_ACCEPT_TUSKARRMAGEDON               = -1571031,
-    SAY_QUEST_ACCEPT_KORRAK_1                     = -1571033,
-    SAY_QUEST_ACCEPT_KORRAK_2                     = -1571034,
-    SAY_QUEST_ACCEPT_MAGNATAUR                    = -1571035,
+    SAY_QUEST_ACCEPT_TUSKARRMAGEDON               = 4,
+    SAY_QUEST_ACCEPT_KORRAK_1                     = 3,
+    SAY_QUEST_ACCEPT_KORRAK_2                     = 2,
+    SAY_QUEST_ACCEPT_MAGNATAUR                    = 1,
     //SAY_QUEST_ACCEPT_VLADOF_BUTCHER         = 0, // Text
 
-    EMOTE_YGGDRAS_SPAWN                           = -1571039,
-    SAY_STINKBEARD_SPAWN                          = -1571040,
-    SAY_GURGTHOCK_ELEMENTAL_SPAWN                 = -1571041,
+    EMOTE_YGGDRAS_SPAWN                           = 0,
+    SAY_STINKBEARD_SPAWN                          = 0,
+    SAY_GURGTHOCK_ELEMENTAL_SPAWN                 = 0,
 
     SPELL_CRASHING_WAVE                           = 55909, // water
     SPELL_SHOCKWAVE                               = 55918, // earth
@@ -382,12 +382,12 @@ public:
                     switch (value)
                     {
                         case QUEST_AMPHITHEATER_ANGUISH_TUSKARRMAGEDDON:
-                            DoScriptText(SAY_QUEST_ACCEPT_TUSKARRMAGEDON, me);
+                            Talk(SAY_QUEST_ACCEPT_TUSKARRMAGEDON);
                             Phase = 1;
                             Timer = 4000;
                             break;
                         case QUEST_AMPHITHEATER_ANGUISH_KORRAK_BLOODRAGER:
-                            DoScriptText(SAY_QUEST_ACCEPT_KORRAK_1, me);
+                            Talk(SAY_QUEST_ACCEPT_KORRAK_1);
                             Phase = 3;
                             Timer = 3000;
                             break;
@@ -449,7 +449,7 @@ public:
                             SummonGUID = 0;
                             break;
                         case 3:
-                            DoScriptText(SAY_QUEST_ACCEPT_KORRAK_2, me);
+                            Talk(SAY_QUEST_ACCEPT_KORRAK_2);
                             Timer = 3000;
                             Phase = 4;
                             break;
@@ -483,7 +483,7 @@ public:
                             }
                             break;
                         case 8:
-                            DoScriptText(SAY_QUEST_ACCEPT_MAGNATAUR, me);
+                            Talk(SAY_QUEST_ACCEPT_MAGNATAUR);
                             Timer = 5000;
                             Phase = 11;
                             break;
@@ -500,12 +500,12 @@ public:
                             break;
                         case 10:
                             me->SummonCreature(NPC_YGGDRAS, SpawnPosition[1], TEMPSUMMON_CORPSE_DESPAWN, 1000);
-                            DoScriptText(EMOTE_YGGDRAS_SPAWN, me);
+                            Talk(EMOTE_YGGDRAS_SPAWN);
                             Phase = 0;
                             break;
                         case 11:
                             if (Creature* creature = me->SummonCreature(NPC_STINKBEARD, SpawnPosition[0], TEMPSUMMON_CORPSE_DESPAWN, 1000))
-                                DoScriptText(SAY_STINKBEARD_SPAWN, creature);
+                                creature->AI()->Talk(SAY_STINKBEARD_SPAWN);
                             Phase = 0;
                             break;
                         case 12:
@@ -520,7 +520,7 @@ public:
                         }
                         break;
                         case 13:
-                            DoScriptText(SAY_GURGTHOCK_ELEMENTAL_SPAWN, me);
+                            Talk(SAY_GURGTHOCK_ELEMENTAL_SPAWN);
                             Timer = 3000;
                             Phase = 14;
                             break;
@@ -543,7 +543,7 @@ public:
                             }
                             break;
                         case 16:
-                            //DoScriptText(SAY_QUEST_ACCEPT_VLADOF_BUTCHER, me);
+                            //Talk(SAY_QUEST_ACCEPT_VLADOF_BUTCHER);
                             Timer = 0;
                             Phase = 17;
                             break;
@@ -709,7 +709,7 @@ enum eOrinokoTuskbreaker
     NPC_WHISKER             = 30113,
     NPC_HUNGRY_PENGUIN      = 30110,
 
-    SAY_CALL_FOR_HELP       = -1571032
+    SAY_CALL_FOR_HELP       = 0
 };
 
 class npc_orinoko_tuskbreaker : public CreatureScript
@@ -791,7 +791,7 @@ public:
 
             if (!bSummoned && !HealthAbovePct(50))
             {
-                DoScriptText(SAY_CALL_FOR_HELP , me);
+                Talk(SAY_CALL_FOR_HELP );
                 //DoCast(me->getVictim(), SPELL_SUMMON_WHISKER); petai is not working correctly???
 
                 if (Creature* whisker = me->SummonCreature(NPC_WHISKER, me->GetPositionX(), me->GetPositionY(), me->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 0))
@@ -1412,9 +1412,9 @@ enum eCrusade_recruit
 
     GOSSIP_CRUSADE_TEXT                           = 13069,
 
-    SAY_RECRUIT_1                                 = -1571036,
-    SAY_RECRUIT_2                                 = -1571037,
-    SAY_RECRUIT_3                                 = -1571038
+    SAY_RECRUIT_1                                 = 2,
+    SAY_RECRUIT_2                                 = 1,
+    SAY_RECRUIT_3                                 = 0
 };
 
 #define GOSSIP_ITEM_1 "Get out there and make those Scourge wish they were never reborn!"
@@ -1453,7 +1453,7 @@ public:
                             // say random text
                             me->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                             me->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_NONE);
-                            DoScriptText(RAND(SAY_RECRUIT_1, SAY_RECRUIT_2, SAY_RECRUIT_3), me);
+                            Talk(RAND(SAY_RECRUIT_1, SAY_RECRUIT_2, SAY_RECRUIT_3));
                             m_Timer = 3000;
                             m_Phase = 2;
                             break;

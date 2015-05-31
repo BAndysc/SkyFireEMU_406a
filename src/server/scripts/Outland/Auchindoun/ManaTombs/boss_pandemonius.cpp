@@ -26,16 +26,16 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_AGGRO_1                     -1557008
-#define SAY_AGGRO_2                     -1557009
-#define SAY_AGGRO_3                     -1557010
+#define SAY_AGGRO_1                     6
+#define SAY_AGGRO_2                     5
+#define SAY_AGGRO_3                     4
 
-#define SAY_KILL_1                      -1557011
-#define SAY_KILL_2                      -1557012
+#define SAY_KILL_1                      3
+#define SAY_KILL_2                      2
 
-#define SAY_DEATH                       -1557013
+#define SAY_DEATH                       1
 
-#define EMOTE_DARK_SHELL                -1557014
+#define EMOTE_DARK_SHELL                0
 
 #define SPELL_VOID_BLAST                32325
 #define H_SPELL_VOID_BLAST              38760
@@ -71,17 +71,17 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+            Talk(RAND(SAY_KILL_1, SAY_KILL_2));
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
         }
 
         void UpdateAI(const uint32 diff)
@@ -112,7 +112,7 @@ public:
                     if (me->IsNonMeleeSpellCasted(false))
                         me->InterruptNonMeleeSpells(true);
 
-                    DoScriptText(EMOTE_DARK_SHELL, me);
+                    Talk(EMOTE_DARK_SHELL);
 
                     DoCast(me, SPELL_DARK_SHELL);
                     DarkShell_Timer = 20000;

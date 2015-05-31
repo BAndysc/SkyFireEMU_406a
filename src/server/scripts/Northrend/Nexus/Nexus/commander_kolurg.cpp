@@ -34,7 +34,7 @@ Script Data End */
 
 //not used
 //Yell
-#define SAY_AGGRO                                          -1576024
+#define SAY_AGGRO                                          0
 #define SAY_KILL                                           -1576025
 #define SAY_DEATH                                          -1576026
 

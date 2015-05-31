@@ -44,15 +44,15 @@ EndContentData */
 
 enum eEnums
 {
-    SAY_HEAL1           = -1000176,
-    SAY_HEAL2           = -1000177,
-    SAY_HEAL3           = -1000178,
-    SAY_HEAL4           = -1000179,
+    SAY_HEAL1           = 488,
+    SAY_HEAL2           = 487,
+    SAY_HEAL3           = 486,
+    SAY_HEAL4           = 485,
 
-    SAY_HELP1           = -1000180,
-    SAY_HELP2           = -1000181,
-    SAY_HELP3           = -1000182,
-    SAY_HELP4           = -1000183,
+    SAY_HELP1           = 484,
+    SAY_HELP2           = 483,
+    SAY_HELP3           = 482,
+    SAY_HELP4           = 481,
 
     SPELL_IRRIDATION    = 35046,
     SPELL_STUNNED       = 28630
@@ -105,7 +105,7 @@ public:
             if (CanSayHelp && who->GetTypeId() == TYPEID_PLAYER && me->IsFriendlyTo(who) && me->IsWithinDistInMap(who, 25.0f))
             {
                 //Random switch between 4 texts
-                DoScriptText(RAND(SAY_HELP1, SAY_HELP2, SAY_HELP3, SAY_HELP4), me, who);
+                Talk(RAND(SAY_HELP1, SAY_HELP2, SAY_HELP3, SAY_HELP4), who->GetGUID());
 
                 SayHelpTimer = 20000;
                 CanSayHelp = false;
@@ -137,7 +137,7 @@ public:
 
                     if (Player* player = Unit::GetPlayer(*me, pCaster))
                     {
-                        DoScriptText(RAND(SAY_HEAL1, SAY_HEAL2, SAY_HEAL3, SAY_HEAL4), me, player);
+                        Talk(RAND(SAY_HEAL1, SAY_HEAL2, SAY_HEAL3, SAY_HEAL4), player->GetGUID());
 
                         player->TalkedToCreature(me->GetEntry(), me->GetGUID());
                     }
@@ -177,9 +177,9 @@ public:
 
 enum eOvergrind
 {
-    SAY_TEXT        = -1000184,
-    SAY_EMOTE       = -1000185,
-    ATTACK_YELL     = -1000186,
+    SAY_TEXT        = 480,
+    SAY_EMOTE       = 479,
+    ATTACK_YELL     = 478,
 
     AREA_COVE       = 3579,
     AREA_ISLE       = 3639,
@@ -253,7 +253,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(ATTACK_YELL, me, who);
+            //Talk(ATTACK_YELL, who->GetGUID());//improper data
         }
 
         void UpdateAI(const uint32 diff)
@@ -262,8 +262,8 @@ public:
             {
                 if (Emote_Timer <= diff)
                 {
-                    DoScriptText(SAY_TEXT, me);
-                    DoScriptText(SAY_EMOTE, me);
+                    //Talk(SAY_TEXT);//improper data
+                    //Talk(SAY_EMOTE);//improper data
                     Emote_Timer = 120000 + rand()%30000;
                 } else Emote_Timer -= diff;
             }
@@ -331,12 +331,12 @@ public:
 
 enum eMagwin
 {
-    SAY_START                   = -1000111,
-    SAY_AGGRO                   = -1000112,
-    SAY_PROGRESS                = -1000113,
-    SAY_END1                    = -1000114,
-    SAY_END2                    = -1000115,
-    EMOTE_HUG                   = -1000116,
+    SAY_START                   = 5,
+    SAY_AGGRO                   = 4,
+    SAY_PROGRESS                = 3,
+    SAY_END1                    = 2,
+    SAY_END2                    = 1,
+    EMOTE_HUG                   = 0,
 
     QUEST_A_CRY_FOR_SAY_HELP    = 9528
 };
@@ -376,17 +376,17 @@ public:
             switch (i)
             {
             case 0:
-                DoScriptText(SAY_START, me, player);
+                Talk(SAY_START, player->GetGUID());
                 break;
             case 17:
-                DoScriptText(SAY_PROGRESS, me, player);
+                Talk(SAY_PROGRESS, player->GetGUID());
                 break;
             case 28:
-                DoScriptText(SAY_END1, me, player);
+                Talk(SAY_END1, player->GetGUID());
                 break;
             case 29:
-                DoScriptText(EMOTE_HUG, me, player);
-                DoScriptText(SAY_END2, me, player);
+                Talk(EMOTE_HUG, player->GetGUID());
+                Talk(SAY_END2, player->GetGUID());
                 player->GroupEventHappens(QUEST_A_CRY_FOR_SAY_HELP, me);
                 break;
             }
@@ -394,7 +394,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(SAY_AGGRO, me, who);
+            Talk(SAY_AGGRO, who->GetGUID());
         }
 
         void Reset() { }
@@ -411,15 +411,15 @@ enum eGeezle
 
     SPELL_TREE_DISGUISE = 30298,
 
-    GEEZLE_SAY_1    = -1000629,
-    SPARK_SAY_2     = -1000630,
-    SPARK_SAY_3     = -1000631,
-    GEEZLE_SAY_4    = -1000632,
-    SPARK_SAY_5     = -1000633,
-    SPARK_SAY_6     = -1000634,
-    GEEZLE_SAY_7    = -1000635,
+    GEEZLE_SAY_1    = 419,
+    SPARK_SAY_2     = 418,
+    SPARK_SAY_3     = 417,
+    GEEZLE_SAY_4    = 416,
+    SPARK_SAY_5     = 415,
+    SPARK_SAY_6     = 414,
+    GEEZLE_SAY_7    = 413,
 
-    EMOTE_SPARK     = -1000636,
+    EMOTE_SPARK     = 412,
 
     MOB_SPARK       = 17243,
     GO_NAGA_FLAG    = 181694
@@ -484,22 +484,22 @@ public:
                 return 9000; // NPCs are walking up to fire
             case 1:
                 DespawnNagaFlag(true);
-                DoScriptText(EMOTE_SPARK, Spark);
+                //Spark->AI()->Talk(EMOTE_SPARK);//improper data
                 return 1000;
             case 2:
-                DoScriptText(GEEZLE_SAY_1, me, Spark);
+                //Talk(GEEZLE_SAY_1, Spark->GetGUID());//improper data
                 if (Spark)
                 {
                     Spark->SetInFront(me);
                     me->SetInFront(Spark);
                 }
                 return 5000;
-            case 3: DoScriptText(SPARK_SAY_2, Spark); return 7000;
-            case 4: DoScriptText(SPARK_SAY_3, Spark); return 8000;
-            case 5: DoScriptText(GEEZLE_SAY_4, me, Spark); return 8000;
-            case 6: DoScriptText(SPARK_SAY_5, Spark); return 9000;
-            case 7: DoScriptText(SPARK_SAY_6, Spark); return 8000;
-            case 8: DoScriptText(GEEZLE_SAY_7, me, Spark); return 2000;
+            //case 3: Spark->AI()->Talk(SPARK_SAY_2); return 7000;//improper data
+            //case 4: Spark->AI()->Talk(SPARK_SAY_3); return 8000;//improper data
+            //case 5: Talk(GEEZLE_SAY_4, Spark->GetGUID()); return 8000;//improper data
+            //case 6: Spark->AI()->Talk(SPARK_SAY_5); return 9000;//improper data
+            //case 7: Spark->AI()->Talk(SPARK_SAY_6); return 8000;//improper data
+            //case 8: Talk(GEEZLE_SAY_7, Spark->GetGUID()); return 2000;//improper data
             case 9:
                 me->GetMotionMaster()->MoveTargetedHome();
                 if (Spark)
@@ -656,9 +656,9 @@ enum BristlelimbCage
     NPC_STILLPINE_CAPITIVE              = 17375,
     GO_BRISTELIMB_CAGE                  = 181714,
 
-    CAPITIVE_SAY_1                      = -1000474,
-    CAPITIVE_SAY_2                      = -1000475,
-    CAPITIVE_SAY_3                      = -1000476,
+    CAPITIVE_SAY_1                      = 2,
+    CAPITIVE_SAY_2                      = 1,
+    CAPITIVE_SAY_3                      = 0,
 
     POINT_INIT                          = 1,
     EVENT_DESPAWN                       = 1,
@@ -691,7 +691,7 @@ class npc_stillpine_capitive : public CreatureScript
             {
                 if (owner)
                 {
-                    DoScriptText(RAND(CAPITIVE_SAY_1, CAPITIVE_SAY_2, CAPITIVE_SAY_3), me, owner);
+                    Talk(RAND(CAPITIVE_SAY_1, CAPITIVE_SAY_2, CAPITIVE_SAY_3), owner->GetGUID());
                     _player = owner;
                 }
                 Position pos;

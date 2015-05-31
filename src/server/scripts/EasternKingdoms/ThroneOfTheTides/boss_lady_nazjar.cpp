@@ -44,12 +44,12 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                   = -1643001,
-    SAY_66_PRECENT              = -1643002,
-    SAY_33_PRECENT              = -1643003,
-    SAY_DEATH                   = -1643004,
-    SAY_KILL_1                  = -1643005,
-    SAY_KILL_2                  = -1643006,
+    SAY_AGGRO                   = 5,
+    SAY_66_PRECENT              = 4,
+    SAY_33_PRECENT              = 3,
+    SAY_DEATH                   = 2,
+    SAY_KILL_1                  = 1,
+    SAY_KILL_2                  = 0,
 };
 
 enum Phases
@@ -138,7 +138,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+            Talk(RAND(SAY_KILL_1, SAY_KILL_2));
         }
 
         void JustSummoned(Creature* summon)
@@ -156,7 +156,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(DATA_LADY_NAZJAR_EVENT, IN_PROGRESS);
@@ -165,7 +165,7 @@ public:
         void JustDied(Unit* /*killer*/)
         {
             me->SummonCreature(BOSS_COMMANDER_ULTHOK, 59.185f, 802.251f, 805.730f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60480000);
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             RemoveSummons();
 
             if (instance)
@@ -193,7 +193,7 @@ public:
 
             if (me->HealthBelowPct(67) && Phase == PHASE_NORMAL && PhaseCount == 0)
             {
-                DoScriptText(SAY_66_PRECENT, me);
+                Talk(SAY_66_PRECENT);
 
                 me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_INTERRUPT, true);
                 PhaseCount++;
@@ -213,7 +213,7 @@ public:
             if (me->HealthBelowPct(34) && Phase == PHASE_NORMAL && PhaseCount == 1)
             {
                 me->ApplySpellImmune(0, IMMUNITY_MECHANIC, MECHANIC_INTERRUPT, true);
-                DoScriptText(SAY_33_PRECENT, me);
+                Talk(SAY_33_PRECENT);
 
                 PhaseCount++;
                 SetCombatMovement(false);

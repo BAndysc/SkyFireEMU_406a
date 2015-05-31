@@ -32,13 +32,13 @@ EndContentData */
 #include "ScriptPCH.h"
 #include "steam_vault.h"
 
-#define SAY_SUMMON                  -1545000
-#define SAY_AGGRO_1                 -1545001
-#define SAY_AGGRO_2                 -1545002
-#define SAY_AGGRO_3                 -1545003
-#define SAY_SLAY_1                  -1545004
-#define SAY_SLAY_2                  -1545005
-#define SAY_DEAD                    -1545006
+#define SAY_SUMMON                  6
+#define SAY_AGGRO_1                 5
+#define SAY_AGGRO_2                 4
+#define SAY_AGGRO_3                 3
+#define SAY_SLAY_1                  2
+#define SAY_SLAY_2                  1
+#define SAY_DEAD                    0
 
 #define SPELL_LIGHTNING_CLOUD       25033
 #define SPELL_LUNG_BURST            31481
@@ -82,7 +82,7 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEAD, me);
+            Talk(SAY_DEAD);
 
             if (instance)
                 instance->SetData(TYPE_HYDROMANCER_THESPIA, DONE);
@@ -90,12 +90,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
 
             if (instance)
                 instance->SetData(TYPE_HYDROMANCER_THESPIA, IN_PROGRESS);

@@ -829,7 +829,7 @@ class npc_homeless_citizen : public CreatureScript
         {
             me->CastSpell(me, SPELL_FULL_BELLY, true);
             me->SetStandState(UNIT_STAND_STATE_SIT);
-            DoScriptText(RAND(-1642384,-1642385,-1642386), me);
+            Talk(RAND(-1642384,-1642385,-1642386));
         }
 
         void MoveInFront(Unit* Source, Unit* Target)

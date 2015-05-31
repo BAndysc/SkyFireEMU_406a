@@ -27,9 +27,9 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO                   -1309002
-#define SAY_RAIN_FIRE               -1309003
-#define SAY_DEATH                   -1309004
+#define SAY_AGGRO                   2
+#define SAY_RAIN_FIRE               1
+#define SAY_DEATH                   0
 
 #define SPELL_CHARGE                22911
 #define SPELL_SONICBURST            23918
@@ -91,13 +91,13 @@ class boss_jeklik : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 DoCast(me, SPELL_BAT_FORM);
             }
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_JEKLIK, DONE);

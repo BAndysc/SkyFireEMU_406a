@@ -27,8 +27,8 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "karazhan.h"
 
-#define EMOTE_PHASE_PORTAL          -1532089
-#define EMOTE_PHASE_BANISH          -1532090
+#define EMOTE_PHASE_PORTAL          1
+#define EMOTE_PHASE_BANISH          0
 
 #define SPELL_NETHERBURN_AURA       30522
 #define SPELL_VOIDZONE              37063
@@ -228,7 +228,7 @@ public:
             PortalPhase = true;
             PortalTimer = 10000;
             EmpowermentTimer = 10000;
-            DoScriptText(EMOTE_PHASE_PORTAL, me);
+            Talk(EMOTE_PHASE_PORTAL);
         }
 
         void SwitchToBanishPhase()
@@ -240,7 +240,7 @@ public:
             DestroyPortals();
             PhaseTimer = 30000;
             PortalPhase = false;
-            DoScriptText(EMOTE_PHASE_BANISH, me);
+            Talk(EMOTE_PHASE_BANISH);
 
             for (int i=0; i<3; ++i)
                 me->RemoveAurasDueToSpell(NetherBuff[i]);

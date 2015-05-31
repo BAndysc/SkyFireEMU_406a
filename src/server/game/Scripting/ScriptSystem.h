@@ -80,19 +80,12 @@ class SystemMgr
         typedef UNORDERED_MAP<uint32, ScriptPointVector> PointMoveMap;
 
         //Database
-        void LoadScriptTexts();
-        void LoadScriptTextsCustom();
         void LoadScriptWaypoints();
 
         //Retrive from storage
         StringTextData const* GetTextData(int32 textId) const
         {
-            TextDataMap::const_iterator itr = m_mTextDataMap.find(textId);
-
-            if (itr == m_mTextDataMap.end())
-                return NULL;
-
-            return &itr->second;
+            return NULL;
         }
 
         ScriptPointVector const& GetPointMoveList(uint32 creatureEntry) const
@@ -106,7 +99,6 @@ class SystemMgr
         }
 
     protected:
-        TextDataMap     m_mTextDataMap;                     //additional data for text strings
         PointMoveMap    m_mPointMoveMap;                    //coordinates for waypoints
 
     private:

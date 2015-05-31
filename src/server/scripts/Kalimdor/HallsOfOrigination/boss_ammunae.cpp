@@ -115,7 +115,7 @@ class boss_ammunae : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                //DoScriptText(SAY_AGGRO, me);
+                //Talk(SAY_AGGRO);
 
                 if (instance)
                     instance->SetData(DATA_AMMUNAE_EVENT, IN_PROGRESS);
@@ -149,7 +149,7 @@ class boss_ammunae : public CreatureScript
 
             void DoRampartGrowth()
             {
-                //DoScriptText(SAY_GROWTH, me);
+                //Talk(SAY_GROWTH);
                 me->SetPower(POWER_ENERGY, 0);
                 DoCastAOE(SPELL_RAMPANT_GROWTH);
                 RampartSummon(NPC_SEEDING_POD, 100);
@@ -201,7 +201,7 @@ class boss_ammunae : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                //DoScriptText(SAY_DEATH, me);
+                //Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_AMMUNAE_EVENT, DONE);

@@ -67,16 +67,16 @@ const uint32 SPELL_PUNISH[]     =   {0, 57381, 0, 57377};
 #define SPELL_BERSERK               26662
 
 // used by 16063, 16064, 16065, 30549, but signed for 16063
-const int32 SAY_AGGRO[]     =   {-1533051, -1533044, -1533065, -1533058};
-const int32 SAY_TAUNT[3][4] ={  {-1533052, -1533045, -1533071, -1533059},
-                                {-1533053, -1533046, -1533072, -1533060},
-                                {-1533054, -1533047, -1533073, -1533061}, };
-const int32 SAY_SPECIAL[]   =   {-1533055, -1533048, -1533070, -1533062};
-const int32 SAY_SLAY[]      =   {-1533056, -1533049, -1533068, -1533063};
-const int32 SAY_DEATH[]     =   {-1533057, -1533050, -1533074, -1533064};
+const int32 SAY_AGGRO[]     =   {23, 30, 9, 16};
+const int32 SAY_TAUNT[3][4] ={  {22, 29, 3, 15},
+                                {21, 28, 2, 14},
+                                {20, 27, 1, 13}, };
+const int32 SAY_SPECIAL[]   =   {19, 26, 4, 12};
+const int32 SAY_SLAY[]      =   {18, 25, 6, 11};
+const int32 SAY_DEATH[]     =   {17, 24, 0, 10};
 
-#define SAY_BARON_AGGRO     RAND(-1533065, -1533066, -1533067)
-#define SAY_BARON_SLAY      RAND(-1533068, -1533069)
+#define SAY_BARON_AGGRO     RAND(9, 8, 7)
+#define SAY_BARON_SLAY      RAND(6, 5)
 
 class boss_four_horsemen : public CreatureScript
 {
@@ -289,9 +289,9 @@ public:
             if (!(rand()%5))
             {
                 if (id == HORSEMEN_BARON)
-                    DoScriptText(SAY_BARON_SLAY, me);
+                    Talk(SAY_BARON_SLAY);
                 else
-                    DoScriptText(SAY_SLAY[id], me);
+                    Talk(SAY_SLAY[id]);
             }
         }
 
@@ -313,7 +313,7 @@ public:
                 instance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, 59450);
             }
 
-            DoScriptText(SAY_DEATH[id], me);
+            Talk(SAY_DEATH[id]);
         }
 
         void EnterCombat(Unit* /*who*/)
@@ -321,9 +321,9 @@ public:
             _EnterCombat();
 
             if (id == HORSEMEN_BARON)
-                DoScriptText(SAY_BARON_AGGRO, me);
+                Talk(SAY_BARON_AGGRO);
             else
-                DoScriptText(SAY_AGGRO[id], me);
+                Talk(SAY_AGGRO[id]);
 
             events.ScheduleEvent(EVENT_MARK, 15000);
             events.ScheduleEvent(EVENT_CAST, 20000+rand()%5000);
@@ -352,13 +352,13 @@ public:
                 {
                     case EVENT_MARK:
                         if (!(rand()%5))
-                            DoScriptText(SAY_SPECIAL[id], me);
+                            Talk(SAY_SPECIAL[id]);
                         DoCastAOE(SPELL_MARK[id]);
                         events.ScheduleEvent(EVENT_MARK, 15000);
                         break;
                     case EVENT_CAST:
                         if (!(rand()%5))
-                            DoScriptText(SAY_TAUNT[rand()%3][id], me);
+                            Talk(SAY_TAUNT[rand()%3][id]);
 
                         if (caster)
                         {
@@ -371,7 +371,7 @@ public:
                         events.ScheduleEvent(EVENT_CAST, 15000);
                         break;
                     case EVENT_BERSERK:
-                        DoScriptText(SAY_SPECIAL[id], me);
+                        Talk(SAY_SPECIAL[id]);
                         DoCast(me, EVENT_BERSERK);
                         break;
                 }

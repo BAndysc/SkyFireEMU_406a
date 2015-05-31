@@ -19,10 +19,10 @@
 #include "ScriptPCH.h"
 #include "naxxramas.h"
 
-#define SAY_AGGRO               RAND(-1533075, -1533076, -1533077)
-#define SAY_SUMMON              -1533078
-#define SAY_SLAY                RAND(-1533079, -1533080)
-#define SAY_DEATH               -1533081
+#define SAY_AGGRO               RAND(6, 5, 4)
+#define SAY_SUMMON              3
+#define SAY_SLAY                RAND(2, 1)
+#define SAY_DEATH               0
 
 #define SOUND_DEATH      8848
 
@@ -90,7 +90,7 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             _EnterCombat();
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             balconyCount = 0;
             EnterPhaseGround();
         }
@@ -115,7 +115,7 @@ public:
         void KilledUnit(Unit* /*victim*/)
         {
             if (!(rand()%5))
-                DoScriptText(SAY_SLAY, me);
+                Talk(SAY_SLAY);
         }
 
         void JustSummoned(Creature* summon)
@@ -128,7 +128,7 @@ public:
         void JustDied(Unit* /*Killer*/)
         {
             _JustDied();
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void SummonUndead(uint32 entry, uint32 num)
@@ -157,7 +157,7 @@ public:
                         events.ScheduleEvent(EVENT_CURSE, urand(50000, 60000));
                         return;
                     case EVENT_WARRIOR:
-                        DoScriptText(SAY_SUMMON, me);
+                        Talk(SAY_SUMMON);
                         SummonUndead(MOB_WARRIOR, RAID_MODE(2, 3));
                         events.ScheduleEvent(EVENT_WARRIOR, 30000);
                         return;
@@ -178,7 +178,7 @@ public:
                         waveCount = 0;
                         return;
                     case EVENT_WAVE:
-                        DoScriptText(SAY_SUMMON, me);
+                        Talk(SAY_SUMMON);
                         switch (balconyCount)
                         {
                             case 0: SummonUndead(MOB_CHAMPION, RAID_MODE(2, 4)); break;

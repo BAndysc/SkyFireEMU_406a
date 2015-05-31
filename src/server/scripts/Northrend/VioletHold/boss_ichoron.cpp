@@ -40,15 +40,15 @@ enum IchoronCreatures
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1608018,
-    SAY_SLAY_1                                  = -1608019,
-    SAY_SLAY_2                                  = -1608020,
-    SAY_SLAY_3                                  = -1608021,
-    SAY_DEATH                                   = -1608022,
-    SAY_SPAWN                                   = -1608023,
-    SAY_ENRAGE                                  = -1608024,
-    SAY_SHATTER                                 = -1608025,
-    SAY_BUBBLE                                  = -1608026
+    SAY_AGGRO                                   = 8,
+    SAY_SLAY_1                                  = 7,
+    SAY_SLAY_2                                  = 6,
+    SAY_SLAY_3                                  = 5,
+    SAY_DEATH                                   = 4,
+    SAY_SPAWN                                   = 3,
+    SAY_ENRAGE                                  = 2,
+    SAY_SHATTER                                 = 1,
+    SAY_BUBBLE                                  = 0
 };
 
 enum Actions
@@ -120,7 +120,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             DoCast(me, SPELL_PROTECTIVE_BUBBLE);
 
@@ -189,7 +189,7 @@ public:
 
             if (!HealthBelowPct(25))
             {
-                DoScriptText(SAY_BUBBLE, me);
+                Talk(SAY_BUBBLE);
                 DoCast(me, SPELL_PROTECTIVE_BUBBLE, true);
             }
 
@@ -214,7 +214,7 @@ public:
 
             if (!bIsFrenzy && HealthBelowPct(25) && !bIsExploded)
             {
-                DoScriptText(SAY_ENRAGE, me);
+                Talk(SAY_ENRAGE);
                 DoCast(me, SPELL_FRENZY, true);
                 bIsFrenzy = true;
             }
@@ -227,7 +227,7 @@ public:
                     {
                         if (!me->HasAura(SPELL_PROTECTIVE_BUBBLE, 0))
                         {
-                            DoScriptText(SAY_SHATTER, me);
+                            Talk(SAY_SHATTER);
                             DoCast(me, SPELL_WATER_BLAST);
                             DoCast(me, SPELL_DRAINED);
                             bIsExploded = true;
@@ -277,7 +277,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (bIsExploded)
             {
@@ -326,7 +326,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
     };
 };

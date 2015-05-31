@@ -26,7 +26,7 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_TELEPORT            -1000100
+#define SAY_TELEPORT            0
 
 #define SPELL_MARKOFFROST        23182
 #define SPELL_MANASTORM          21097
@@ -83,7 +83,7 @@ public:
 
             if (Teleport_Timer <= diff)
             {
-                DoScriptText(SAY_TELEPORT, me);
+                Talk(SAY_TELEPORT);
                 std::list<HostileReference*>& m_threatlist = me->getThreatManager().getThreatList();
                 std::list<HostileReference*>::const_iterator i = m_threatlist.begin();
                 for (i = m_threatlist.begin(); i!= m_threatlist.end(); ++i)

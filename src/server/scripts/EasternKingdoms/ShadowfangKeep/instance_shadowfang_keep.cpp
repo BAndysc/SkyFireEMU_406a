@@ -31,9 +31,9 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_BOSS_DIE_AD         = -1033007,
-    SAY_BOSS_DIE_AS         = -1033008,
-    SAY_ARCHMAGE            = -1033009,
+    SAY_BOSS_DIE_AD         = 0,
+    SAY_BOSS_DIE_AS         = 0,
+    SAY_ARCHMAGE            = 0,
 
     NPC_ASH                 = 3850,
     NPC_ADA                 = 3849,
@@ -138,8 +138,8 @@ public:
 
             if (ada && ada->isAlive() && ash && ash->isAlive())
             {
-                DoScriptText(SAY_BOSS_DIE_AD, ada);
-                DoScriptText(SAY_BOSS_DIE_AS, ash);
+                ada->AI()->Talk(SAY_BOSS_DIE_AD);
+                ash->AI()->Talk(SAY_BOSS_DIE_AS);
             }
         }
 
@@ -256,7 +256,7 @@ public:
                             summon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IMMUNE_TO_PC);
                             summon->SetReactState(REACT_DEFENSIVE);
                             summon->CastSpell(summon, SPELL_ASHCROMBE_TELEPORT, true);
-                            DoScriptText(SAY_ARCHMAGE, summon);
+                            summon->AI()->Talk(SAY_ARCHMAGE);
                             Timer = 2000;
                             Phase = 2;
                             break;

@@ -29,9 +29,9 @@ EndScriptData */
 
 enum eYells
 {
-    SAY_AGGRO                   = -1309011,
-    SAY_FEAST_PANTHER           = -1309012,
-    SAY_DEATH                   = -1309013,
+    SAY_AGGRO                   = 2,
+    SAY_FEAST_PANTHER           = 1,
+    SAY_DEATH                   = 0,
 };
 
 enum eSpells
@@ -102,7 +102,7 @@ class boss_arlokk : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void JustReachedHome()
@@ -116,7 +116,7 @@ class boss_arlokk : public CreatureScript
 
             void JustDied(Unit* /*killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
 
                 me->SetDisplayId(MODEL_ID_NORMAL);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -128,7 +128,7 @@ class boss_arlokk : public CreatureScript
             void DoSummonPhanters()
             {
                 if (Unit* markedTarget = Unit::GetUnit(*me, MarkedTargetGUID))
-                    DoScriptText(SAY_FEAST_PANTHER, me, markedTarget);
+                    Talk(SAY_FEAST_PANTHER, markedTarget->GetGUID());
 
                 me->SummonCreature(NPC_ZULIAN_PROWLER, -11532.7998f, -1649.6734f, 41.4800f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
                 me->SummonCreature(NPC_ZULIAN_PROWLER, -11532.9970f, -1606.4840f, 41.2979f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);

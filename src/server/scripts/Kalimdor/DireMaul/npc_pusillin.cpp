@@ -122,23 +122,23 @@ public:
                 switch (uiPhase)
                 {
                 case 1:
-                    DoScriptText(SAY_1, me);
+                    Talk(SAY_1);
                     uiPhase=0;
                     break;
                 case 2:
-                    DoScriptText(SAY_2, me);
+                    Talk(SAY_2);
                     uiPhase=0;
                     break;
                 case 3:
-                    DoScriptText(SAY_3, me);
+                    Talk(SAY_3);
                     uiPhase=0;
                     break;
                 case 4:
-                    DoScriptText(SAY_4, me);
+                    Talk(SAY_4);
                     uiPhase=0;
                     break;
                 case 5:
-                    DoScriptText(SAY_5, me);
+                    Talk(SAY_5);
                     me->setFaction(14);
                     float scale = me->GetFloatValue(OBJECT_FIELD_SCALE_X);
                     me->SetFloatValue(OBJECT_FIELD_SCALE_X, scale * 3);

@@ -36,9 +36,9 @@ enum GuardGeneric
 {
     GENERIC_CREATURE_COOLDOWN       = 5000,
 
-    SAY_GUARD_SIL_AGGRO1            = -1070001,
-    SAY_GUARD_SIL_AGGRO2            = -1070002,
-    SAY_GUARD_SIL_AGGRO3            = -1070003,
+    SAY_GUARD_SIL_AGGRO1            = 396,
+    SAY_GUARD_SIL_AGGRO2            = 395,
+    SAY_GUARD_SIL_AGGRO3            = 394,
 
     NPC_CENARION_HOLD_INFANTRY      = 15184,
     NPC_STORMWIND_CITY_GUARD        = 68,
@@ -64,7 +64,7 @@ public:
         void EnterCombat(Unit* who)
         {
             if (me->GetEntry() == NPC_CENARION_HOLD_INFANTRY)
-                DoScriptText(RAND(SAY_GUARD_SIL_AGGRO1, SAY_GUARD_SIL_AGGRO2, SAY_GUARD_SIL_AGGRO3), me, who);
+                Talk(RAND(SAY_GUARD_SIL_AGGRO1, SAY_GUARD_SIL_AGGRO2, SAY_GUARD_SIL_AGGRO3), who->GetGUID());
             if (SpellInfo const* spell = me->reachWithSpellAttack(who))
                 DoCast(who, spell->Id);
         }

@@ -55,13 +55,13 @@ public:
 ## boss_lieutenant_drake
 ######*/
 
-#define SAY_ENTER               -1560006
-#define SAY_AGGRO               -1560007
-#define SAY_SLAY1               -1560008
-#define SAY_SLAY2               -1560009
-#define SAY_MORTAL              -1560010
-#define SAY_SHOUT               -1560011
-#define SAY_DEATH               -1560012
+#define SAY_ENTER               6
+#define SAY_AGGRO               5
+#define SAY_SLAY1               4
+#define SAY_SLAY2               3
+#define SAY_MORTAL              2
+#define SAY_SHOUT               1
+#define SAY_DEATH               0
 
 #define SPELL_WHIRLWIND         31909
 #define SPELL_HAMSTRING         9080
@@ -134,17 +134,17 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void UpdateAI(const uint32 diff)
@@ -170,7 +170,7 @@ public:
             //Fear
             if (Fear_Timer <= diff)
             {
-                DoScriptText(SAY_SHOUT, me);
+                Talk(SAY_SHOUT);
                 DoCast(me->getVictim(), SPELL_FRIGHTENING_SHOUT);
                 Fear_Timer = 25000+rand()%10000;
             } else Fear_Timer -= diff;
@@ -178,7 +178,7 @@ public:
             //Mortal Strike
             if (MortalStrike_Timer <= diff)
             {
-                DoScriptText(SAY_MORTAL, me);
+                Talk(SAY_MORTAL);
                 DoCast(me->getVictim(), SPELL_MORTAL_STRIKE);
                 MortalStrike_Timer = 20000+rand()%10000;
             } else MortalStrike_Timer -= diff;

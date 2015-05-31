@@ -27,10 +27,10 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO               -1309005
-#define SAY_TRANSFORM           -1309006
-#define SAY_SPIDER_SPAWN        -1309007
-#define SAY_DEATH               -1309008
+#define SAY_AGGRO               3
+#define SAY_TRANSFORM           2
+#define SAY_SPIDER_SPAWN        1
+#define SAY_DEATH               0
 
 #define SPELL_CHARGE              22911
 #define SPELL_ASPECT_OF_MARLI     24686                     // A stun spell
@@ -84,12 +84,12 @@ class boss_marli : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 if (instance)
                     instance->SetData(DATA_MARLI, DONE);
             }
@@ -115,7 +115,7 @@ class boss_marli : public CreatureScript
 
                     if (!Spawned && SpawnStartSpiders_Timer <= diff)
                     {
-                        DoScriptText(SAY_SPIDER_SPAWN, me);
+                        Talk(SAY_SPIDER_SPAWN);
 
                         Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0);
                         if (!target)
@@ -153,7 +153,7 @@ class boss_marli : public CreatureScript
 
                     if (!PhaseTwo && Transform_Timer <= diff)
                     {
-                        DoScriptText(SAY_TRANSFORM, me);
+                        Talk(SAY_TRANSFORM);
                         DoCast(me, SPELL_SPIDER_FORM);
                         const CreatureTemplate* cinfo = me->GetCreatureTemplate();
                         me->SetBaseWeaponDamage(BASE_ATTACK, MINDAMAGE, (cinfo->mindmg +((cinfo->mindmg/100) * 35)));

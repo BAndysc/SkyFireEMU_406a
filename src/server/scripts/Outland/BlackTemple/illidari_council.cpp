@@ -28,29 +28,29 @@ EndScriptData */
 #include "black_temple.h"
 
 //Speech'n'Sounds
-#define SAY_GATH_SLAY           -1564085
-#define SAY_GATH_SLAY_COMNT     -1564089
-#define SAY_GATH_DEATH          -1564093
-#define SAY_GATH_SPECIAL1       -1564077
-#define SAY_GATH_SPECIAL2       -1564081
+#define SAY_GATH_SLAY           2
+#define SAY_GATH_SLAY_COMNT     1
+#define SAY_GATH_DEATH          0
+#define SAY_GATH_SPECIAL1       4
+#define SAY_GATH_SPECIAL2       3
 
-#define SAY_VERA_SLAY           -1564086
-#define SAY_VERA_COMNT          -1564089 //signed for 22949
-#define SAY_VERA_DEATH          -1564094
-#define SAY_VERA_SPECIAL1       -1564078
-#define SAY_VERA_SPECIAL2       -1564082
+#define SAY_VERA_SLAY           1
+#define SAY_VERA_COMNT          1 //signed for 22949
+#define SAY_VERA_DEATH          0
+#define SAY_VERA_SPECIAL1       3
+#define SAY_VERA_SPECIAL2       2
 
-#define SAY_MALA_SLAY           -1564087
-#define SAY_MALA_COMNT          -1564090
-#define SAY_MALA_DEATH          -1564095
-#define SAY_MALA_SPECIAL1       -1564079
-#define SAY_MALA_SPECIAL2       -1564083
+#define SAY_MALA_SLAY           2
+#define SAY_MALA_COMNT          1
+#define SAY_MALA_DEATH          0
+#define SAY_MALA_SPECIAL1       4
+#define SAY_MALA_SPECIAL2       3
 
-#define SAY_ZERE_SLAY           -1564088
-#define SAY_ZERE_COMNT          -1564091
-#define SAY_ZERE_DEATH          -1564096
-#define SAY_ZERE_SPECIAL1       -1564080
-#define SAY_ZERE_SPECIAL2       -1564084
+#define SAY_ZERE_SLAY           2
+#define SAY_ZERE_COMNT          1
+#define SAY_ZERE_DEATH          0
+#define SAY_ZERE_SPECIAL1       4
+#define SAY_ZERE_SPECIAL2       3
 
 #define ERROR_INST_DATA           "SD2 ERROR: Instance Data for Black Temple not set properly; Illidari Council event will not function properly."
 
@@ -64,19 +64,19 @@ struct CouncilYells
 
 static CouncilYells CouncilAggro[]=
 {
-    {-1564069, 5000},                                      // Gathios
-    {-1564070, 5500},                                      // Veras
-    {-1564071, 5000},                                      // Malande
-    {-1564072, 0},                                         // Zerevor
+    {319, 5000},                                      // Gathios
+    {318, 5500},                                      // Veras
+    {317, 5000},                                      // Malande
+    {316, 0},                                         // Zerevor
 };
 
 // Need to get proper timers for this later
 static CouncilYells CouncilEnrage[]=
 {
-    {-1564073, 2000},                                      // Gathios
-    {-1564074, 6000},                                      // Veras
-    {-1564075, 5000},                                      // Malande
-    {-1564076, 0},                                         // Zerevor
+    {315, 2000},                                      // Gathios
+    {314, 6000},                                      // Veras
+    {313, 5000},                                      // Malande
+    {312, 0},                                         // Zerevor
 };
 
 // High Nethermancer Zerevor's spells
@@ -179,7 +179,8 @@ public:
             {
                 if (Unit* pMember = Unit::GetUnit(*me, Council[YellCounter]))
                 {
-                    DoScriptText(CouncilAggro[YellCounter].entry, pMember);
+					if (pMember->ToCreature())
+						pMember->ToCreature()->AI()->Talk(CouncilAggro[YellCounter].entry);
                     AggroYellTimer = CouncilAggro[YellCounter].timer;
                 }
                 ++YellCounter;
@@ -195,7 +196,8 @@ public:
                 if (Unit* pMember = Unit::GetUnit(*me, Council[YellCounter]))
                 {
                     pMember->CastSpell(pMember, SPELL_BERSERK, true);
-                    DoScriptText(CouncilEnrage[YellCounter].entry, pMember);
+					if (pMember->ToCreature())
+						pMember->ToCreature()->AI()->Talk(CouncilEnrage[YellCounter].entry);
                     EnrageTimer = CouncilEnrage[YellCounter].timer;
                 }
                 ++YellCounter;
@@ -492,12 +494,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_GATH_SLAY, me);
+            Talk(SAY_GATH_SLAY);
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_GATH_DEATH, me);
+            Talk(SAY_GATH_DEATH);
         }
 
         Unit* SelectCouncilMember()
@@ -620,12 +622,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_ZERE_SLAY, me);
+            Talk(SAY_ZERE_SLAY);
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_ZERE_DEATH, me);
+            Talk(SAY_ZERE_DEATH);
         }
 
         void UpdateAI(const uint32 diff)
@@ -719,12 +721,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_MALA_SLAY, me);
+            Talk(SAY_MALA_SLAY);
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_MALA_DEATH, me);
+            Talk(SAY_MALA_DEATH);
         }
 
         void UpdateAI(const uint32 diff)
@@ -804,12 +806,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_VERA_SLAY, me);
+            Talk(SAY_VERA_SLAY);
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_VERA_DEATH, me);
+            Talk(SAY_VERA_DEATH);
         }
 
         void UpdateAI(const uint32 diff)

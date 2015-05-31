@@ -30,13 +30,13 @@ EndScriptData */
 
 enum Says
 {
-    SAY_AGGRO                   = -1585023, // This yell should be done when the room is cleared. For now, set it as a movelineofsight yell.
-    SAY_PHOENIX                 = -1585024,
-    SAY_FLAMESTRIKE             = -1585025,
-    SAY_GRAVITY_LAPSE           = -1585026,
-    SAY_TIRED                   = -1585027,
-    SAY_RECAST_GRAVITY          = -1585028,
-    SAY_DEATH                   = -1585029,
+    SAY_AGGRO                   = 6, // This yell should be done when the room is cleared. For now, set it as a movelineofsight yell.
+    SAY_PHOENIX                 = 5,
+    SAY_FLAMESTRIKE             = 4,
+    SAY_GRAVITY_LAPSE           = 3,
+    SAY_TIRED                   = 2,
+    SAY_RECAST_GRAVITY          = 1,
+    SAY_DEATH                   = 0,
 };
 
 enum Spells
@@ -156,7 +156,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (!instance)
                 return;
@@ -182,7 +182,7 @@ public:
         {
             if (!HasTaunted && me->IsWithinDistInMap(who, 40.0f))
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 HasTaunted = true;
             }
 
@@ -322,7 +322,7 @@ public:
                             Phoenix->AI()->AttackStart(target);
                         }
 
-                        DoScriptText(SAY_PHOENIX, me);
+                        Talk(SAY_PHOENIX);
 
                         PhoenixTimer = 60000;
                     }
@@ -335,7 +335,7 @@ public:
                             me->InterruptSpell(CURRENT_CHANNELED_SPELL);
                             me->InterruptSpell(CURRENT_GENERIC_SPELL);
                             DoCast(target, SPELL_FLAMESTRIKE3, true);
-                            DoScriptText(SAY_FLAMESTRIKE, me);
+                            Talk(SAY_FLAMESTRIKE);
                         }
                         FlameStrikeTimer = urand(15000, 25000);
                     }
@@ -366,7 +366,7 @@ public:
                             case 0:
                                 if (FirstGravityLapse)          // Different yells at 50%, and at every following Gravity Lapse
                                 {
-                                    DoScriptText(SAY_GRAVITY_LAPSE, me);
+                                    Talk(SAY_GRAVITY_LAPSE);
                                     FirstGravityLapse = false;
 
                                     if (instance)
@@ -377,7 +377,7 @@ public:
                                 }
                                 else
                                 {
-                                    DoScriptText(SAY_RECAST_GRAVITY, me);
+                                    Talk(SAY_RECAST_GRAVITY);
                                 }
 
                                 DoCast(me, SPELL_GRAVITY_LAPSE_INITIAL);
@@ -417,7 +417,7 @@ public:
                                 break;
                             case 4:
                                 me->InterruptNonMeleeSpells(false);
-                                DoScriptText(SAY_TIRED, me);
+                                Talk(SAY_TIRED);
                                 DoCast(me, SPELL_POWER_FEEDBACK);
                                 RemoveGravityLapse();
                                 GravityLapseTimer = 10000;

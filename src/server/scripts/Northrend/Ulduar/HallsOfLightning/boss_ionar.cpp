@@ -42,13 +42,13 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                                     = -1602011,
-    SAY_SLAY_1                                    = -1602012,
-    SAY_SLAY_2                                    = -1602013,
-    SAY_SLAY_3                                    = -1602014,
-    SAY_DEATH                                     = -1602015,
-    SAY_SPLIT_1                                   = -1602016,
-    SAY_SPLIT_2                                   = -1602017
+    SAY_AGGRO                                     = 6,
+    SAY_SLAY_1                                    = 5,
+    SAY_SLAY_2                                    = 4,
+    SAY_SLAY_3                                    = 3,
+    SAY_DEATH                                     = 2,
+    SAY_SPLIT_1                                   = 1,
+    SAY_SPLIT_2                                   = 0
 };
 
 enum Creatures
@@ -123,7 +123,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(TYPE_IONAR, IN_PROGRESS);
@@ -131,7 +131,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             lSparkList.DespawnAll();
 
@@ -141,7 +141,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void SpellHit(Unit* /*caster*/, const SpellInfo* spell)
@@ -279,7 +279,7 @@ public:
             {
                 bHasDispersed = true;
 
-                DoScriptText(RAND(SAY_SPLIT_1, SAY_SPLIT_2), me);
+                Talk(RAND(SAY_SPLIT_1, SAY_SPLIT_2));
 
                 if (me->IsNonMeleeSpellCasted(false))
                     me->InterruptNonMeleeSpells(false);

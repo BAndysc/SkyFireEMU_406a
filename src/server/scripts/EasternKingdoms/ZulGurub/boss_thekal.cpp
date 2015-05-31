@@ -27,8 +27,8 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "zulgurub.h"
 
-#define SAY_AGGRO               -1309009
-#define SAY_DEATH               -1309010
+#define SAY_AGGRO               1
+#define SAY_DEATH               0
 
 enum eSpells
 {
@@ -104,12 +104,12 @@ class boss_thekal : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
             }
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
                 if (instance)
                     instance->SetData(DATA_THEKAL, DONE);
             }

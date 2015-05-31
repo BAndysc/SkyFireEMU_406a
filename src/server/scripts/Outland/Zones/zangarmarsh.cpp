@@ -43,7 +43,7 @@ EndContentData */
 #define GOSSIP_ITEM_BLESS_ASH     "Grant me your mark, wise ancient."
 #define GOSSIP_ITEM_BLESS_KEL     "Grant me your mark, mighty ancient."
 //signed for 17900 but used by 17900, 17901
-#define GOSSIP_REWARD_BLESS       -1000359
+#define GOSSIP_REWARD_BLESS       0
 //#define TEXT_BLESSINGS        "<You need higher standing with Cenarion Expedition to recive a blessing.>"
 
 class npcs_ashyen_and_keleth : public CreatureScript
@@ -80,19 +80,19 @@ public:
                 {                                               //mark of lore
                     case REP_FRIENDLY:
                         creature->CastSpell(player, 31808, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_HONORED:
                         creature->CastSpell(player, 31810, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_REVERED:
                         creature->CastSpell(player, 31811, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_EXALTED:
                         creature->CastSpell(player, 31815, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     default:
                         break;
@@ -105,19 +105,19 @@ public:
                 {
                     case REP_FRIENDLY:
                         creature->CastSpell(player, 31807, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_HONORED:
                         creature->CastSpell(player, 31812, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_REVERED:
                         creature->CastSpell(player, 31813, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     case REP_EXALTED:
                         creature->CastSpell(player, 31814, true);
-                        DoScriptText(GOSSIP_REWARD_BLESS, creature);
+                        creature->AI()->Talk(GOSSIP_REWARD_BLESS);
                         break;
                     default:
                         break;
@@ -300,12 +300,12 @@ public:
 
 enum eKayra
 {
-    SAY_START           = -1000343,
-    SAY_AMBUSH1         = -1000344,
-    SAY_PROGRESS        = -1000345,
-    SAY_AMBUSH2         = -1000346,
-    SAY_NEAR_END        = -1000347,
-    SAY_END             = -1000348, //this is signed for 10646
+    SAY_START           = 3,
+    SAY_AMBUSH1         = 2,
+    SAY_PROGRESS        = 1,
+    SAY_AMBUSH2         = 0,
+    SAY_NEAR_END        = 2,
+    SAY_END             = 1, //this is signed for 10646
 
     QUEST_ESCAPE_FROM   = 9752,
     NPC_SLAVEBINDER     = 18042
@@ -332,25 +332,25 @@ public:
             switch (i)
             {
                 case 4:
-                    DoScriptText(SAY_AMBUSH1, me, player);
+                    Talk(SAY_AMBUSH1, player->GetGUID());
                     DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     break;
                 case 5:
-                    DoScriptText(SAY_PROGRESS, me, player);
+                    Talk(SAY_PROGRESS, player->GetGUID());
                     SetRun();
                     break;
                 case 16:
-                    DoScriptText(SAY_AMBUSH2, me, player);
+                    Talk(SAY_AMBUSH2, player->GetGUID());
                     DoSpawnCreature(NPC_SLAVEBINDER, -10.0f, -5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     DoSpawnCreature(NPC_SLAVEBINDER, -8.0f, 5.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000);
                     break;
                 case 17:
                     SetRun(false);
-                    DoScriptText(SAY_NEAR_END, me, player);
+                    Talk(SAY_NEAR_END, player->GetGUID());
                     break;
                 case 25:
-                    DoScriptText(SAY_END, me, player);
+                    Talk(SAY_END, player->GetGUID());
                     player->GroupEventHappens(QUEST_ESCAPE_FROM, me);
                     break;
             }
@@ -361,7 +361,7 @@ public:
     {
         if (quest->GetQuestId() == QUEST_ESCAPE_FROM)
         {
-            DoScriptText(SAY_START, creature, player);
+            creature->AI()->Talk(SAY_START, player->GetGUID());
 
             if (npc_escortAI* pEscortAI = CAST_AI(npc_kayra_longmane::npc_kayra_longmaneAI, creature->AI()))
                 pEscortAI->Start(false, false, player->GetGUID());

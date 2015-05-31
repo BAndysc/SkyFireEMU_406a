@@ -29,12 +29,12 @@ EndScriptData */
 
 enum eEnums
 {
-    SAY_AGGRO_1                 = -1542009,
-    SAY_AGGRO_2                 = -1542010,
-    SAY_AGGRO_3                 = -1542011,
-    SAY_KILL_1                  = -1542012,
-    SAY_KILL_2                  = -1542013,
-    SAY_DIE                     = -1542014,
+    SAY_AGGRO_1                 = 5,
+    SAY_AGGRO_2                 = 4,
+    SAY_AGGRO_3                 = 3,
+    SAY_KILL_1                  = 2,
+    SAY_KILL_2                  = 1,
+    SAY_DIE                     = 0,
 
     SPELL_ACID_SPRAY            = 38153,                    // heroic 38973 ??? 38153
     SPELL_EXPLODING_BREAKER     = 30925,
@@ -81,7 +81,7 @@ class boss_the_maker : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
 
                 if (!instance)
                     return;
@@ -92,12 +92,12 @@ class boss_the_maker : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                Talk(RAND(SAY_KILL_1, SAY_KILL_2));
             }
 
             void JustDied(Unit* /*Killer*/)
             {
-                DoScriptText(SAY_DIE, me);
+                Talk(SAY_DIE);
 
                 if (!instance)
                     return;

@@ -54,15 +54,15 @@ enum eUnits
 
 enum eSays
 {
-    SAY_INTRO                     = -1543017,
-    SAY_WIPE                      = -1543018,
-    SAY_AGGRO_1                   = -1543019,
-    SAY_AGGRO_2                   = -1543020,
-    SAY_AGGRO_3                   = -1543021,
-    SAY_KILL_1                    = -1543022,
-    SAY_KILL_2                    = -1543023,
-    SAY_DIE                       = -1543024,
-    EMOTE                         = -1543025,
+    SAY_INTRO                     = 0,
+    SAY_WIPE                      = 7,
+    SAY_AGGRO_1                   = 6,
+    SAY_AGGRO_2                   = 5,
+    SAY_AGGRO_3                   = 4,
+    SAY_KILL_1                    = 3,
+    SAY_KILL_2                    = 2,
+    SAY_DIE                       = 1,
+    EMOTE                         = 0,
 };
 
 const float VazrudenMiddle[3] = {-1406.5f, 1746.5f, 81.2f};
@@ -152,7 +152,7 @@ class boss_nazan : public CreatureScript
                         if (Unit* victim = SelectTarget(SELECT_TARGET_NEAREST, 0))
                             me->AI()->AttackStart(victim);
                         DoStartMovement(me->getVictim());
-                        DoScriptText(EMOTE, me);
+                        Talk(EMOTE);
                         return;
                     }
                     else
@@ -228,19 +228,19 @@ class boss_vazruden : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+                Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
             }
 
             void KilledUnit(Unit* who)
             {
                 if (who && who->GetEntry() != ENTRY_VAZRUDEN)
-                    DoScriptText(RAND(SAY_KILL_1, SAY_KILL_2), me);
+                    Talk(RAND(SAY_KILL_1, SAY_KILL_2));
             }
 
             void JustDied(Unit* who)
             {
                 if (who && who != me)
-                    DoScriptText(SAY_DIE, me);
+                    Talk(SAY_DIE);
             }
 
             void UpdateAI(const uint32 diff)
@@ -251,7 +251,7 @@ class boss_vazruden : public CreatureScript
                     {
                         if (!WipeSaid)
                         {
-                            DoScriptText(SAY_WIPE, me);
+                            Talk(SAY_WIPE);
                             WipeSaid = true;
                         }
                         me->DisappearAndDie();
@@ -363,7 +363,7 @@ class boss_vazruden_the_herald : public CreatureScript
                 {
                     phase = 1;
                     check = 0;
-                    DoScriptText(SAY_INTRO, me);
+                    Talk(SAY_INTRO);
                 }
             }
 

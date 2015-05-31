@@ -29,11 +29,11 @@ EndScriptData */
 
 enum Says
 {
-    SAY_AGGRO               = -1189011,
-    SAY_HEALTH1             = -1189012,
-    SAY_HEALTH2             = -1189013,
-    SAY_KILL                = -1189014,
-    SAY_TRIGGER_VORREL      = -1189015
+    SAY_AGGRO               = 4,
+    SAY_HEALTH1             = 3,
+    SAY_HEALTH2             = 2,
+    SAY_KILL                = 1,
+    SAY_TRIGGER_VORREL      = 0
 };
 
 enum Spells
@@ -71,12 +71,12 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
 
         void KilledUnit(Unit* /*Victim*/)
         {
-            DoScriptText(SAY_KILL, me);
+            Talk(SAY_KILL);
         }
 
         void JustDied(Unit* /*Killer*/)
@@ -86,7 +86,8 @@ public:
 
             //Any other actions to do with vorrel? setStandState?
             if (Unit* vorrel = Unit::GetUnit(*me, instance->GetData64(DATA_VORREL)))
-                DoScriptText(SAY_TRIGGER_VORREL, vorrel);
+				if (vorrel->ToCreature())
+					vorrel->ToCreature()->AI()->Talk(SAY_TRIGGER_VORREL);
         }
 
         void UpdateAI(const uint32 diff)
@@ -97,13 +98,13 @@ public:
             //If we are low on hp Do sayings
             if (!Yell60 && !HealthAbovePct(60))
             {
-                DoScriptText(SAY_HEALTH1, me);
+                Talk(SAY_HEALTH1);
                 Yell60 = true;
             }
 
             if (!Yell30 && !HealthAbovePct(30))
             {
-                DoScriptText(SAY_HEALTH2, me);
+                Talk(SAY_HEALTH2);
                 Yell30 = true;
             }
 

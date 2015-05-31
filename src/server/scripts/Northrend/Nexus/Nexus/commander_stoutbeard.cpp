@@ -34,9 +34,9 @@ Script Data End */
 
 //not used
 //Yell
-#define SAY_AGGRO                                              -1576021
-#define SAY_KILL                                               -1576022
-#define SAY_DEATH                                              -1576023
+#define SAY_AGGRO                                              3
+#define SAY_KILL                                               2
+#define SAY_DEATH                                              1
 
 class boss_commander_stoutbeard : public CreatureScript
 {
@@ -55,7 +55,7 @@ public:
         void Reset() {}
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
         }
         void AttackStart(Unit* /*who*/) {}
         void MoveInLineOfSight(Unit* /*who*/) {}
@@ -69,7 +69,7 @@ public:
         }
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
     };
 };

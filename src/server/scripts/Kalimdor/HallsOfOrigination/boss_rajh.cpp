@@ -99,7 +99,7 @@ class boss_rajh : public CreatureScript
 
             void EnterCombat(Unit* /*who*/)
             {
-                //DoScriptText(SAY_AGGRO, me);
+                //Talk(SAY_AGGRO);
 
                 if (instance)
                     instance->SetData(DATA_RAJH_EVENT, IN_PROGRESS);
@@ -117,7 +117,7 @@ class boss_rajh : public CreatureScript
 
             void EnergizeSun()
             {
-                //DoScriptText(SAY_ENERGIZE, me);
+                //Talk(SAY_ENERGIZE);
                 me->GetMotionMaster()->MovePoint(0, X, Y, Z);
                 DoCastAOE(SPELL_BLESSING_OF_THE_SUN);
             }
@@ -166,7 +166,7 @@ class boss_rajh : public CreatureScript
 
             void JustDied(Unit* /*who*/)
             {
-                //DoScriptText(SAY_DEATH, me);
+                //Talk(SAY_DEATH);
 
                 if (instance)
                     instance->SetData(DATA_RAJH_EVENT, DONE);

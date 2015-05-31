@@ -27,12 +27,12 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "old_hillsbrad.h"
 
-#define SAY_ENTER                   -1560000
-#define SAY_TAUNT1                  -1560001
-#define SAY_TAUNT2                  -1560002
-#define SAY_SLAY1                   -1560003
-#define SAY_SLAY2                   -1560004
-#define SAY_DEATH                   -1560005
+#define SAY_ENTER                   5
+#define SAY_TAUNT1                  4
+#define SAY_TAUNT2                  3
+#define SAY_SLAY1                   2
+#define SAY_SLAY2                   1
+#define SAY_DEATH                   0
 
 #define SPELL_HOLY_LIGHT            29427
 #define SPELL_CLEANSE               29380
@@ -80,18 +80,18 @@ public:
         void EnterCombat(Unit* /*who*/)
         {
             //This is not correct. Should taunt Thrall before engage in combat
-            DoScriptText(SAY_TAUNT1, me);
-            DoScriptText(SAY_TAUNT2, me);
+            Talk(SAY_TAUNT1);
+            Talk(SAY_TAUNT2);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance && instance->GetData(TYPE_THRALL_EVENT) == IN_PROGRESS)
                 instance->SetData(TYPE_THRALL_PART1, DONE);

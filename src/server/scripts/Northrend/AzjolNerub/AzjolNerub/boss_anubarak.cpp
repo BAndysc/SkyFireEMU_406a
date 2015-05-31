@@ -46,17 +46,17 @@ enum Creatures
 // not in db
 enum Yells
 {
-    SAY_INTRO                                     = -1601010,
-    SAY_AGGRO                                     = -1601000,
-    SAY_SLAY_1                                    = -1601001,
-    SAY_SLAY_2                                    = -1601002,
-    SAY_SLAY_3                                    = -1601003,
-    SAY_LOCUST_1                                  = -1601005,
-    SAY_LOCUST_2                                  = -1601006,
-    SAY_LOCUST_3                                  = -1601007,
-    SAY_SUBMERGE_1                                = -1601008,
-    SAY_SUBMERGE_2                                = -1601009,
-    SAY_DEATH                                     = -1601004
+    SAY_INTRO                                     = 0,
+    SAY_AGGRO                                     = 10,
+    SAY_SLAY_1                                    = 9,
+    SAY_SLAY_2                                    = 8,
+    SAY_SLAY_3                                    = 7,
+    SAY_LOCUST_1                                  = 5,
+    SAY_LOCUST_2                                  = 4,
+    SAY_LOCUST_3                                  = 3,
+    SAY_SUBMERGE_1                                = 2,
+    SAY_SUBMERGE_2                                = 1,
+    SAY_DEATH                                     = 6
 };
 
 enum
@@ -163,7 +163,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             DelayTimer = 0;
             if (instance)
                 instance->DoStartTimedAchievement(ACHIEVEMENT_TIMED_TYPE_EVENT, ACHIEV_TIMED_START_EVENT);
@@ -340,7 +340,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             Summons.DespawnAll();
             if (instance)
                 instance->SetData(DATA_ANUBARAK_EVENT, DONE);
@@ -350,7 +350,7 @@ public:
         {
             if (victim == me)
                 return;
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void JustSummoned(Creature* summon)

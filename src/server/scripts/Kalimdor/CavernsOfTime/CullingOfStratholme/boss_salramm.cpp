@@ -41,19 +41,19 @@ enum Spells
 
 enum Yells
 {
-    SAY_AGGRO                                   = -1595032,
-    SAY_SPAWN                                   = -1595033,
-    SAY_SLAY_1                                  = -1595034,
-    SAY_SLAY_2                                  = -1595035,
-    SAY_SLAY_3                                  = -1595036,
-    SAY_DEATH                                   = -1595037,
-    SAY_EXPLODE_GHOUL_1                         = -1595038,
-    SAY_EXPLODE_GHOUL_2                         = -1595039,
-    SAY_STEAL_FLESH_1                           = -1595040,
-    SAY_STEAL_FLESH_2                           = -1595041,
-    SAY_STEAL_FLESH_3                           = -1595042,
-    SAY_SUMMON_GHOULS_1                         = -1595043,
-    SAY_SUMMON_GHOULS_2                         = -1595044
+    SAY_AGGRO                                   = 12,
+    SAY_SPAWN                                   = 11,
+    SAY_SLAY_1                                  = 10,
+    SAY_SLAY_2                                  = 9,
+    SAY_SLAY_3                                  = 8,
+    SAY_DEATH                                   = 7,
+    SAY_EXPLODE_GHOUL_1                         = 6,
+    SAY_EXPLODE_GHOUL_2                         = 5,
+    SAY_STEAL_FLESH_1                           = 4,
+    SAY_STEAL_FLESH_2                           = 3,
+    SAY_STEAL_FLESH_3                           = 2,
+    SAY_SUMMON_GHOULS_1                         = 1,
+    SAY_SUMMON_GHOULS_2                         = 0
 };
 
 class boss_salramm : public CreatureScript
@@ -72,7 +72,7 @@ public:
         {
             instance = creature->GetInstanceScript();
             if (instance)
-                DoScriptText(SAY_SPAWN, me);
+                Talk(SAY_SPAWN);
         }
 
         uint32 CurseFleshTimer;
@@ -97,7 +97,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                  instance->SetData(DATA_SALRAMM_EVENT, IN_PROGRESS);
@@ -129,7 +129,7 @@ public:
             //Steal Flesh timer
             if (StealFleshTimer <= diff)
             {
-                DoScriptText(RAND(SAY_STEAL_FLESH_1, SAY_STEAL_FLESH_2, SAY_STEAL_FLESH_3), me);
+                Talk(RAND(SAY_STEAL_FLESH_1, SAY_STEAL_FLESH_2, SAY_STEAL_FLESH_3));
                 if (Unit* random_target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(random_target, SPELL_STEAL_FLESH);
                 StealFleshTimer = 10000;
@@ -139,7 +139,7 @@ public:
             //Summon ghouls timer
             if (SummonGhoulsTimer <= diff)
             {
-                DoScriptText(RAND(SAY_SUMMON_GHOULS_1, SAY_SUMMON_GHOULS_2), me);
+                Talk(RAND(SAY_SUMMON_GHOULS_1, SAY_SUMMON_GHOULS_2));
                 if (Unit* random_target = SelectTarget(SELECT_TARGET_RANDOM, 0))
                     DoCast(random_target, SPELL_SUMMON_GHOULS);
                 SummonGhoulsTimer = 10000;
@@ -151,7 +151,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_SALRAMM_EVENT, DONE);
@@ -162,7 +162,7 @@ public:
             if (victim == me)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
     };
 };

@@ -45,8 +45,8 @@ enum blyAndCrewFactions
 
 enum blySays
 {
-    SAY_1 = -1209002,
-    SAY_2 = -1209003
+    SAY_1 = 1,
+    SAY_2 = 0
 };
 
 enum blySpells
@@ -134,11 +134,11 @@ public:
                             //weegli doesn't fight - he goes & blows up the door
                             if (Creature* pWeegli = instance->instance->GetCreature(instance->GetData64(ENTRY_WEEGLI)))
                                 pWeegli->AI()->DoAction(0);
-                            DoScriptText(SAY_1, me);
+                            Talk(SAY_1);
                             Text_Timer = 5000;
                             break;
                         case 2:
-                            DoScriptText(SAY_2, me);
+                            Talk(SAY_2);
                             Text_Timer = 5000;
                             break;
                         case 3:
@@ -246,8 +246,8 @@ enum weegliSpells
 
 enum weegliSays
 {
-    SAY_WEEGLI_OHNO = -1209000,
-    SAY_WEEGLI_OK_I_GO = -1209001
+    SAY_WEEGLI_OHNO = 1,
+    SAY_WEEGLI_OK_I_GO = 0
 };
 
 #define GOSSIP_WEEGLI               "[PH] Please blow up the door."
@@ -359,7 +359,7 @@ public:
                 if (instance->GetData(EVENT_PYRAMID) == PYRAMID_CAGES_OPEN)
                 {
                     instance->SetData(EVENT_PYRAMID, PYRAMID_ARRIVED_AT_STAIR);
-                    DoScriptText(SAY_WEEGLI_OHNO, me);
+                    Talk(SAY_WEEGLI_OHNO);
                     me->SetHomePosition(1882.69f, 1272.28f, 41.87f, 0);
                 }
                 else
@@ -384,7 +384,7 @@ public:
                 me->setFaction(FACTION_FRIENDLY);
                 me->GetMotionMaster()->MovePoint(0, 1858.57f, 1146.35f, 14.745f);
                 me->SetHomePosition(1858.57f, 1146.35f, 14.745f, 3.85f); // in case he gets interrupted
-                DoScriptText(SAY_WEEGLI_OK_I_GO, me);
+                Talk(SAY_WEEGLI_OK_I_GO);
                 destroyingDoor=true;
             }
         }

@@ -30,19 +30,19 @@ EndScriptData */
 enum eEnums
 {
     // Yell
-    SAY_AGGRO = -1548030,
-    SAY_SUMMON1 = -1548031,
-    SAY_SUMMON2 = -1548032,
-    SAY_SUMMON_BUBL1 = -1548033,
-    SAY_SUMMON_BUBL2 = -1548034,
-    SAY_SLAY1 = -1548035,
-    SAY_SLAY2 = -1548036,
-    SAY_SLAY3 = -1548037,
-    SAY_DEATH = -1548038,
+    SAY_AGGRO = 11,
+    SAY_SUMMON1 = 10,
+    SAY_SUMMON2 = 9,
+    SAY_SUMMON_BUBL1 = 8,
+    SAY_SUMMON_BUBL2 = 7,
+    SAY_SLAY1 = 6,
+    SAY_SLAY2 = 5,
+    SAY_SLAY3 = 4,
+    SAY_DEATH = 3,
     // Emotes
-    EMOTE_WATERY_GRAVE = -1548039,
-    EMOTE_EARTHQUAKE = -1548040,
-    EMOTE_WATERY_GLOBULES = -1548041,
+    EMOTE_WATERY_GRAVE = 2,
+    EMOTE_EARTHQUAKE = 1,
+    EMOTE_WATERY_GLOBULES = 0,
     // Spells
     SPELL_TIDAL_WAVE = 37730,
     SPELL_WATERY_GRAVE = 38049,
@@ -130,7 +130,7 @@ public:
 
         void StartEvent()
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, IN_PROGRESS);
@@ -138,12 +138,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+            Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(DATA_MOROGRIMTIDEWALKEREVENT, DONE);
@@ -184,7 +184,7 @@ public:
                 }
                 else
                 {
-                    DoScriptText(RAND(SAY_SUMMON1, SAY_SUMMON2), me);
+                    Talk(RAND(SAY_SUMMON1, SAY_SUMMON2));
 
                     for (uint8 i = 0; i < 10; ++i)
                     {
@@ -193,7 +193,7 @@ public:
                         if (target && Murloc)
                             Murloc->AI()->AttackStart(target);
                     }
-                    DoScriptText(EMOTE_EARTHQUAKE, me);
+                    Talk(EMOTE_EARTHQUAKE);
                     Earthquake = false;
                     Earthquake_Timer = 40000+rand()%5000;
                 }
@@ -235,9 +235,9 @@ public:
                         }
                     }
 
-                    DoScriptText(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2), me);
+                    Talk(RAND(SAY_SUMMON_BUBL1, SAY_SUMMON_BUBL2));
 
-                    DoScriptText(EMOTE_WATERY_GRAVE, me);
+                    Talk(EMOTE_WATERY_GRAVE);
                     WateryGrave_Timer = 30000;
                 } else WateryGrave_Timer -= diff;
 
@@ -271,7 +271,7 @@ public:
                             pGlobuleTarget->CastSpell(pGlobuleTarget, globulespell[g], true);
                         }
                     }
-                    DoScriptText(EMOTE_WATERY_GLOBULES, me);
+                    Talk(EMOTE_WATERY_GLOBULES);
                     WateryGlobules_Timer = 25000;
                 } else WateryGlobules_Timer -= diff;
             }

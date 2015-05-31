@@ -82,10 +82,10 @@ public:
 ######*/
 
 //Possibly more of these quotes around.
-#define SAY_ZAPPED0 -1329000
-#define SAY_ZAPPED1 -1329001
-#define SAY_ZAPPED2 -1329002
-#define SAY_ZAPPED3 -1329003
+#define SAY_ZAPPED0 3
+#define SAY_ZAPPED1 2
+#define SAY_ZAPPED2 1
+#define SAY_ZAPPED3 0
 
 class mob_freed_soul : public CreatureScript
 {
@@ -103,7 +103,7 @@ public:
 
         void Reset()
         {
-            DoScriptText(RAND(SAY_ZAPPED0, SAY_ZAPPED1, SAY_ZAPPED2, SAY_ZAPPED3), me);
+            Talk(RAND(SAY_ZAPPED0, SAY_ZAPPED1, SAY_ZAPPED2, SAY_ZAPPED3));
         }
 
         void EnterCombat(Unit* /*who*/) {}

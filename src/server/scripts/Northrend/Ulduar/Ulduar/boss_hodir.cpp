@@ -33,18 +33,18 @@
 
 enum HodirYells
 {
-    SAY_AGGRO                                    = -1603210,
-    SAY_SLAY_1                                   = -1603211,
-    SAY_SLAY_2                                   = -1603212,
-    SAY_FLASH_FREEZE                             = -1603213,
-    SAY_STALACTITE                               = -1603214,
-    SAY_DEATH                                    = -1603215,
-    SAY_BERSERK                                  = -1603216,
-    SAY_YS_HELP                                  = -1603217,
-    SAY_HARD_MODE_FAILED                         = -1603218,
+    SAY_AGGRO                                    = 9,
+    SAY_SLAY_1                                   = 8,
+    SAY_SLAY_2                                   = 7,
+    SAY_FLASH_FREEZE                             = 6,
+    SAY_STALACTITE                               = 5,
+    SAY_DEATH                                    = 4,
+    SAY_BERSERK                                  = 3,
+    SAY_YS_HELP                                  = 2,
+    SAY_HARD_MODE_FAILED                         = 1,
 
-    EMOTE_FREEZE                                 = -1603209,
-    EMOTE_BLOWS                                  = -1603219,
+    EMOTE_FREEZE                                 = 10,
+    EMOTE_BLOWS                                  = 0,
 };
 
 enum HodirSpells
@@ -330,7 +330,7 @@ class boss_hodir : public CreatureScript
             void EnterCombat(Unit* /*who*/)
             {
                 _EnterCombat();
-                DoScriptText(SAY_AGGRO, me);
+                Talk(SAY_AGGRO);
                 DoCast(me, SPELL_BITING_COLD, true);
 
                 gettingColdInHereTimer = 1000;
@@ -350,7 +350,7 @@ class boss_hodir : public CreatureScript
             void KilledUnit(Unit* /*who*/)
             {
                 if (!urand(0, 3))
-                    DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+                    Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
             }
 
             void DamageTaken(Unit* /*who*/, uint32& damage)
@@ -358,7 +358,7 @@ class boss_hodir : public CreatureScript
                 if (damage >= me->GetHealth())
                 {
                     damage = 0;
-                    DoScriptText(SAY_DEATH, me);
+                    Talk(SAY_DEATH);
                     if (iCouldSayThatThisCacheWasRare)
                         instance->SetData(DATA_HODIR_RARE_CACHE, 1);
 
@@ -405,8 +405,8 @@ class boss_hodir : public CreatureScript
                             events.ScheduleEvent(EVENT_ICICLE, RAID_MODE(5500, 3500));
                             break;
                         case EVENT_FLASH_FREEZE:
-                            DoScriptText(SAY_FLASH_FREEZE, me);
-                            DoScriptText(EMOTE_FREEZE, me);
+                            Talk(SAY_FLASH_FREEZE);
+                            Talk(EMOTE_FREEZE);
                             for (uint8 n = 0; n < RAID_MODE(2, 3); ++n)
                                 if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 0, 100.0f, true))
                                     target->CastSpell(target, SPELL_ICICLE_SNOWDRIFT, true);
@@ -425,19 +425,19 @@ class boss_hodir : public CreatureScript
                             break;
                         }
                         case EVENT_BLOWS:
-                            DoScriptText(SAY_STALACTITE, me);
-                            DoScriptText(EMOTE_BLOWS, me);
+                            Talk(SAY_STALACTITE);
+                            Talk(EMOTE_BLOWS);
                             DoCast(me, SPELL_FROZEN_BLOWS);
                             events.ScheduleEvent(EVENT_BLOWS, urand(60000, 65000));
                             break;
                         case EVENT_RARE_CACHE:
-                            DoScriptText(SAY_HARD_MODE_FAILED, me);
+                            Talk(SAY_HARD_MODE_FAILED);
                             iCouldSayThatThisCacheWasRare = false;
                             instance->SetData(DATA_HODIR_RARE_CACHE, 0);
                             events.CancelEvent(EVENT_RARE_CACHE);
                             break;
                         case EVENT_BERSERK:
-                            DoScriptText(SAY_BERSERK, me);
+                            Talk(SAY_BERSERK);
                             DoCast(me, SPELL_BERSERK, true);
                             events.CancelEvent(EVENT_BERSERK);
                             break;

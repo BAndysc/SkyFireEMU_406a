@@ -32,15 +32,15 @@ EndContentData */
 #include "ScriptPCH.h"
 #include "steam_vault.h"
 
-#define SAY_MECHANICS               -1545007
-#define SAY_AGGRO_1                 -1545008
-#define SAY_AGGRO_2                 -1545009
-#define SAY_AGGRO_3                 -1545010
-#define SAY_AGGRO_4                 -1545011
-#define SAY_SLAY_1                  -1545012
-#define SAY_SLAY_2                  -1545013
-#define SAY_SLAY_3                  -1545014
-#define SAY_DEATH                   -1545015
+#define SAY_MECHANICS               8
+#define SAY_AGGRO_1                 7
+#define SAY_AGGRO_2                 6
+#define SAY_AGGRO_3                 5
+#define SAY_AGGRO_4                 4
+#define SAY_SLAY_1                  3
+#define SAY_SLAY_2                  2
+#define SAY_SLAY_3                  1
+#define SAY_DEATH                   0
 
 #define SPELL_SUPER_SHRINK_RAY      31485
 #define SPELL_SAW_BLADE             31486
@@ -91,7 +91,7 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
 
             if (instance)
                 instance->SetData(TYPE_MEKGINEER_STEAMRIGGER, DONE);
@@ -99,12 +99,12 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2, SAY_SLAY_3));
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
 
             if (instance)
                 instance->SetData(TYPE_MEKGINEER_STEAMRIGGER, IN_PROGRESS);
@@ -113,7 +113,7 @@ public:
         //no known summon spells exist
         void SummonMechanichs()
         {
-            DoScriptText(SAY_MECHANICS, me);
+            Talk(SAY_MECHANICS);
 
             DoSpawnCreature(ENTRY_STREAMRIGGER_MECHANIC, 5, 5, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 240000);
             DoSpawnCreature(ENTRY_STREAMRIGGER_MECHANIC, -5, 5, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 240000);

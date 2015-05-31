@@ -31,42 +31,42 @@ EndScriptData */
 enum eEnums
 {
     //kael'thas Speech
-    SAY_INTRO                           = -1550016,
-    SAY_INTRO_CAPERNIAN                 = -1550017,
-    SAY_INTRO_TELONICUS                 = -1550018,
-    SAY_INTRO_THALADRED                 = -1550019,
-    SAY_INTRO_SANGUINAR                 = -1550020,
-    SAY_PHASE2_WEAPON                   = -1550021,
-    SAY_PHASE3_ADVANCE                  = -1550022,
-    SAY_PHASE4_INTRO2                   = -1550023,
-    SAY_PHASE5_NUTS                     = -1550024,
-    SAY_SLAY1                           = -1550025,
-    SAY_SLAY2                           = -1550026,
-    SAY_SLAY3                           = -1550027,
-    SAY_MINDCONTROL1                    = -1550028,
-    SAY_MINDCONTROL2                    = -1550029,
-    SAY_GRAVITYLAPSE1                   = -1550030,
-    SAY_GRAVITYLAPSE2                   = -1550031,
-    SAY_SUMMON_PHOENIX1                 = -1550032,
-    SAY_SUMMON_PHOENIX2                 = -1550033,
-    SAY_DEATH                           = -1550034,
+    SAY_INTRO                           = 18,
+    SAY_INTRO_CAPERNIAN                 = 17,
+    SAY_INTRO_TELONICUS                 = 16,
+    SAY_INTRO_THALADRED                 = 15,
+    SAY_INTRO_SANGUINAR                 = 14,
+    SAY_PHASE2_WEAPON                   = 13,
+    SAY_PHASE3_ADVANCE                  = 12,
+    SAY_PHASE4_INTRO2                   = 11,
+    SAY_PHASE5_NUTS                     = 10,
+    SAY_SLAY1                           = 9,
+    SAY_SLAY2                           = 8,
+    SAY_SLAY3                           = 7,
+    SAY_MINDCONTROL1                    = 6,
+    SAY_MINDCONTROL2                    = 5,
+    SAY_GRAVITYLAPSE1                   = 4,
+    SAY_GRAVITYLAPSE2                   = 3,
+    SAY_SUMMON_PHOENIX1                 = 2,
+    SAY_SUMMON_PHOENIX2                 = 1,
+    SAY_DEATH                           = 0,
 
     //Thaladred the Darkener speech
-    SAY_THALADRED_AGGRO                 = -1550035,
-    SAY_THALADRED_DEATH                 = -1550036,
-    EMOTE_THALADRED_GAZE                = -1550037,
+    SAY_THALADRED_AGGRO                 = 2,
+    SAY_THALADRED_DEATH                 = 1,
+    EMOTE_THALADRED_GAZE                = 0,
 
     //Lord Sanguinar speech
-    SAY_SANGUINAR_AGGRO                 = -1550038,
-    SAY_SANGUINAR_DEATH                 = -1550039,
+    SAY_SANGUINAR_AGGRO                 = 1,
+    SAY_SANGUINAR_DEATH                 = 0,
 
     //Grand Astromancer Capernian speech
-    SAY_CAPERNIAN_AGGRO                 = -1550040,
-    SAY_CAPERNIAN_DEATH                 = -1550041,
+    SAY_CAPERNIAN_AGGRO                 = 1,
+    SAY_CAPERNIAN_DEATH                 = 0,
 
     //Master Engineer Telonicus speech
-    SAY_TELONICUS_AGGRO                 = -1550042,
-    SAY_TELONICUS_DEATH                 = -1550043,
+    SAY_TELONICUS_AGGRO                 = 1,
+    SAY_TELONICUS_DEATH                 = 0,
 
     //Phase 2 spells
     SPELL_SUMMON_WEAPONS                = 36976,
@@ -368,7 +368,7 @@ class boss_kaelthas : public CreatureScript
                 {
                     sLog->outError("TSCR: Kael'Thas One or more advisors missing, Skipping Phases 1-3");
 
-                    DoScriptText(SAY_PHASE4_INTRO2, me);
+                    Talk(SAY_PHASE4_INTRO2);
 
                     Phase = 4;
 
@@ -384,7 +384,7 @@ class boss_kaelthas : public CreatureScript
                 {
                     PrepareAdvisors();
 
-                    DoScriptText(SAY_INTRO, me);
+                    Talk(SAY_INTRO);
 
                     m_pInstance->SetData(DATA_KAELTHASEVENT, 1);
                     me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -430,7 +430,7 @@ class boss_kaelthas : public CreatureScript
 
             void KilledUnit(Unit* /*victim*/)
             {
-                DoScriptText(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3), me);
+                Talk(RAND(SAY_SLAY1, SAY_SLAY2, SAY_SLAY3));
             }
 
             void JustSummoned(Creature* summoned)
@@ -452,7 +452,7 @@ class boss_kaelthas : public CreatureScript
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 me->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
-                DoScriptText(SAY_DEATH, me);
+                Talk(SAY_DEATH);
 
                 summons.DespawnAll();
 
@@ -483,7 +483,7 @@ class boss_kaelthas : public CreatureScript
                             case 0:
                                 if (Phase_Timer <= diff)
                                 {
-                                    DoScriptText(SAY_INTRO_THALADRED, me);
+                                    Talk(SAY_INTRO_THALADRED);
 
                                     //start advisor within 7 seconds
                                     Phase_Timer = 7000;
@@ -517,7 +517,7 @@ class boss_kaelthas : public CreatureScript
 
                                 if (Advisor && (Advisor->getStandState() == UNIT_STAND_STATE_DEAD))
                                 {
-                                    DoScriptText(SAY_INTRO_SANGUINAR, me);
+                                    Talk(SAY_INTRO_SANGUINAR);
 
                                     //start advisor within 12.5 seconds
                                     Phase_Timer = 12500;
@@ -551,7 +551,7 @@ class boss_kaelthas : public CreatureScript
 
                                 if (Advisor && (Advisor->getStandState() == UNIT_STAND_STATE_DEAD))
                                 {
-                                    DoScriptText(SAY_INTRO_CAPERNIAN, me);
+                                    Talk(SAY_INTRO_CAPERNIAN);
 
                                     //start advisor within 7 seconds
                                     Phase_Timer = 7000;
@@ -585,7 +585,7 @@ class boss_kaelthas : public CreatureScript
 
                                 if (Advisor && (Advisor->getStandState() == UNIT_STAND_STATE_DEAD))
                                 {
-                                    DoScriptText(SAY_INTRO_TELONICUS, me);
+                                    Talk(SAY_INTRO_TELONICUS);
 
                                     //start advisor within 8.4 seconds
                                     Phase_Timer = 8400;
@@ -624,7 +624,7 @@ class boss_kaelthas : public CreatureScript
                                     if (m_pInstance)
                                         m_pInstance->SetData(DATA_KAELTHASEVENT, 2);
 
-                                    DoScriptText(SAY_PHASE2_WEAPON, me);
+                                    Talk(SAY_PHASE2_WEAPON);
 
                                     PhaseSubphase = 0;
                                     Phase_Timer = 3500;
@@ -665,7 +665,7 @@ class boss_kaelthas : public CreatureScript
                         {
                             if (Phase_Timer <= diff)
                             {
-                                DoScriptText(SAY_PHASE3_ADVANCE, me);
+                                Talk(SAY_PHASE3_ADVANCE);
                                 if (m_pInstance)
                                     m_pInstance->SetData(DATA_KAELTHASEVENT, 3);
                                 Phase = 3;
@@ -701,7 +701,7 @@ class boss_kaelthas : public CreatureScript
 
                         if (Phase_Timer <= diff)
                         {
-                            DoScriptText(SAY_PHASE4_INTRO2, me);
+                            Talk(SAY_PHASE4_INTRO2);
                             Phase = 4;
 
                             if (m_pInstance)
@@ -797,7 +797,7 @@ class boss_kaelthas : public CreatureScript
                         if (Phoenix_Timer <= diff)
                         {
                             DoCast(me, SPELL_PHOENIX_ANIMATION);
-                            DoScriptText(RAND(SAY_SUMMON_PHOENIX1, SAY_SUMMON_PHOENIX2), me);
+                            Talk(RAND(SAY_SUMMON_PHOENIX1, SAY_SUMMON_PHOENIX2));
 
                             Phoenix_Timer = 60000;
                         }
@@ -814,7 +814,7 @@ class boss_kaelthas : public CreatureScript
                                 Phase = 5;
                                 Phase_Timer = 10000;
 
-                                DoScriptText(SAY_PHASE5_NUTS, me);
+                                Talk(SAY_PHASE5_NUTS);
 
                                 me->StopMoving();
                                 me->GetMotionMaster()->Clear();
@@ -907,7 +907,7 @@ class boss_kaelthas : public CreatureScript
                                         break;
 
                                     case 1:
-                                        DoScriptText(RAND(SAY_GRAVITYLAPSE1, SAY_GRAVITYLAPSE2), me);
+                                        Talk(RAND(SAY_GRAVITYLAPSE1, SAY_GRAVITYLAPSE2));
 
                                         // 2) At that point he will put a Gravity Lapse debuff on everyone
                                         for (i = me->getThreatManager().getThreatList().begin(); i != me->getThreatManager().getThreatList().end(); ++i)
@@ -1037,14 +1037,14 @@ class boss_thaladred_the_darkener : public CreatureScript
                 if (!who || FakeDeath)
                     return;
 
-                DoScriptText(SAY_THALADRED_AGGRO, me);
+                Talk(SAY_THALADRED_AGGRO);
                 me->AddThreat(who, 5000000.0f);
             }
 
             void JustDied(Unit* /*killer*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
-                    DoScriptText(SAY_THALADRED_DEATH, me);
+                    Talk(SAY_THALADRED_DEATH);
             }
 
             void UpdateAI(const uint32 diff)
@@ -1066,7 +1066,7 @@ class boss_thaladred_the_darkener : public CreatureScript
                     {
                         DoResetThreat();
                         me->AddThreat(target, 5000000.0f);
-                        DoScriptText(EMOTE_THALADRED_GAZE, me, target);
+                        Talk(EMOTE_THALADRED_GAZE, target->GetGUID());
                         Gaze_Timer = 8500;
                     }
                 }
@@ -1130,13 +1130,13 @@ class boss_lord_sanguinar : public CreatureScript
                 if (!who || FakeDeath)
                     return;
 
-                DoScriptText(SAY_SANGUINAR_AGGRO, me);
+                Talk(SAY_SANGUINAR_AGGRO);
             }
 
             void JustDied(Unit* /*Killer*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
-                    DoScriptText(SAY_SANGUINAR_DEATH, me);
+                    Talk(SAY_SANGUINAR_DEATH);
             }
 
             void UpdateAI(const uint32 diff)
@@ -1201,7 +1201,7 @@ class boss_grand_astromancer_capernian : public CreatureScript
             void JustDied(Unit* /*killer*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
-                    DoScriptText(SAY_CAPERNIAN_DEATH, me);
+                    Talk(SAY_CAPERNIAN_DEATH);
             }
 
             void AttackStart(Unit* who)
@@ -1245,7 +1245,7 @@ class boss_grand_astromancer_capernian : public CreatureScript
                 {
                     if (Yell_Timer <= diff)
                     {
-                        DoScriptText(SAY_CAPERNIAN_AGGRO, me);
+                        Talk(SAY_CAPERNIAN_AGGRO);
                         Yell = true;
                     }
                     else
@@ -1340,7 +1340,7 @@ class boss_master_engineer_telonicus : public CreatureScript
             void JustDied(Unit* /*killer*/)
             {
                 if (m_pInstance && m_pInstance->GetData(DATA_KAELTHASEVENT) == 3)
-                    DoScriptText(SAY_TELONICUS_DEATH, me);
+                    Talk(SAY_TELONICUS_DEATH);
             }
 
             void EnterCombat(Unit* who)
@@ -1351,7 +1351,7 @@ class boss_master_engineer_telonicus : public CreatureScript
                 if (!who || FakeDeath)
                     return;
 
-                DoScriptText(SAY_TELONICUS_AGGRO, me);
+                Talk(SAY_TELONICUS_AGGRO);
             }
 
             void UpdateAI(const uint32 diff)

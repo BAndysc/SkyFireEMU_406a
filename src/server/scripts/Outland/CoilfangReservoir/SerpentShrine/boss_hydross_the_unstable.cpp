@@ -27,15 +27,15 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "serpent_shrine.h"
 
-#define SAY_AGGRO                   -1548000
-#define SAY_SWITCH_TO_CLEAN         -1548001
-#define SAY_CLEAN_SLAY1             -1548002
-#define SAY_CLEAN_SLAY2             -1548003
-#define SAY_CLEAN_DEATH             -1548004
-#define SAY_SWITCH_TO_CORRUPT       -1548005
-#define SAY_CORRUPT_SLAY1           -1548006
-#define SAY_CORRUPT_SLAY2           -1548007
-#define SAY_CORRUPT_DEATH           -1548008
+#define SAY_AGGRO                   8
+#define SAY_SWITCH_TO_CLEAN         7
+#define SAY_CLEAN_SLAY1             6
+#define SAY_CLEAN_SLAY2             5
+#define SAY_CLEAN_DEATH             4
+#define SAY_SWITCH_TO_CORRUPT       3
+#define SAY_CORRUPT_SLAY1           2
+#define SAY_CORRUPT_SLAY2           1
+#define SAY_CORRUPT_DEATH           0
 
 #define SWITCH_RADIUS               18
 
@@ -169,7 +169,7 @@ public:
         }
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
 
             if (instance)
                 instance->SetData(DATA_HYDROSSTHEUNSTABLEEVENT, IN_PROGRESS);
@@ -179,11 +179,11 @@ public:
         {
             if (CorruptedForm)
             {
-                DoScriptText(RAND(SAY_CORRUPT_SLAY1, SAY_CORRUPT_SLAY2), me);
+                Talk(RAND(SAY_CORRUPT_SLAY1, SAY_CORRUPT_SLAY2));
             }
             else
             {
-                DoScriptText(RAND(SAY_CLEAN_SLAY1, SAY_CLEAN_SLAY2), me);
+                Talk(RAND(SAY_CLEAN_SLAY1, SAY_CLEAN_SLAY2));
             }
         }
 
@@ -211,9 +211,9 @@ public:
         void JustDied(Unit* /*victim*/)
         {
             if (CorruptedForm)
-                DoScriptText(SAY_CORRUPT_DEATH, me);
+                Talk(SAY_CORRUPT_DEATH);
             else
-                DoScriptText(SAY_CLEAN_DEATH, me);
+                Talk(SAY_CLEAN_DEATH);
 
             if (instance)
                 instance->SetData(DATA_HYDROSSTHEUNSTABLEEVENT, DONE);
@@ -280,7 +280,7 @@ public:
                         CorruptedForm = false;
                         MarkOfHydross_Count = 0;
 
-                        DoScriptText(SAY_SWITCH_TO_CLEAN, me);
+                        Talk(SAY_SWITCH_TO_CLEAN);
                         DoResetThreat();
                         SummonBeams();
 
@@ -347,7 +347,7 @@ public:
                         MarkOfCorruption_Count = 0;
                         CorruptedForm = true;
 
-                        DoScriptText(SAY_SWITCH_TO_CORRUPT, me);
+                        Talk(SAY_SWITCH_TO_CORRUPT);
                         DoResetThreat();
                         DeSummonBeams();
 

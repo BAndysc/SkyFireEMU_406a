@@ -30,10 +30,10 @@ EndScriptData */
 
 enum Say
 {
-    SAY_EGGS_BROKEN1        = -1469022,
-    SAY_EGGS_BROKEN2        = -1469023,
-    SAY_EGGS_BROKEN3        = -1469024,
-    SAY_DEATH               = -1469025
+    SAY_EGGS_BROKEN1        = 3,
+    SAY_EGGS_BROKEN2        = 2,
+    SAY_EGGS_BROKEN3        = 1,
+    SAY_DEATH               = 0
 };
 
 enum Spells
@@ -78,7 +78,7 @@ public:
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void UpdateAI(const uint32 diff)

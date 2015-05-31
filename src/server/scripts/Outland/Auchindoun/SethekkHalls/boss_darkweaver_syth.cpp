@@ -26,16 +26,16 @@ EndScriptData */
 
 #include "ScriptPCH.h"
 
-#define SAY_SUMMON                  -1556000
+#define SAY_SUMMON                  6
 
-#define SAY_AGGRO_1                 -1556001
-#define SAY_AGGRO_2                 -1556002
-#define SAY_AGGRO_3                 -1556003
+#define SAY_AGGRO_1                 5
+#define SAY_AGGRO_2                 4
+#define SAY_AGGRO_3                 3
 
-#define SAY_SLAY_1                  -1556004
-#define SAY_SLAY_2                  -1556005
+#define SAY_SLAY_1                  2
+#define SAY_SLAY_2                  1
 
-#define SAY_DEATH                   -1556006
+#define SAY_DEATH                   0
 
 #define SPELL_FROST_SHOCK           21401 //37865
 #define SPELL_FLAME_SHOCK           34354
@@ -95,12 +95,12 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2, SAY_AGGRO_3));
         }
 
         void JustDied(Unit* /*Killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
         }
 
         void KilledUnit(Unit* /*victim*/)
@@ -108,7 +108,7 @@ public:
             if (rand()%2)
                 return;
 
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void JustSummoned(Creature* summoned)
@@ -119,7 +119,7 @@ public:
 
         void SythSummoning()
         {
-            DoScriptText(SAY_SUMMON, me);
+            Talk(SAY_SUMMON);
 
             if (me->IsNonMeleeSpellCasted(false))
                 me->InterruptNonMeleeSpells(false);

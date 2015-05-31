@@ -29,8 +29,8 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO                                              = -1230001,
-    SAY_SLAY                                               = -1230002
+    SAY_AGGRO                                              = 1,
+    SAY_SLAY                                               = 0
 };
 
 enum Spells
@@ -70,13 +70,13 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(SAY_AGGRO, me);
+            Talk(SAY_AGGRO);
             me->CallForHelp(VISIBLE_RANGE);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(SAY_SLAY, me);
+            Talk(SAY_SLAY);
         }
 
         void JustDied(Unit* /*who*/)

@@ -30,32 +30,32 @@ EndScriptData */
 
 //Sound'n'speech
 //Suffering
-#define SUFF_SAY_FREED              -1564047
-#define SUFF_SAY_AGGRO              -1564048
-#define SUFF_SAY_SLAY1              -1564049
-#define SUFF_SAY_SLAY2              -1564050
-#define SUFF_SAY_SLAY3              -1564051
-#define SUFF_SAY_RECAP              -1564052
-#define SUFF_SAY_AFTER              -1564053
-#define SUFF_EMOTE_ENRAGE           -1564054
+#define SUFF_SAY_FREED              7
+#define SUFF_SAY_AGGRO              6
+#define SUFF_SAY_SLAY1              5
+#define SUFF_SAY_SLAY2              4
+#define SUFF_SAY_SLAY3              3
+#define SUFF_SAY_RECAP              2
+#define SUFF_SAY_AFTER              1
+#define SUFF_EMOTE_ENRAGE           0
 
 //Desire
-#define DESI_SAY_FREED              -1564055
-#define DESI_SAY_SLAY1              -1564056
-#define DESI_SAY_SLAY2              -1564057
-#define DESI_SAY_SLAY3              -1564058
-#define DESI_SAY_SPEC               -1564059
-#define DESI_SAY_RECAP              -1564060
-#define DESI_SAY_AFTER              -1564061
+#define DESI_SAY_FREED              6
+#define DESI_SAY_SLAY1              5
+#define DESI_SAY_SLAY2              4
+#define DESI_SAY_SLAY3              3
+#define DESI_SAY_SPEC               2
+#define DESI_SAY_RECAP              1
+#define DESI_SAY_AFTER              0
 
 //Anger
-#define ANGER_SAY_FREED             -1564062
-#define ANGER_SAY_FREED2            -1564063
-#define ANGER_SAY_SLAY1             -1564064
-#define ANGER_SAY_SLAY2             -1564065
-#define ANGER_SAY_SPEC              -1564066
-#define ANGER_SAY_BEFORE            -1564067
-#define ANGER_SAY_DEATH             -1564068
+#define ANGER_SAY_FREED             6
+#define ANGER_SAY_FREED2            5
+#define ANGER_SAY_SLAY1             4
+#define ANGER_SAY_SLAY2             3
+#define ANGER_SAY_SPEC              2
+#define ANGER_SAY_BEFORE            1
+#define ANGER_SAY_DEATH             0
 
 //Spells
 #define AURA_OF_SUFFERING               41292
@@ -318,11 +318,11 @@ public:
                 case 5:
                     if (Phase == 1)
                     {
-                        DoScriptText(SUFF_SAY_AFTER, Essence);
+                        Essence->AI()->Talk(SUFF_SAY_AFTER);
                     }
                     else
                     {
-                        DoScriptText(DESI_SAY_AFTER, Essence);
+                        Essence->AI()->Talk(DESI_SAY_AFTER);
                     }
                     Essence->DespawnOrUnsummon();
                     me->SetUInt32Value(UNIT_NPC_EMOTESTATE, 0);
@@ -406,7 +406,7 @@ public:
                 damage = 0;
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 me->Yell(SUFF_SAY_RECAP, LANGUAGE_UNIVERSAL, 0);
-                DoScriptText(SUFF_SAY_RECAP, me);
+                Talk(SUFF_SAY_RECAP);
             }
         }
 
@@ -414,7 +414,7 @@ public:
         {
             if (!me->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE))
                 {
-                DoScriptText(SUFF_SAY_FREED, me);
+                Talk(SUFF_SAY_FREED);
                 DoZoneInCombat();
                 DoCast(me, AURA_OF_SUFFERING, true); // linked aura need core support
                 DoCast(me, ESSENCE_OF_SUFFERING_PASSIVE, true);
@@ -425,7 +425,7 @@ public:
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SUFF_SAY_SLAY1, SUFF_SAY_SLAY2, SUFF_SAY_SLAY3), me);
+            Talk(RAND(SUFF_SAY_SLAY1, SUFF_SAY_SLAY2, SUFF_SAY_SLAY3));
         }
 
         void CastFixate()
@@ -463,7 +463,7 @@ public:
                     FixateTimer = 5000;
                     if (!(rand()%16))
                     {
-                        DoScriptText(SUFF_SAY_AGGRO, me);
+                        Talk(SUFF_SAY_AGGRO);
                     }
                 } else FixateTimer -= diff;
             }
@@ -476,7 +476,7 @@ public:
             {
                 DoCast(me, SPELL_ENRAGE);
                 EnrageTimer = 60000;
-                DoScriptText(SUFF_EMOTE_ENRAGE, me);
+                Talk(SUFF_EMOTE_ENRAGE);
             } else EnrageTimer -= diff;
 
             if (SoulDrainTimer <= diff)
@@ -525,7 +525,7 @@ public:
             {
                 damage = 0;
                 me->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                DoScriptText(SUFF_SAY_RECAP, me);
+                Talk(SUFF_SAY_RECAP);
             }
             else
             {
@@ -546,14 +546,14 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(DESI_SAY_FREED, me);
+            Talk(DESI_SAY_FREED);
             DoZoneInCombat();
             DoCast(me, AURA_OF_DESIRE, true);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(DESI_SAY_SLAY1, DESI_SAY_SLAY2, DESI_SAY_SLAY3), me);
+            Talk(RAND(DESI_SAY_SLAY1, DESI_SAY_SLAY2, DESI_SAY_SLAY3));
         }
 
         void UpdateAI(const uint32 diff)
@@ -583,7 +583,7 @@ public:
                 DeadenTimer = urand(25000, 35000);
                 if (!(rand()%2))
                 {
-                    DoScriptText(DESI_SAY_SPEC, me);
+                    Talk(DESI_SAY_SPEC);
                 }
             } else DeadenTimer -= diff;
 
@@ -631,7 +631,7 @@ public:
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(ANGER_SAY_FREED, ANGER_SAY_FREED2), me);
+            Talk(RAND(ANGER_SAY_FREED, ANGER_SAY_FREED2));
 
             DoZoneInCombat();
             DoCast(me, AURA_OF_ANGER, true);
@@ -639,12 +639,12 @@ public:
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(ANGER_SAY_DEATH, me);
+            Talk(ANGER_SAY_DEATH);
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(ANGER_SAY_SLAY1, ANGER_SAY_SLAY2), me);
+            Talk(RAND(ANGER_SAY_SLAY1, ANGER_SAY_SLAY2));
         }
 
         void UpdateAI(const uint32 diff)
@@ -663,7 +663,7 @@ public:
             {
                 if (me->getVictim()->GetGUID() != AggroTargetGUID)
                 {
-                    DoScriptText(ANGER_SAY_BEFORE, me);
+                    Talk(ANGER_SAY_BEFORE);
                     DoCast(me, SPELL_SELF_SEETHE, true);
                     AggroTargetGUID = me->getVictim()->GetGUID();
                 }
@@ -676,7 +676,7 @@ public:
                 SoulScreamTimer = urand(9000, 11000);
                 if (!(rand()%3))
                 {
-                    DoScriptText(ANGER_SAY_SPEC, me);
+                    Talk(ANGER_SAY_SPEC);
                 }
             } else SoulScreamTimer -= diff;
 
@@ -684,7 +684,7 @@ public:
             {
                 DoCast(me, SPELL_SPITE_TARGET);
                 SpiteTimer = 30000;
-                DoScriptText(ANGER_SAY_SPEC, me);
+                Talk(ANGER_SAY_SPEC);
             } else SpiteTimer -= diff;
 
             DoMeleeAttackIfReady();

@@ -27,12 +27,12 @@ EndScriptData */
 #include "ScriptPCH.h"
 #include "black_temple.h"
 
-#define SAY_DEATH                   -1564013
-#define SAY_LOW_HEALTH              -1564014
+#define SAY_DEATH                   4
+#define SAY_LOW_HEALTH              3
 // Ending cinematic text
-#define SAY_FREE                    -1564015
-#define SAY_BROKEN_FREE_01          -1564016
-#define SAY_BROKEN_FREE_02          -1564017
+#define SAY_FREE                    2
+#define SAY_BROKEN_FREE_01          1
+#define SAY_BROKEN_FREE_02          0
 
 #define GOSSIP_ITEM                 "We are ready to fight alongside you, Akama"
 
@@ -689,7 +689,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             EventBegun = false;
             ShadeHasDied = false;
             StartCombat = false;
@@ -714,7 +714,7 @@ public:
 
             if (HealthBelowPct(15) && !HasYelledOnce)
             {
-                DoScriptText(SAY_LOW_HEALTH, me);
+                Talk(SAY_LOW_HEALTH);
                 HasYelledOnce = true;
             }
 
@@ -810,7 +810,7 @@ public:
                         SummonBrokenTimer = 1;
                         break;
                     case 1:
-                        DoScriptText(SAY_FREE, me);
+                        Talk(SAY_FREE);
                         ++EndingTalkCount;
                         SoulRetrieveTimer = 25000;
                         break;
@@ -823,7 +823,7 @@ public:
                                 {
                                     if (!Yelled)
                                     {
-                                        DoScriptText(SAY_BROKEN_FREE_01, unit);
+                                        unit->AI()->Talk(SAY_BROKEN_FREE_01);
                                         Yelled = true;
                                     }
                                     unit->HandleEmoteCommand(EMOTE_ONESHOT_KNEEL);

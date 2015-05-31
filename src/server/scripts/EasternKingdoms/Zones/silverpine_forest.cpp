@@ -105,20 +105,20 @@ public:
 
 enum eErland
 {
-    SAY_QUESTACCEPT     = -1000306,
-    SAY_START           = -1000307,
-    SAY_AGGRO_1         = -1000308,
-    SAY_AGGRO_2         = -1000309,
-    SAY_LAST            = -1000310,
+    SAY_QUESTACCEPT     = 21,
+    SAY_START           = 20,
+    SAY_AGGRO_1         = 19,
+    SAY_AGGRO_2         = 18,
+    SAY_LAST            = 17,
 
-    SAY_THANKS          = -1000311,
-    SAY_RANE            = -1000312,
-    SAY_ANSWER          = -1000313,
-    SAY_MOVE_QUINN      = -1000314,
+    SAY_THANKS          = 16,
+    SAY_RANE            = 15,
+    SAY_ANSWER          = 14,
+    SAY_MOVE_QUINN      = 13,
 
-    SAY_GREETINGS       = -1000315,
-    SAY_QUINN           = -1000316,
-    SAY_ON_BYE          = -1000317,
+    SAY_GREETINGS       = 12,
+    SAY_QUINN           = 11,
+    SAY_ON_BYE          = 10,
 
     QUEST_ESCORTING     = 435,
     NPC_RANE            = 1950,
@@ -143,25 +143,25 @@ public:
 
             switch (i)
             {
-            case 1: DoScriptText(SAY_START, me, player);break;
+            case 1: Talk(SAY_START, player->GetGUID());break;
             case 13:
-                DoScriptText(SAY_LAST, me, player);
+                Talk(SAY_LAST, player->GetGUID());
                 player->GroupEventHappens(QUEST_ESCORTING, me); break;
-            case 14: DoScriptText(SAY_THANKS, me, player); break;
+            case 14: Talk(SAY_THANKS, player->GetGUID()); break;
             case 15: {
                     Unit* Rane = me->FindNearestCreature(NPC_RANE, 20);
-                    if (Rane)
-                        DoScriptText(SAY_RANE, Rane);
+                    if (Rane && Rane->ToCreature())
+						Rane->ToCreature()->AI()->Talk(SAY_RANE);
                     break;}
-            case 16: DoScriptText(SAY_ANSWER, me); break;
-            case 17: DoScriptText(SAY_MOVE_QUINN, me); break;
-            case 24: DoScriptText(SAY_GREETINGS, me); break;
+            case 16: Talk(SAY_ANSWER); break;
+            case 17: Talk(SAY_MOVE_QUINN); break;
+            case 24: Talk(SAY_GREETINGS); break;
             case 25: {
                     Unit* Quinn = me->FindNearestCreature(NPC_QUINN, 20);
-                    if (Quinn)
-                        DoScriptText(SAY_QUINN, Quinn);
+					if (Quinn && Quinn->ToCreature())
+						Quinn->ToCreature()->AI()->Talk(SAY_QUINN);
                     break;}
-            case 26: DoScriptText(SAY_ON_BYE, me, NULL); break;
+            case 26: Talk(SAY_ON_BYE); break;
             }
         }
 
@@ -169,7 +169,7 @@ public:
 
         void EnterCombat(Unit* who)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2), me, who);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2), who->GetGUID());
         }
     };
 
@@ -177,7 +177,7 @@ public:
     {
         if (quest->GetQuestId() == QUEST_ESCORTING)
         {
-            DoScriptText(SAY_QUESTACCEPT, creature, player);
+            creature->AI()->Talk(SAY_QUESTACCEPT, player->GetGUID());
 
             if (npc_escortAI* escortAI = CAST_AI(npc_deathstalker_erland::npc_deathstalker_erlandAI, creature->AI()))
                 escortAI->Start(true, false, player->GetGUID());

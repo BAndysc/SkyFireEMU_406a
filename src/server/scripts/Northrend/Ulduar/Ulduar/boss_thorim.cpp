@@ -22,24 +22,24 @@
 
 enum Yells
 {
-    SAY_AGGRO_1                                 = -1603270,
-    SAY_AGGRO_2                                 = -1603271,
-    SAY_SPECIAL_1                               = -1603272,
-    SAY_SPECIAL_2                               = -1603273,
-    SAY_SPECIAL_3                               = -1603274,
-    SAY_JUMPDOWN                                = -1603275,
-    SAY_SLAY_1                                  = -1603276,
-    SAY_SLAY_2                                  = -1603277,
-    SAY_BERSERK                                 = -1603278,
-    SAY_WIPE                                    = -1603279,
-    SAY_DEATH                                   = -1603280,
-    SAY_END_NORMAL_1                            = -1603281,
-    SAY_END_NORMAL_2                            = -1603282,
-    SAY_END_NORMAL_3                            = -1603283,
-    SAY_END_HARD_1                              = -1603284,
-    SAY_END_HARD_2                              = -1603285,
-    SAY_END_HARD_3                              = -1603286,
-    SAY_YS_HELP                                 = -1603287,
+    SAY_AGGRO_1                                 = 17,
+    SAY_AGGRO_2                                 = 16,
+    SAY_SPECIAL_1                               = 15,
+    SAY_SPECIAL_2                               = 14,
+    SAY_SPECIAL_3                               = 13,
+    SAY_JUMPDOWN                                = 12,
+    SAY_SLAY_1                                  = 11,
+    SAY_SLAY_2                                  = 10,
+    SAY_BERSERK                                 = 9,
+    SAY_WIPE                                    = 8,
+    SAY_DEATH                                   = 7,
+    SAY_END_NORMAL_1                            = 6,
+    SAY_END_NORMAL_2                            = 5,
+    SAY_END_NORMAL_3                            = 4,
+    SAY_END_HARD_1                              = 3,
+    SAY_END_HARD_2                              = 2,
+    SAY_END_HARD_3                              = 1,
+    SAY_YS_HELP                                 = 0,
 };
 
 class boss_thorim : public CreatureScript
@@ -65,24 +65,24 @@ public:
 
         void EnterEvadeMode()
         {
-            DoScriptText(SAY_WIPE, me);
+            Talk(SAY_WIPE);
             _EnterEvadeMode();
         }
 
         void KilledUnit(Unit* /*victim*/)
         {
-            DoScriptText(RAND(SAY_SLAY_1, SAY_SLAY_2), me);
+            Talk(RAND(SAY_SLAY_1, SAY_SLAY_2));
         }
 
         void JustDied(Unit* /*victim*/)
         {
-            DoScriptText(SAY_DEATH, me);
+            Talk(SAY_DEATH);
             _JustDied();
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(RAND(SAY_AGGRO_1, SAY_AGGRO_2), me);
+            Talk(RAND(SAY_AGGRO_1, SAY_AGGRO_2));
             _EnterCombat();
         }
 

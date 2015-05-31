@@ -29,14 +29,14 @@ EndScriptData */
 enum Yells
 {
     //Yells Ingvar
-    YELL_AGGRO_1                                = -1574005,
-    YELL_AGGRO_2                                = -1574006,
+    YELL_AGGRO_1                                = 5,
+    YELL_AGGRO_2                                = 4,
 
-    YELL_DEAD_1                                 = -1574007,
-    YELL_DEAD_2                                 = -1574008,
+    YELL_DEAD_1                                 = 3,
+    YELL_DEAD_2                                 = 2,
 
-    YELL_KILL_1                                 = -1574009,
-    YELL_KILL_2                                 = -1574010,
+    YELL_KILL_1                                 = 1,
+    YELL_KILL_2                                 = 0,
 };
 
 enum Creatures
@@ -159,7 +159,7 @@ public:
                 bIsUndead = true;
                 events.SetPhase(PHASE_UNDEAD);
 
-                DoScriptText(YELL_DEAD_1, me);
+                Talk(YELL_DEAD_1);
             }
 
             if (bEventInProgress)
@@ -177,12 +177,12 @@ public:
             me->SetInCombatWith(me->getVictim());
             me->GetMotionMaster()->MoveChase(me->getVictim());
 
-            DoScriptText(YELL_AGGRO_2, me);
+            Talk(YELL_AGGRO_2);
         }
 
         void EnterCombat(Unit* /*who*/)
         {
-            DoScriptText(YELL_AGGRO_1, me);
+            Talk(YELL_AGGRO_1);
 
             if (instance)
                 instance->SetData(DATA_INGVAR_EVENT, IN_PROGRESS);
@@ -190,7 +190,7 @@ public:
 
         void JustDied(Unit* /*killer*/)
         {
-            DoScriptText(YELL_DEAD_2, me);
+            Talk(YELL_DEAD_2);
 
             if (instance)
             {
@@ -203,9 +203,9 @@ public:
         void KilledUnit(Unit* /*victim*/)
         {
             if (bIsUndead)
-                DoScriptText(YELL_KILL_1, me);
+                Talk(YELL_KILL_1);
             else
-                DoScriptText(YELL_KILL_2, me);
+                Talk(YELL_KILL_2);
         }
 
         void UpdateAI(const uint32 diff)
@@ -335,7 +335,7 @@ public:
             {
                 me->GetMotionMaster()->MovePoint(1, x, y, z+15);
 
-    //            DoScriptText(YELL_RESSURECT, me);
+    //            Talk(YELL_RESSURECT);
             }
         }
 
