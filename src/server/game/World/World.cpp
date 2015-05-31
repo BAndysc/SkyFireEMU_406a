@@ -1759,12 +1759,6 @@ void World::SetInitialWorldSettings()
     sLog->outString("Loading CreatureAI Texts...");
     sEventAIMgr->LoadCreatureEventAI_Texts();
 
-    sLog->outString("Loading CreatureAI Summons...");
-    sEventAIMgr->LoadCreatureEventAI_Summons();
-
-    sLog->outString("Loading CreatureAI Scripts...");
-    sEventAIMgr->LoadCreatureEventAI_Scripts();
-
     sLog->outString("Loading spell script names...");
     sObjectMgr->LoadSpellScriptNames();
 
