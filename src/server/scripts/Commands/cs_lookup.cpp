@@ -69,6 +69,7 @@ public:
             { "skill",          SEC_ADMINISTRATOR,  true,  &HandleLookupSkillCommand,           "", NULL },
             { "spell",          SEC_ADMINISTRATOR,  true,  NULL,                                "", lookupSpellCommandTable },
             { "taxinode",       SEC_ADMINISTRATOR,  true,  &HandleLookupTaxiNodeCommand,        "", NULL },
+			{ "taxipath",        SEC_ADMINISTRATOR, true, &HandleLookupTaxiPathCommand, "", NULL },
             { "tele",           SEC_MODERATOR,      true,  &HandleLookupTeleCommand,            "", NULL },
             { "title",          SEC_GAMEMASTER,     true,  &HandleLookupTitleCommand,           "", NULL },
             { "map",            SEC_ADMINISTRATOR,  true,  &HandleLookupMapCommand,             "", NULL },
@@ -1040,6 +1041,53 @@ public:
 
         return true;
     }
+
+	
+
+
+	static bool HandleLookupTaxiPathCommand(ChatHandler* handler, const char * args)
+	{
+
+		uint32 node_start_id = atoi((char*)args);
+
+		// Search in TaxiPath.dbc
+		for (uint32 id = 0; id < sTaxiPathStore.GetNumRows(); id++)
+		{
+			TaxiPathEntry const* pathEntry = sTaxiPathStore.LookupEntry(id);
+			if (pathEntry)
+			{
+				if (node_start_id == 0 || node_start_id == pathEntry->from) {
+
+					TaxiNodesEntry const* nodeEntryFrom = sTaxiNodesStore.LookupEntry(pathEntry->from);
+					TaxiNodesEntry const* nodeEntryTo = sTaxiNodesStore.LookupEntry(pathEntry->to);
+
+					char * fromName;
+					char * toName;
+
+					if (nodeEntryFrom)
+						fromName = nodeEntryFrom->name;
+
+					if (nodeEntryTo)
+						toName = nodeEntryTo->name;
+
+					std::ostringstream ss;
+					ss << "ID: " << pathEntry->ID << " ";
+					ss << "from: " << pathEntry->from<< " ";
+					if (fromName)
+						ss << "(" << fromName << ") ";
+					ss << "to: " << pathEntry->to << " ";
+					if (toName)
+						ss << "(" << toName << ") ";
+
+
+					handler->PSendSysMessage(ss.str().c_str());
+				}
+			}
+			
+		}
+		return true;
+	}
+
 
     static bool HandleLookupTaxiNodeCommand(ChatHandler* handler, const char * args)
     {
